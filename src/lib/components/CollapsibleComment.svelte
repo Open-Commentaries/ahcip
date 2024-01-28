@@ -19,9 +19,7 @@
 		</h3>
 		<h4 class="text-sm font-medium text-slate-900 cursor-pointer">
 			<small class="mt-1 mx-w-2xl text-sm text-slate-600">
-				<a href={'/bibliography/#{@comment.canonical_commentary.pid}'} class="hover:underline">
-					{comment.authors.map((a) => a.name).join(', ')}
-				</a>
+				{comment.authors.map((a) => a.name).join(', ')}
 			</small>
 		</h4>
 	</div>

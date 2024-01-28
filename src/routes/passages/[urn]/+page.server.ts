@@ -3,6 +3,8 @@ import { error } from '@sveltejs/kit';
 
 import type { Comment, Tag } from '$lib/types/commentary.type';
 
+export const prerender = true;
+
 export const load = ({ params: { urn = '' } }) => {
 	const passageDir = fs.readdirSync('passages');
 	const relevantFiles = passageDir.filter((f) => {

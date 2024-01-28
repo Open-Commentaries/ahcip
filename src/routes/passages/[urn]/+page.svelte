@@ -12,8 +12,6 @@
 	$: versionUrn = urn.split(':').slice(0, -1).join(':');
 	$: citation = urn.split(':').at(-1);
 
-	console.log(data);
-
 	function getCommentsForLine(line: Line) {
 		return comments.filter((comment: Comment) => {
 			const [_urn, _cts, _collection, _workComponent, citation] = comment.target_urn.split(':');
