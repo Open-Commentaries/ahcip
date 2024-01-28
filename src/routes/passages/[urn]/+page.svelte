@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { Comment, Line } from '$lib/types/commentary.type';
 
+	import { base } from '$app/paths';
+
 	import CollapsibleComment from '$lib/components/CollapsibleComment.svelte';
 
 	export let data;
@@ -39,7 +41,7 @@
 				{#each [...Array.from({ length: 24 }, (_, i) => i + 1)] as n}
 					<li class="text-sm">
 						<a
-							href={`/passages/${versionUrn}:${n}`}
+							href={`/${base}/passages/${versionUrn}:${n}`}
 							class={n == parseInt(citation || '') ? 'active' : ''}
 						>
 							Scroll {n}
