@@ -41,7 +41,7 @@
 				{#each [...Array.from({ length: 24 }, (_, i) => i + 1)] as n}
 					<li class="text-sm">
 						<a
-							href="/{base}/passages/{versionUrn}:{n}"
+							href="{base}/passages/{versionUrn}:{n}"
 							class={n == parseInt(citation || '') ? 'active' : ''}
 						>
 							Scroll {n}

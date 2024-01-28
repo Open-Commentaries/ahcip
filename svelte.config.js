@@ -67,7 +67,8 @@ const config = {
 				'/passages/urn:cts:greekLit:tlg0012.tlg002.perseus-grc2:22',
 				'/passages/urn:cts:greekLit:tlg0012.tlg002.perseus-grc2:23',
 				'/passages/urn:cts:greekLit:tlg0012.tlg002.perseus-grc2:24'
-			]
+			],
+			handleHttpError: 'warn'
 		}
 	}
 };
