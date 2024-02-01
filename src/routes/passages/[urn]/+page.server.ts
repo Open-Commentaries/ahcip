@@ -2,7 +2,7 @@ import fs from 'fs';
 import YAML from 'yaml';
 import { error } from '@sveltejs/kit';
 
-import type { Comment, Tag } from '$lib/types/commentary.type';
+import type { Card, Comment, Line } from '$lib/types/commentary.type';
 
 export const prerender = true;
 
@@ -70,9 +70,11 @@ export const load = ({ params: { urn = '' } }) => {
 	const speechesFile = relevantFiles.find((f) => f.endsWith('_speeches.json'));
 
 	return {
-		cards: cardsFile ? getCards(cardsFile) : [],
+		cards: cardsFile ? getCards(cardsFile).sort((cardA: Card, cardB: Card) => {
+			return parseInt(cardA.n) < parseInt(cardB.n) ? -1 : 1;
+		}) : [],
 		comments,
-		lines: linesFile ? readFile(linesFile).sort((lineA, lineB) => {
+		lines: linesFile ? readFile(linesFile).sort((lineA: Line, lineB: Line) => {
 			return parseInt(lineA.n) < parseInt(lineB.n) ? -1 : 1;
 		}) : [],
 		metadata: metadataFile ? readFile(metadataFile) : [],

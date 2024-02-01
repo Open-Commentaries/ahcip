@@ -3,12 +3,13 @@
 
 	export let comment: Comment;
 
-	let isHighlighted = false;
+	$: isHighlighted = comment.isHighlighted;
 </script>
 
 <div
 	class="border-2 collapse collapse-arrow rounded-sm mb-2"
 	class:border-slate-800={isHighlighted}
+	id={comment.citable_urn}
 >
 	<input type="checkbox" />
 	<div class="collapse-title">
