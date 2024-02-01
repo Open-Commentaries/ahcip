@@ -72,7 +72,9 @@ export const load = ({ params: { urn = '' } }) => {
 	return {
 		cards: cardsFile ? getCards(cardsFile) : [],
 		comments,
-		lines: linesFile ? readFile(linesFile) : [],
+		lines: linesFile ? readFile(linesFile).sort((lineA, lineB) => {
+			return parseInt(lineA.n) < parseInt(lineB.n) ? -1 : 1;
+		}) : [],
 		metadata: metadataFile ? readFile(metadataFile) : [],
 		notes: notesFile ? readFile(notesFile) : [],
 		speeches: speechesFile ? readFile(speechesFile) : [],

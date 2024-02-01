@@ -52,7 +52,7 @@
 		</section>
 		<section class="col-span-2">
 			{#each lines as line}
-				<p>{line.n} {line.text}</p>
+				<p>{line.text}<span class="float-right">{line.n}</span></p>
 			{/each}
 		</section>
 		<section class="overflow-y-scroll col-span-2 max-w-96 max-h-[64rem]">
