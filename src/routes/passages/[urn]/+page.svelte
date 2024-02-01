@@ -7,12 +7,11 @@
 	export let data;
 
 	$: metadata = data.metadata;
+	$: comments = data.comments;
 	$: lines = data.lines;
 	$: urn = data.urn;
 	$: versionUrn = urn.split(':').slice(0, -1).join(':');
 	$: citation = urn.split(':').at(-1);
-
-	let comments = data.comments;
 
 	function getCommentsForLineNumber(n: string) {
 		return comments.filter((comment: Comment) => {
