@@ -1,0 +1,19 @@
++++
+
+tags:
+- "Iliad 10 and the Poetics of Ambush"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Iliad.10.98.48yEWCX"
+target_urn: "urn:cts:greekLit:tlg0012.tlg001:10.98"
+title: "Iliad 10.98"
+
+authors:
+- email: "cldue@central.uh.edu"
+  name: "Casey Dué Hackney"
+  username: "cldue"
+- email: "mebbott@holycross.edu"
+  name: "Mary Ebbott"
+  username: "mebbott"
++++
+
+<p>καμάτω ἁδηκότες  </p><p>The meaning of ἁδηκότες can be easily gleaned from context, but its derivation is disputed. This formula appears four times in this book (here, 10.312, 10.399, and 10.471), but with the exception of Odyssey 12.281 nowhere else in the <em>Iliad</em> or <em>Odyssey</em>. (See also <em>Homeric Hymn to Apollo</em> 460.) Here is another instance of a formula closely tied to the night that has been seen by previous commentators and scholars as evidence of the book’s unusual style. We have argued that <em>Iliad</em> 10 is essentially our only surviving extended narration of a night raid, and this accident of transmission makes these formulas seem more unusual than would otherwise be the case. If we examine the use of καμάτῳ ἁδηκότες in this book more closely, we can see why this formula would have been particularly useful for a poet composing a night raid, and for one composing this episode in particular.</p><p>We have already observed that the necessity of staying awake is part of the hardship that characterizes ambush warfare. This necessity, as it happens, is likewise an important component of keeping a night watch. Because on this night the Trojans are encamped nearby—which we have seen is a cause of great anxiety for the Achaeans—the importance of the night watch is heightened. It is vital that the Achaean watches not fail in their duty; they must not fall asleep.</p><p>In 10.312, Hektor proposes that someone find out if the Achaeans are keeping a proper night watch, or if in fact they are too worn out by the toil of battle to do so (καμάτῳ ἁδηκότες αἰνῷ). In 10.399, Dolon repeats Hektor’s words to Odysseus virtually word for word, as so often happens in Homer when messages and information are relayed. In 10.420–422, Dolon reveals that the allies of the Trojans are not keeping night watches, and are instead leaving security to the Trojans, who have wives and children to protect. And so, in 10.471, we find that Rhesos and his men have done what the Achaeans must not do: they have fallen asleep, overcome by exhaustion (οἱ δ’ εὗδον καμάτῳ ἁδηκότες). In <em>Odyssey</em> 12.281, Odysseus attempts to force his men to sail through the night, past the island of the sun god (where Teiresias had foretold disaster). The men refuse, saying that they are too worn out to do so (καμάτῳ ἀδηκότας ἠδὲ καὶ ὕπνῳ). It seems clear that this formula occurs naturally when the hardship of staying awake is added to the weariness of a day’s toil, whether it be a day spent fighting in the <em>polemos</em>, or, in the case of the <em>Odyssey</em>, a day spent rowing at sea. (Cf. the simile at <em>Iliad</em> 7.4–7, which compares the relief that the Trojan soldiers feel when Hektor and Paris return to the battlefield to that experienced by sailors who, when their limbs are giving out from the toil of rowing [καμάτῳ δ’ ὑπὸ γυῖα λέλυνται], hope for and receive a favorable wind.) It is not necessary to see these instances in Book 10 as idiosyncratic in their concentration, the work of a particular poet with his own personal and/or Odyssean style, as Danek and Hainsworth have most recently explained them. (See Danek 1988:84–86 </p><p>and Hainsworth 1993 <em>ad loc.</em>) Rather, they are yet another example of the way that formulas and traditional themes go hand in hand.</p>

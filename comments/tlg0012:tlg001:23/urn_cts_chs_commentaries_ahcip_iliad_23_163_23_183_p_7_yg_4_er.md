@@ -1,0 +1,17 @@
++++
+
+tags:
+- "cremation of Patroklos"
+- "A Sampling of Comments on the Iliad"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Iliad.23.163-23.183.p7yg4er"
+target_urn: "urn:cts:greekLit:tlg0012.tlg001:23.163-23.183"
+title: "Iliad 23.163–183"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>Now the cremation proceeds to the finish. The <em>kēdemones</em> or ‘mourning-relations’ who stayed behind may now complete the task of making a mighty funeral pyre, I.23.163–164, and then they place the corpse of Patroklos on top of the pyre, I.23.165. What follows next is a spectacular array of sacrificial offerings that are also placed on the pyre, to be burned together with Patroklos, I.166–178. The offerings include sacrificial animals that are ritually slaughtered before being placed on the pyre: included are sheep and cattle at I.23.166, horses at I.23.171–172, and dogs at I.23.173–174. And then, the last and most important of the sacrificial offerings are the twelve Trojan youths that Achilles had already promised to slaughter as a human sacrifice: Achilles will now personally cut their throats and leave their bodies to be cremated alongside Patroklos, I.23.175–178. Then, to finish off the ritual of cremation, Achilles addresses Patroklos, picturing him in the realm of Hādēs, I.23.179. Achilles boasts again, as he had done before, that he has done everything that he has promised to do, I.23.180—but the only one of those things that he now mentions here specifically is the sacrifice of the Trojan youths, I.23.181–182. There is something very wrong here, and the Master Narrator knows it. Already at I.23.176, where he highlights the moment when the Trojan youths are killed before being cremated, the Master Narrator says about Achilles: ‘and he had bad intentions in in his mind’ (κακὰ δὲ φρεσὶ μήδετο ἔργα). By intending things that look bad for his victims, he is making himself look bad. See also the comment on I.22.395–405, with reference to I.22.395. So, what makes Achilles look bad here? For an answer, I repeat what I already said at Point 1 in the comment on 1.23.01–064: the killing of the Trojan youths as a form of human sacrifice is in retrospect understood to be morally wrong. In myth, human sacrifice is a pollution. And such pollution is an instance of dysfunctionality in myth as opposed to functionality in ritual, where animal sacrifice is understood to be a salvific replacement of human sacrifice. And the idea that something is polluted in the thinking of Achilles when he slaughters the youths is linked to something else in his train of thought as he goes on to say one more thing about this killing: at least the bodies of the youths were devoured by the fire of cremation, I.23.183. But then he adds in the same train of thought: by contrast, the body of Hector will be devoured by dogs, I.23.183. So, Achilles expresses here once again a ghastly intention that he has expressed so many times before. But, this time, the expression becomes the final moment in the ritual of cremation for Patroklos. And to bring the whole ritual of cremation to such a conclusion is I think a sign of pollution. Here I find it relevant to epitomize what I already said at Points 2 and 3 in the comment on 1.23.01–064 about the mistreatment of Hector’s corpse by Achilles: <em>both the dragging of the corpse and the intent to feed it to dogs and birds are signs of pollution</em>.  </p>

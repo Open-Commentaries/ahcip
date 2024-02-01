@@ -1,0 +1,18 @@
++++
+
+tags:
+- "arrows of Odysseus"
+- "A Sampling of Comments on the Odyssey"
+- "Plato&#39;s Ion"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Odyssey.22.1-22.7.WAvs5FM"
+target_urn: "urn:cts:greekLit:tlg0012.tlg002:22.1-22.7"
+title: "Odyssey 22.001-007"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>Here at O.22.001–007 is the moment when Odysseus finally strips off the rags of a beggar and stands tall at the threshold as he scatters at his feet the arrows from his quiver. He will now pick up the arrows, one by one, and shoot them at the suitors. And he starts by taking aim at Antinoos. In Plato’s <em>Ion</em>, this moment is treated as the greatest of all scenes pictured in Homeric poetry. In a conversation with the rhapsode Ion, who specializes in the performance of Homeric poetry, Plato’s Socrates is making a mental list of what he considers to be the greatest Homeric scenes. First place in the list goes to the moment that we see here at the beginning of Rhapsody 22, where Odysseus stands at the threshold and pours the arrows from his quiver. This moment in the <em>Odyssey</em>, as we see in the order of mention by Plato’s Socrates, outranks even the greatest moment in the <em>Iliad</em>, which gets only second place. The Iliadic moment is where Achilles lunges at Hector, evidently for the last time. And third place goes to any one of those moments in the <em>Iliad</em> where Andromache or Hecuba or Priam, in that order, are shown lamenting. In this mental list of Plato’s Socrates, we see two examples of <em>fear</em> or <em>terror</em> and one combined example of <em>pity</em>—two emotions that are considered to be primary in tragedy as analyzed by Aristotle in his <em>Poetics</em>. I quote here the relevant wording, where Plato’s Socrates is speaking directly to the Homeric rhapsode Ion (Plato <em>Ion</em> 535b–c): </p><p>ΣΩ. Ἔχε δή μοι τόδε εἰπέ, ὦ Ἴων, καὶ μὴ ἀποκρύψῃ ὅτι ἄν σε ἔρωμαι· ὅταν εὖ εἴπῃς ἔπη καὶ ἐκπλήξῃς μάλιστα τοὺς θεωμένους, ἢ τὸν Ὀδυσσέα ὅταν ἐπὶ τὸν οὐδὸν ἐφαλλόμενον ᾄδῃς, ἐκφανῆ γιγνόμενον τοῖς μνηστῆρσι καὶ ἐκχέοντα τοὺς ὀιστοὺς πρὸ τῶν ποδῶν, ἢ Ἀχιλλέα ἐπὶ τὸν Ἕκτορα ὁρμῶντα, ἢ καὶ τῶν περὶ Ἀνδρομάχην ἐλεινῶν τι ἢ περὶ Ἑκάβην ἢ περὶ Πρίαμον, τότε πότερον ἔμφρων εἶ ἢ ἔξω {c} σαυτοῦ γίγνῃ καὶ παρὰ τοῖς πράγμασιν οἴεταί σου εἶναι ἡ ψυχὴ οἷς λέγεις ἐνθουσιάζουσα, ἢ ἐν Ἰθάκῃ οὖσιν ἢ ἐν Τροίᾳ ἢ ὅπως ἂν καὶ τὰ ἔπη ἔχῃ; </p><p>SOCRATES: Hold it right there. Tell me this, Ion—respond to what I ask without concealment. When you recite well the epic verses [<em>epos</em> plural] and induce a feeling of bedazzlement [<em>ekplēxis</em>] for the spectators [<em>theōmenoi</em>]—when you sing [as the subject of your singing] Odysseus leaping onto the threshold and revealing himself to the suitors and pouring out the arrows at his feet, or [as another subject of your singing] Achilles rushing at Hector, or [as still another subject of your singing] something connected to the pitiful things about Andromache or Hecuba or Priam— are you then in your right mind, or outside yourself? Does your soul [<em>psukhē</em>], possessed by the god [<em>enthousiazein</em>], suppose that you are in the midst of the actions you describe in Ithaca or Troy, or wherever the epic verses [<em>epos</em> plural] have it? </p><p>This description captures the high drama of Homeric performance, as here at the beginning of Rhapsody 22.  </p>

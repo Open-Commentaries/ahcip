@@ -1,0 +1,19 @@
++++
+
+tags:
+- "A Sampling of Comments on the Odyssey"
+- "Athena and Athens"
+- "ellipsis"
+- "Erekhtheus"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Odyssey.7.78-7.81.TF7xWpo"
+target_urn: "urn:cts:greekLit:tlg0012.tlg002:7.78-7.81"
+title: "Odyssey 7.078-081"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>|78 ὣς ἄρα φωνήσασ’ ἀπέβη γλαυκῶπις Ἀθήνη |79 πόντον ἐπ’ ἀτρύγετον, λίπε δὲ Σχερίην ἐρατεινήν, |80 ἵκετο δ’ ἐς Μαραθῶνα καὶ εὐρυάγυιαν Ἀθήνην, |81 δῦνε δ’ Ἐρεχθῆος πυκινὸν δόμον. αὐτὰρ Ὀδυσσεὺς |82 Ἀλκινόου πρὸς δώματ’ ἴε κλυτά· </p><p>|78 Speaking thus, Athena [<em>Athḗnē</em>], with the looks of an owl, went off |79 over the barren sea, leaving behind lovely Skheria. |80 She came to Marathon and to Athens [<em>Athḗnē</em>], with its wide causeways, |81 and she entered the well-built palace of Erekhtheus. As for Odysseus, |81 he headed for the renowned palace of Alkinoos.</p><p>[The comments that follow are epitomized from Nagy 2015.09.10§§6–9.] At O.07.078, we see the name <em>Athḗnē</em> for the goddess Athena. At O.07.080 we see the same name <em>Athēnē</em> for the place that is known in historical times as the city of Athens. As a place-name, <em>Athḗnē</em> is attested only here in the singular. Everywhere else, in the entire surviving textual evidence of the Greek language, this place-name is attested only in the plural, <em>Athênai</em>. The plural has an elliptic function, but I think that even the suffix -<em>ḗnē</em> of <em>Athḗnē</em> is elliptic. Here is a working definition of ellipsis: a form that is <em>elliptic</em> refers not only to X but also to everything that belongs to X, such as X2, X3, X4 etc. An elliptic form of X implies X2, X3, X4 etc. without naming X2, X3, X4 etc. explicitly. In terms of this definition, the name <em>Athḗnē</em> refers not only to the goddess ‘Athena’ but also to everything that belongs to the goddess. An example of such ‘everything’ would be the acropolis of Athens. And we see a further level of ellipsis in the plural form <em>Athênai</em>: this elliptic plural refers not only to the acropolis of Athens but also to everything that belongs to the acropolis, and that everything becomes the city of Athens. Eventually, the ellipsis extends to everything that belongs to the city, which is ultimately the region of Attica. Earlier, however, in the second millennium BCE, the extended region of Attica was not yet dominated by Athens. And a rival dominant power in Attica was Marathon, mentioned here at O.07.80 as an alternative residence of the goddess Athena. But even if Athena had alternative residences in Attica, only in one place did she have a condominium, as it were, with Erekhtheus, and that place was the acropolis of Athens. On the relationship of the goddess Athena with the hero Erekhtheus, see the comment on I.02.546–552. Comparable to the name <em>Athḗnē</em> is the name of the nymph or local goddess <em>Mukḗnē</em>, who presides over the acropolis of Mycenae. As for the elliptic plural <em>Mukênai</em>, it must refer not only to the acropolis but also to the region dominated by the acropolis. Another comparable form is the place-name <em>Messḗnē</em>, which means something like ‘Midland’. Here I compare the place-name me-za-na written on a Linear B tablet from Pylos, Cn 3.1. And here is another relevant piece of information from the Linear B texts: in a tablet from Knossos, V 52, the name of a female divinity in line one is a-ta-na-po-ti-ni-ja, which I interpret as <em>athānās potniāi</em> ‘to the lady [<em>potnia</em>] of Athens’. I translate <em>athānā</em> here as ‘Athens’, by which I mean simply the acropolis of Athens as it existed as far back as the second millennium BCE. [Further analysis in Nagy 2015.07.10.] </p>

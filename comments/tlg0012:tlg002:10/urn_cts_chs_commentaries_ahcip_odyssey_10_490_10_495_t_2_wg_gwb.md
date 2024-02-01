@@ -1,0 +1,19 @@
++++
+
+tags:
+- "A Sampling of Comments on the Odyssey"
+- "phrenes ‘heart, thinking’"
+- "teleîn ‘reach an outcome; bring to fulfillment (in active forms of the verb)’"
+- "psūkhē &#39;spirit&#39;"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Odyssey.10.490-10.495.T2WgGwb"
+target_urn: "urn:cts:greekLit:tlg0012.tlg002:10.490-10.495"
+title: "Odyssey 10.490-495"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>|490 ἀλλ’ ἄλλην χρὴ πρῶτον ὁδὸν τελέσαι καὶ ἱκέσθαι |491 εἰς Ἀΐδαο δόμους καὶ ἐπαινῆς Περσεφονείης |492 ψυχῇ χρησομένους Θηβαίου Τειρεσίαο, |493 μάντιος ἀλαοῦ, τοῦ τε φρένες ἔμπεδοί εἰσι· |494 τῷ καὶ τεθνηῶτι νόον πόρε Περσεφόνεια |495 οἴῳ πεπνῦσθαι· τοὶ δὲ σκιαὶ ἀΐσσουσιν.</p><p>|490 But first you [= Odysseus] must bring to fulfillment [<em>teleîn</em>] another journey and travel until you enter |491 the palace of Hādēs and of the dreaded Persephone, |492 and there you all will consult [<em>khrē</em>-] the spirit [<em>psūkhē</em>] of Teiresias of Thebes, |493 the blind seer [<em>mantis</em>], whose thinking [<em>phrenes</em>] is grounded [<em>empedoi</em>]: |494 to him, even though he was dead, Persephone gave consciousness [<em>nóos</em>], |495 so as to be the only one there who has the power to think [<em>pepnûsthai</em>]. But the others [in Hādēs] just flit about, like shadows [<em>skiai</em>].</p><p>Circe describes for Odysseus what to expect when he sees Teiresias in Hādēs. Exceptionally, the <em>psūkhē</em> ‘spirit’ of the hero, O.10.492, will have consciousness: that is, his <em>phrenes</em> ‘thinking’ will be <em>empedoi</em> ‘grounded’, O.10.493. On <em>phrenes</em> in the sense of ‘thinking’, see the anchor comment at O.01.320, where I note that Homeric diction leaves room for the idea that you can think with your heart. But what is it that confers on the <em>psūkhē</em> ‘spirit’ of Teiresias the exceptional power to think even when he is dead, in Hādēs? The answer is given at O.10.494–495: Persephone, queen of Hādēs, has exceptionally given permission for Teiresias to have the <em>nóos</em> ‘consciousness’, O.10.494, that is needed for ‘thinking’, <em>pepnûsthai</em>, even in Hādēs. Here I translate <em>nóos</em> ‘mind’ as ‘consciousness’, referring to the mystical force that will reintegrate the consciousness of the self with the body after death. It is relevant that the <em>nóos</em> or ‘consciousness’ of the ‘spirit’ or <em>psūkhē</em> of the seer Teiresias is properly activated only after he drinks the blood of two sacrificial sheep that Odysseus slaughters in order to make mental contact, as we will see at O.11.095–098. I offer further analysis in H24H 11§35. But there is a complication that I did not note in that analysis: Circe instructs Odysseus to perform a libation for the dead when he is in Hādēs, O.10.516–520, and he is further instructed to promise in a prayer directed at these dead that he will perform a sacrifice for them if he succeeds in getting back home to Ithaca: there Odysseus will slaughter a barren cow for the dead in general, O.10.522–523, and a black ram for Teiresias in particular, O.10.524–525. When the right time comes in Hādēs, and Odysseus performs his libations for the dead, O11.024–028, he will follow through and make that promise to them, namely, that he will sacrifice in Ithaca a barren cow for the dead in general, O.11.029–030, and a black ram for Teiresias in particular, O.11.032–033. (At H24H 11§35, I leave it unsaid that this black ram to be sacrificed in Ithaca is different from the black ram and black ewe that Odysseus sacrifices in Hādēs: see the comment on O.10.521–537.) As we know from external sources, such as Pausanias 5.13.1-2, a black ram is the preferred sacrificial animal to slaughter for the purpose of making mental contact with a male cult hero (H24H 0§11).  </p>

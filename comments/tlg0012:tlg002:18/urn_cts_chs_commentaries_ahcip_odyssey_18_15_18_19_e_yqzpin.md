@@ -1,0 +1,19 @@
++++
+
+tags:
+- "A Sampling of Comments on the Odyssey"
+- "phthoneîn ‘begrudge’"
+- "blame poetry"
+- "olbos ‘prosperity’"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Odyssey.18.15-18.19.eYqzpin"
+target_urn: "urn:cts:greekLit:tlg0012.tlg002:18.15-18.19"
+title: "Odyssey 18.15-19"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>|15 δαιμόνι᾽, οὔτε τί σε ῥέζω κακὸν οὔτ᾽ ἀγορεύω, |16 οὔτε τινὰ φθονέω δόμεναι καὶ πόλλ᾽ ἀνελόντα. |17 οὐδὸς δ᾽ ἀμφοτέρους ὅδε χείσεται, οὐδέ τί σε χρή |18 ἀλλοτρίων φθονέειν· δοκέεις δέ μοι εἶναι ἀλήτης |19 ὥς περ ἐγών, ὄλβον δὲ θεοὶ μέλλουσιν ὀπάζειν</p><p>|15 O you, you who must be possessed by some superhuman-force [=<em>daimōn</em>]! I am harming you by neither deed nor word. |16 And I do not begrudge [<em>phthoneîn</em>] that someone should be a giver [to you], even when someone [like you] has already been a taker in great quantities. |17 This threshold will accommodate both of us, and you should not |18 be begrudging [<em>phthoneîn</em>] about the property of others. You seem to be a wandering-beggar [<em>alētēs</em>] |19 like me,  and it is the gods who are likely to grant prosperity [<em>olbos</em>].</p><p>(What follows is epitomized from BA 228.) The verb <em>phthoneîn</em> ‘begrudge’ corresponds to the noun <em>phthonos</em> ‘being begrudging’. To begrudge is to feel ungenerous about giving something to someone else to have, or even about accepting a pre-existing situation where someone else already has something that you don’t want for that someone to have—because you want to have it instead. In the praise poetry of Pindar, as at <em>Olympian</em> 8.55, <em>phthonos</em> conventionally applies to blame poetry. In such praise poetry, blame poets are viewed as ungenerously negative about the very thought that someone should be getting praised by praise poetry. It is this kind of <em>phthonos</em> ‘begrudging’ that we find encapsulated in the behavior of Iros toward Odysseus. Picking a quarrel, as expressed by the verb <em>neikeîn</em> at O.18.009, Iros hurls words of blame against Odysseus. In doing so, he also orders Odysseus to get out of the way, O.18.010, threatening that the present <em>eris</em> ‘strife’ between the two of them, O.18.013, may escalate from verbal to physical violence, Ο.18.010–013. The disguised master of the household refuses to budge from the doorway, answering Iros with the words that I have just quoted from O.18.015–019. There the collocation of <em>olbos</em> ‘prosperity’ at O.18.019 with <em>phthoneîn</em> ‘begrudge’ at O.18.016 and O.18.018 reflects a traditional way of thinking, well attested also in Pindar’s praise poetry, which teaches that prosperity is given by the gods to the righteous—and that this gift is threatened by the unrighteous, who feel begrudging about such god-given prosperity. Ironically, the prosperity of Odysseus himself is now being threatened by the suitors, whose messenger Iros, as a mock Iris, is so begrudging as to hinder our hero from even entering his own household. Without having to identify himself as the real householder, however, Odysseus warns Iros not ‘to be begrudging [<em>phthoneîn</em>] about the property of others’ (ἀλλοτρίων φθονέειν), O.18.018. Such a begrudging attitude on the part of Iros is directly comparable to blame poetry in its function as a traditional negative foil of praise poetry within praise poetry, where the vice of gluttony is pictured as a prime characteristic of blame poetry: hence the saying ‘words are a morsel for those who are begrudging [<em>phthoneroi</em>]’ (ὄψον δὲ λόγοι φθονεροῖσιν) in Pindar <em>Nemean</em> 8.21. In fact, we now see from the Homeric description of Iros that his role as a blame poet is manifested in precisely this sort of gluttony. And the key word is <em>margos</em> &#x27;gluttonous, wanton&#x27;.   </p>

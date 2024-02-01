@@ -1,0 +1,17 @@
++++
+
+tags:
+- "theoeikelos ‘looking like a god’"
+- "A Sampling of Comments on the Iliad"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Iliad.19.155.8hdcZNb"
+target_urn: "urn:cts:greekLit:tlg0012.tlg001:19.155"
+title: "Iliad 19.155"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>This epithet <em>theoeikelos</em> ‘looking like a god’ occurs only two times in the <em>Iliad</em>. Besides the occurrence here, I.19.155, we see it also at I.01.131. In both cases, the referent is Achilles. In Song 44 of Sappho, “The Wedding of Hector and Andromache,” the same epithet <em>theoeikeloi</em> ‘looking like gods’ occurs in the plural at line 34 (θεοεικέλο[ις]), applying to Hector and Andromache together. The act of comparing humans to divinities is a conventional trope in the ritual context of weddings, and so the application of the epithet <em>theoeikeloi</em> ‘looking like gods’ to Hector and Andromache on the happy occasion of their wedding is perfectly understandable. Most commonly, the bride is equated with Aphrodite and the bridegroom, with Ares. See the comment on I.18.492 (also H24H 4§§14–21). But there may be an irony in the application of the same epithet <em>theoeikelos</em> ‘looking like a god’ to Achilles in the <em>Iliad</em>, since this hero tragically dies before he can ever get married (H24H 5§§98–102, 110–114). Conversely, there may also be an irony in the application of <em>theoeikeloi</em> ‘looking like gods’ to Hector and Andromache in Song 44 of Sappho, since the lives of this couple, once happy, will now tragically be ruined by Achilles in his role as the bridegroom that never was: he will kill Hector and make Andromache a widow. This is not to say that the use of the epithet <em>theoeikeloi</em> ‘looking like gods’ in Sappho Song 44.34 evokes the <em>Iliad</em> as we have it. The evocation may center on a local epic tradition that was current in the Aeolic song culture of Lesbos. The doomed triad of bride and bridegroom and killer of bridegroom was surely involved in such a local tradition as well. Another sign of such a free-standing Iliadic tradition originating from a distinctively Aeolian song culture is the occurrence of the expression <em>kleos aphthiton</em> ‘imperishable glory [<em>kleos</em>]’ in the same song, Sappho 44.5. This expression corresponds exactly to the expression we find in the <em>Iliad</em>, <em>kleos aphthiton</em> ‘imperishable glory [<em>kleos</em>]’, as spoken by Achilles himself about his own poetic glory at I.09.413. The two matching expressions, in Song 44 of Sappho and in <em>Iliad</em> 9, are cognate with each other both in wording and in metrical positioning. See the comment on I.09.413. So, the doomed triad of bride and bridegroom and killer of bridegroom are not only part of comparable stories about the different kinds of doom that await each one of the three: they are also part of two comparable media, both of which are meant to make eternal the poetic ‘glory’ or <em>kleos</em> of all three. One of these two media has just barely survived, in Song 44 of Sappho. The other of the two, by contrast, became the definitive form of epic, as represented by the Homeric <em>Iliad</em>.  </p>

@@ -1,0 +1,21 @@
++++
+
+tags:
+- "arkhesthai ‘lead off [in performing]’"
+- "paizein &#39;play&#39;"
+- "sphaira &#39;ball&#39;"
+- "molpē ‘singing-and-dancing’"
+- "A Sampling of Comments on the Odyssey"
+- "krēdemnon ‘headdress’ or ‘veil’"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Odyssey.6.100-6.101.St7eLPy"
+target_urn: "urn:cts:greekLit:tlg0012.tlg002:6.100-6.101"
+title: "Odyssey 6.100-101"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>At O.06.085–099, Nausicaa and the girls who attend her are at the banks of a river, washing the clothes they have brought from the palace, and then waiting for the wet clothes to dry in the sun; while they wait, they clean up and enjoy each other’s company as they indulge in a picnic. Next, at O.06.100–101, after having finished eating and drinking, they start playfully singing and dancing with each other: the playfulness of the song and dance is expressed by the verb <em>paizein</em> ‘play’ at O.06.100, while the actual singing /dancing is expressed by the noun <em>molpē</em> ‘singing and dancing’ at O.06.101. The prima donna / prima ballerina of the singing / dancing is Nausicaa herself, as expressed by the verb <em>arkhesthai </em>‘lead off [in performing]’, again at O.06.101. The dancing in this case includes the playful tossing of a <em>sphaira</em> ‘ball’, O.06.100. While the girls are feeling all freed up in their playfulness, they throw off the <em>krēdemna</em> or ‘veils’ that they are wearing. So, now we can see that Nausicaa and the girls who attend her would not even think of going out in public without first putting on their <em>krēdemna</em> ‘veils’. They won’t leave home without wearing their headdresses. But now they are no longer in public—or so they imagine. The detail about wearing a veil when the girls leave home and go outdoors is hardly a signal of their being married. Clearly, all these girls are unmarried. So, we see here that unmarried women as well as married women like Andromache wear the <em>krēdemnon </em>in public. The custom is simply a signal of propriety. On the function of the <em>krēdemnon</em> ‘headdress’ as an equivalent of a ‘veil’, I recommend the work of Levine 1995 (especially pp. 96–110), who shows that the custom of wearing a veil is part of a “cultural grammar of hair” (Levine p. 95). Relevant are my comments about O.05.333–353 with reference to Ino the White Goddess and, earlier, about I.22.460–474 with reference to Andromache. In both sets of comments, I noted that the undoing of a woman’s hair, caused by the undoing of her <em>krēdemnon</em>, produces what I called an <em>Aphrodisiac effect</em>. So long as a woman’s <em>krēdemnon </em>is in place, her sexuality is under control just as her hair is under control. When the <em>krēdemnon</em> is out of place, however, her sexuality threatens to get out of control. But there is even more to it. When a woman or girl is indoors instead of outdoors, in public, then, while indoors, the sexuality is under control—so long as the vision of the woman or girl with hair undone is private. But what happens when the undoing of the hair is represented in the verbal arts or visual arts? Then the view becomes public and even voyeuristic.</p><p></p><span><img src="https://classical-inquiries.chs.harvard.edu/wp-content/uploads/2017/05/430082001_1280.jpg" alt="draft js image error"/></span><p>Red-figured pyxis, picturing Nereids at home, “indoors”: the Nereid with her hair down is labeled as Thaleia.<br/><u><a href="http://www.britishmuseum.org/research/collection_online/collection_object_details.aspx?assetId=195427001&amp;objectId=400084&amp;partId=1">Image</a></u> via The British Museum.</p><p></p><p>Similarly, there is something voyeuristic about the representation of Nausicaa and the girls who attend her as they sing and dance without wearing their veils: they imagine they are in a private place, but the medium of verbal art is watching them, making their performance public. In this scene, Odysseus is not the only voyeur. </p>

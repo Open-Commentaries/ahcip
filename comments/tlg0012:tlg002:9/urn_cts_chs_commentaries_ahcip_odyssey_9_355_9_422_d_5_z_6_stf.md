@@ -1,0 +1,20 @@
++++
+
+tags:
+- "mētis ‘mind, intelligence’"
+- "A Sampling of Comments on the Odyssey"
+- "biē ‘force, violence, strength’"
+- "outidanos &#39;good-for-nothing&#39;"
+- "outis &#39;no one&#39;"
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Odyssey.9.355-9.422.d5z6STF"
+target_urn: "urn:cts:greekLit:tlg0012.tlg002:9.355-9.422"
+title: "Odyssey 9.355-9.422"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p> </p><p>(Epitomized from Nagy 2007b:70–72.) Even in situations where the <em>mētis</em> ‘mind, intelligence’ of Odysseus in the specialized sense of ‘craft’ helps advance the homecoming of the hero in the <em>Odyssey</em>, it does nothing to advance the <em>kleos</em> or poetic ‘glory’ of his past epic exploits at Troy. A case in point is the decisive moment in the <em>Odyssey</em> when Odysseus devises the stratagem of calling himself <em>Outis</em> ‘no one’, O.09.366, in order to deceive and then blind Polyphemus the Cyclops. The pronoun <em>ou tis</em> ‘no one’ used by the hero for the crafting of his false name deceives not only the Cyclops but also the monster’s fellow Cyclopes when they use the same pronoun to ask the blinded Polyphemus this question: <em>perhaps someone has wronged you?</em>—O.09.405–406. The syntax of the question, expressing the uncertainty of the questioners, requires the changing of the pronoun <em>ou tis</em> ‘no one’ into its modal byform <em>mē tis</em> ‘perhaps someone’, which sounds like the noun <em>mētis </em>‘craft’. The modal byform <em>mē tis </em>is intentionally signaling here the verbal craft used by Odysseus in devising this stratagem. And this intentional act of signaling is made explicit later on when the narrating hero actually refers to his stratagem as a <em>mētis</em>, O.09.414. The same can be said about the hero’s previous stratagem of blinding the Cyclops with a sharpened stake, an act of craftiness compared to the craft of blacksmiths, O.09.390–394. These and all other stratagems used by the hero against the Cyclops qualify as <em>mētis</em> ‘craft’, O.09.422. It goes without saying that the stratagem of crafting the false name <em>Outis</em> succeeds: when the blinded Cyclops answers the question of his fellow Cyclopes, <em>perhaps someone has wronged you?</em>—O.09.405–406—he uses the non-modal form of the pronoun, saying<em> ou tis ‘no one’ has wronged me</em>, O.09.408. Still, though this stratagem succeeds in rescuing Odysseus (and, for the moment, some of his companions), it fails to rescue the hero’s past <em>kleos</em> in Troy. In fact, the stratagem of Odysseus in calling himself <em>Outis</em> ‘no one’ produces just the opposite effect: it erases any previous claim to any <em>kleos</em> that the hero would have had before he entered the cave of the Cyclops. Such erasure is signaled by the epithet <em>outidanos</em> ‘good-for-nothing’, derivative of the pronoun <em>ou tis</em> ‘no one’: whenever this epithet is applied to a hero in the <em>Iliad</em>, it is intended to revile the name of that hero by erasing his epic identity, as at I.11.390. Such erasure means that someone who used to have a name will now no longer have a name and has therefore become a <em>nobody</em>, a <em>no one</em>, <em>ou tis</em>. In the <em>Odyssey</em>, the Cyclops reviles the name of the man who blinded him by applying this same epithet <em>outidanos</em> ‘good-for-nothing’ to the false name <em>Outis</em>, O.09.460. The effect of applying this epithet completes the erasure of the hero’s past identity that was started by Odysseus when he renamed himself as <em>ou tis</em> ‘no one’. The name that the hero had heretofore achieved for himself has been reduced to nothing and must hereafter be rebuilt from nothing. It is relevant that the annihilation of the hero’s identity happens in the darkness of an otherworldly cave, in the context of extinguishing the light of the single eye of the Cyclops, thereby darkening forever the monster’s power to see the truth unless he hears it. </p>

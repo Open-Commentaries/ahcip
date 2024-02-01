@@ -1,0 +1,14 @@
++++
+
+
+citable_urn: "urn:cts:CHS:Commentaries.AHCIP:Iliad.12.1-12.471.EEjCPAB"
+target_urn: "urn:cts:greekLit:tlg0012.tlg001:12.1-12.471"
+title: "Iliad 12"
+
+authors:
+- email: "gnagy@chs.harvard.edu"
+  name: "Gregory Nagy"
+  username: "gnagy"
++++
+
+<p>At the very beginning of <em>Iliad</em> 12, we modern readers may find that we have suddenly hit a wall—the Achaean Wall. It seems difficult for us to understand what the Master Narrator of the <em>Iliad</em> is really saying when he foretells the future destruction or deconstruction of this structure. And the main obstacle to our understanding here is not the presence of the Achaean Wall in the <em>Iliad</em> but rather its foretold absence—after all is said and done in the narrative. For the ancients who heard the Iliad narrated to them, by contrast, the future absence of the Achaean Wall was perfectly understandable <em>in terms of the narration itself</em>. And that is because the Master Narrator presupposes that there is no Achaean Wall to be seen in the Trojan landscape at the time of narration. Such a presupposition shapes the narrative of <em>Iliad</em> 12—and in fact it shapes the whole narrative of the <em>Iliad</em>. The setting for this narrative remains the world of heroes, which is larger-than-life because it is situated in the heroic past, but the setting for the actual narration of this narrative is the post-heroic world of a present time as figured by the Master Narrator himself. The staging of the heroic world by the Master Narrator is comparable to what is called the <em>mise-en-scène</em> in the traditions of French theater and film. And the predominant feature of the Iliadic <em>mise-en-scène</em> or scenery is the Achaean Wall, not the Trojan Wall. That is why the building of this structure by the Achaeans in Iliad 7 had been opposed by the gods Poseidon and Apollo, the original builders of the Trojan Wall. But the Achaean Wall needed to be built by the Achaeans to protect them and their ships from the fire of Hector—which would not be threatening them if Achilles had not been insulted by Agamemnon in <em>Iliad</em> 1. If we think of the overall plot of the <em>Iliad</em> as a scenario, then the Achaean Wall can be seen as an integral feature of the scenery for this scenario.</p><p></p><span><img src="https://classical-inquiries.chs.harvard.edu/wp-content/uploads/2016/10/RP-P-OB-16.043.jpg" alt="draft js image error"/></span><p>“Siege of the Greek Camp.” Crispijn van de Passe (I) (1613). Public domain image, via Rijks Museum. <br/>(https://www.rijksmuseum.nl/en/collection/RP-P-OB-16.043)</p>
