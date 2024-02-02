@@ -15,6 +15,7 @@
 
 	function toggleTranslation(translation: Card) {
 		return (_e: MouseEvent) => {
+			console.log(translation);
 			if (focusedTranslation?.n === translation.n) {
 				focusedTranslation = undefined;
 			} else {
@@ -25,12 +26,14 @@
 </script>
 
 <div>
-	{text}
 	{#each translations as translation (translation.n)}
-		<button class="secondary-content float-right" on:click={toggleTranslation(translation)}>
-			<TranslationIcon />
+		<button class="float-left mr-4" on:click={toggleTranslation(translation)}>
+			<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
 		</button>
 	{/each}
+	<div class="text-left">
+		{text}
+	</div>
 	{#if commentUrns.length > 0}
 		<button
 			class="bg-secondary hover:opacity-70 float-right w-8"

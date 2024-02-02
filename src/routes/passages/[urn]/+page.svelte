@@ -37,7 +37,7 @@
 
 			const intN = parseInt(n);
 
-			if (intN >= parseInt(card.n) && intN <= parseInt(card.next_n)) {
+			if (parseInt(card.n) <= intN && parseInt(card.next_n) - 1 >= intN) {
 				return true;
 			}
 
@@ -73,15 +73,15 @@
 	}
 </script>
 
-<article class="mx-auto">
-	<div class="grid grid-cols-5 gap-x-8 gap-y-2">
-		<div class="col-span-5">
+<article class="mx-auto w-full">
+	<div class="grid grid-cols-6 gap-x-8 gap-y-2">
+		<div class="col-span-6">
 			<h1 class="text-2xl font-bold">{metadata.title}</h1>
 
 			<p>{metadata.description}</p>
 		</div>
 		<section class="col-span-1">
-			<ul class="menu bg-base-200 p-0 max-w-48">
+			<ul class="menu bg-base-200 p-0">
 				{#each [...Array.from({ length: 24 }, (_, i) => i + 1)] as n}
 					<li class="text-sm">
 						<a href="{base}/passages/{versionUrn}:{n}" class:active={n == parseInt(citation || '')}>
@@ -91,7 +91,7 @@
 				{/each}
 			</ul>
 		</section>
-		<section class="col-span-2">
+		<section class="col-span-3 overflow-y-scroll max-h-screen px-4">
 			{#each lines as line}
 				<CitableTextContainer
 					citation={line.n}
@@ -102,7 +102,7 @@
 				/>
 			{/each}
 		</section>
-		<section class="overflow-y-scroll col-span-2 max-w-96 max-h-[64rem]">
+		<section class="overflow-y-scroll col-span-2 max-h-[64rem]">
 			{#each comments as comment (comment.citable_urn)}
 				<CollapsibleComment {comment} />
 			{/each}
