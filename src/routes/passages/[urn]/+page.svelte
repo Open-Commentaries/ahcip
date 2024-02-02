@@ -2,6 +2,7 @@
 	import type { Comment } from '$lib/types/commentary.type';
 
 	import CollapsibleComment from '$lib/components/CollapsibleComment.svelte';
+	import CitableTextContainer from '$lib/components/CitableTextContainer.svelte';
 	import { base } from '$app/paths';
 
 	export let data;
@@ -27,15 +28,15 @@
 		});
 	}
 
-	function highlightComments(e: MouseEvent) {
-		// @ts-expect-error
-		const n = e.target?.dataset?.n;
-		const commentsToHighlight = getCommentsForLineNumber(n).map((c) => c.citable_urn);
+	function highlightComments(e: CustomEvent) {
+		const commentsToHighlight = e.detail;
 		let foundComment: Comment | undefined;
 
-		comments = comments.map((comment) => {
+		comments = comments.map((comment: Comment) => {
 			if (commentsToHighlight.includes(comment.citable_urn)) {
-				foundComment = comment;
+				if (!foundComment) {
+					foundComment = comment;
+				}
 
 				return {
 					...comment,
@@ -75,18 +76,12 @@
 		</section>
 		<section class="col-span-2">
 			{#each lines as line}
-				<p>
-					{line.text}
-					{#if getCommentsForLineNumber(line.n).length > 0}
-						<button
-							class="bg-slate-300 hover:bg-slate-500 float-right w-8"
-							on:click={highlightComments}
-							data-n={line.n}>{line.n}</button
-						>
-					{:else}
-						<span class="float-right text-center w-8">{line.n}</span>
-					{/if}
-				</p>
+				<CitableTextContainer
+					citation={line.n}
+					commentUrns={getCommentsForLineNumber(line.n).map((c) => c.citable_urn)}
+					on:highlightComments={highlightComments}
+					text={line.text}
+				/>
 			{/each}
 		</section>
 		<section class="overflow-y-scroll col-span-2 max-w-96 max-h-[64rem]">
