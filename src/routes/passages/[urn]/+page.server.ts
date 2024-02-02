@@ -6,26 +6,30 @@ import type { Card, Comment, Line } from '$lib/types/commentary.type';
 
 export const prerender = true;
 
+const PASSAGE_DIR = fs.readdirSync('passages');
+
 export const load = ({ params: { urn = '' } }) => {
-	const passageDir = fs.readdirSync('passages');
-	const relevantFiles = passageDir.filter((f) => {
-		return f.startsWith(`${urn}_`);
+	const [_urn_s, _cts, collection, workComponent, passageComponent] = urn.split(':');
+	const [textGroup, work, _version] = workComponent.split('.');
+	const startPassage = passageComponent.split('-')[0];
+	const withoutSubsection = startPassage.split('@')[0];
+	const startBook = withoutSubsection.split('.')[0];
+
+	// get all matching passages, regardless of version
+	const regexp = new RegExp(`urn:cts:${collection}:${textGroup}.${work}.\*:${startBook}`);
+
+	const relevantFiles = PASSAGE_DIR.filter((f) => {
+		return regexp.test(f);
 	});
 
 	if (relevantFiles.length === 0) {
 		return error(404);
 	}
 
-	const [_urn, _cts, _collection, workComponent, passageComponent] = urn.split(':');
-
 	if (!passageComponent) {
 		return error(404);
 	}
 
-	const [textGroup, work, _version] = workComponent.split('.');
-	const startPassage = passageComponent.split('-')[0];
-	const withoutSubsection = startPassage.split('@')[0];
-	const startBook = withoutSubsection.split('.')[0];
 	const commentsDir = `comments/${textGroup}:${work}:${startBook}`;
 
 	const commentFiles = fs.readdirSync(commentsDir);

@@ -6,6 +6,7 @@ export type Author = {
 
 export type Card = {
     n: string;
+    next_n: string;
     xml_content: string;
 }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Comment } from '$lib/types/commentary.type';
+	import type { Card, Comment } from '$lib/types/commentary.type';
 
 	import CollapsibleComment from '$lib/components/CollapsibleComment.svelte';
 	import CitableTextContainer from '$lib/components/CitableTextContainer.svelte';
@@ -8,19 +8,36 @@
 	export let data;
 
 	$: metadata = data.metadata;
+	$: cards = data.cards;
 	$: comments = data.comments;
 	$: lines = data.lines;
 	$: urn = data.urn;
 	$: versionUrn = urn.split(':').slice(0, -1).join(':');
 	$: citation = urn.split(':').at(-1);
 
-	function getCommentsForLineNumber(n: string) {
+	function getCommentsForLine(n: string) {
 		return comments.filter((comment: Comment) => {
 			const [_urn, _cts, _collection, _workComponent, citation] = comment.target_urn.split(':');
 			const [start, _end] = citation.split('-');
 			const [_startBook, startLine] = start.split('.');
 
 			if (n === startLine) {
+				return true;
+			}
+
+			return false;
+		});
+	}
+
+	function getTranslationsForLine(n: string) {
+		return cards.filter((card: Card) => {
+			if (n === card.n) {
+				return true;
+			}
+
+			const intN = parseInt(n);
+
+			if (intN >= parseInt(card.n) && intN <= parseInt(card.next_n)) {
 				return true;
 			}
 
@@ -64,7 +81,7 @@
 			<p>{metadata.description}</p>
 		</div>
 		<section class="col-span-1">
-			<ul class="menu bg-base-200 p-0 max-w-48 [&_li>*]:rounded-none">
+			<ul class="menu bg-base-200 p-0 max-w-48">
 				{#each [...Array.from({ length: 24 }, (_, i) => i + 1)] as n}
 					<li class="text-sm">
 						<a href="{base}/passages/{versionUrn}:{n}" class:active={n == parseInt(citation || '')}>
@@ -78,9 +95,10 @@
 			{#each lines as line}
 				<CitableTextContainer
 					citation={line.n}
-					commentUrns={getCommentsForLineNumber(line.n).map((c) => c.citable_urn)}
+					commentUrns={getCommentsForLine(line.n).map((c) => c.citable_urn)}
 					on:highlightComments={highlightComments}
 					text={line.text}
+					translations={getTranslationsForLine(line.n)}
 				/>
 			{/each}
 		</section>
