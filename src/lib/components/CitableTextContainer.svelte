@@ -9,29 +9,13 @@
 	export let citation: string;
 	export let commentUrns: string[];
 	export let text: string;
-	export let translations: Card[] = [];
-
-	let focusedTranslation: Card | undefined;
-
-	function toggleTranslation(translation: Card) {
-		return (_e: MouseEvent) => {
-			console.log(translation);
-			if (focusedTranslation?.n === translation.n) {
-				focusedTranslation = undefined;
-			} else {
-				focusedTranslation = translation;
-			}
-		};
-	}
 </script>
 
 <div>
-	{#each translations as translation (translation.n)}
-		<button class="float-left mr-4" on:click={toggleTranslation(translation)}>
-			<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
-		</button>
-	{/each}
-	<div class="text-left">
+	<button class="float-left mr-4" on:click={() => dispatch('scrollTranslationIntoView', citation)}>
+		<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
+	</button>
+	<div class="text-left indent-hanging">
 		{text}
 	</div>
 	{#if commentUrns.length > 0}
@@ -43,12 +27,10 @@
 	{:else}
 		<span class="float-right text-center w-8">{citation}</span>
 	{/if}
-
-	{#if focusedTranslation}
-		<div
-			class="border border-base-200 text-secondary-content shadow-inner px-4 max-h-48 overflow-y-scroll"
-		>
-			{@html focusedTranslation.xml_content}
-		</div>
-	{/if}
 </div>
+
+<style>
+	.indent-hanging {
+		text-indent: 2.3rem hanging;
+	}
+</style>
