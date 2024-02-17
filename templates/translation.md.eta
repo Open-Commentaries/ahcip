@@ -1,0 +1,11 @@
++++
+urn: "<%= it.urn %>"
+title: "<%= it.title %>"
+authors:
+<% it.authors.forEach(function(author) { %>
+- <%= author %>
+<% }) %>
+
++++
+
+<%~ it.text %>

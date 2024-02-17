@@ -11,7 +11,7 @@
 	export let text: string;
 </script>
 
-<div>
+<div class="align-baseline">
 	<button class="float-left mr-4" on:click={() => dispatch('scrollTranslationIntoView', citation)}>
 		<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
 	</button>
