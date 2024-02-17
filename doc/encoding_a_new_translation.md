@@ -1,7 +1,7 @@
 Encoding a New Translation
 ------
 
-A block (a line of poetry, a paragraph or section of prose) in a translation for "Commentaries in Progress" need two basic components:
+A block (a line of poetry, a paragraph or section of prose) in a translation for "Commentaries in Progress" needs two basic components:
 
 1. An identifier, usually the line, paragraph, or section number/letter. For alignment to work, this identifier should correspond to the identifier in the target critical edition.
 2. Textual content, i.e., the actual words of the line, paragraph, or section.
@@ -44,9 +44,9 @@ Immediately following the metadata, the text should begin. Any text between the 
 
 ### Identifiers
 
-Identifiers should be enclosed in square brackets (`[]`) followed by a space. Each segment of each identifier should be separated by the identifier that you specified in the metadata block. (By default, the separator is a period (`.`), which you don't need to specify.)
+Identifiers should be enclosed in square brackets (`[]`) followed by a space. Each segment of each identifier should be separated by the separator that you specified in the metadata block. (By default, the separator is a period (`.`), which you don't need to specify.)
 
-In order to form the full citation for an identifier, each identifier will be appended (preceded by the specifier) to the `urn` and `target_urn` that you have specified in the metadata.
+In order to form the full citation for an identifier, each identifier will be appended (preceded by the separator, if necessary) to the `urn` and `target_urn` that you have specified in the metadata.
 
 For example, for the following line
 
