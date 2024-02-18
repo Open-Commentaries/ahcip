@@ -19,18 +19,19 @@
 		<a
 			href={`#${citation}`}
 			role="button"
-			class="bg-secondary hover:opacity-70 w-6 text-center inline-block"
+			class="bg-secondary hover:opacity-70 w-6 text-center"
 			on:click={() => dispatch('highlightComments', commentUrns)}
 			data-citation={citation}>{citation}</a
 		>
 	{:else}
-		<span class="text-center w-6 inline-block">{citation}</span>
+		<span class="text-center w-6">{citation}</span>
 	{/if}
 	<a
 		href={`#${citation}-translation`}
 		role="button"
-		class="inline-block mr-4"
+		class="mr-4"
 		on:click={() => dispatch('scrollTranslationIntoView', citation)}
+		title="Scroll translation into view"
 	>
 		<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
 	</a>

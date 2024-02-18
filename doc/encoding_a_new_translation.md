@@ -1,6 +1,8 @@
 Encoding a New Translation
 ------
 
+NB: This document is subject to changes and revisions as we refine this process.
+
 A block (a line of poetry, a paragraph or section of prose) in a translation for "Commentaries in Progress" needs two basic components:
 
 1. An identifier, usually the line, paragraph, or section number/letter. For alignment to work, this identifier should correspond to the identifier in the target critical edition.
@@ -44,14 +46,14 @@ Immediately following the metadata, the text should begin. Any text between the 
 
 ### Identifiers
 
-Identifiers should be enclosed in square brackets (`[]`) followed by a space. Each segment of each identifier should be separated by the separator that you specified in the metadata block. (By default, the separator is a period (`.`), which you don't need to specify.)
+Every line should begin with the identifer, optionally followed by a space, followed by a pipe character (`|`). followed by a space. Each segment of each identifier should be separated by the separator that you specified in the metadata block. (By default, the separator is a period (`.`), which you don't need to specify.)
 
 In order to form the full citation for an identifier, each identifier will be appended (preceded by the separator, if necessary) to the `urn` and `target_urn` that you have specified in the metadata.
 
 For example, for the following line
 
 ```
-[1] The anger [me>nis] of Peleus' son Achilles, goddess, perform its song --
+1 | The anger [me>nis] of Peleus' son Achilles, goddess, perform its song --
 ```
 
 the complete `target_urn` will be formed by appending `1` to the base `target_urn`, giving us
@@ -71,23 +73,47 @@ urn:cts:greekLit:tlg0013.tlg002.perseus-grc2:1
 The textual content can contain valid markdown. The order of the text matters. If you wish to indicate a line transposition in your edition, for example, you might have the following:
 
 ```
-[79] This line's identifier suggests it comes after the following line
-[78] But because textual order matters, we will preserve the ordering given in your translation
+79 | This line's identifier suggests it comes after the following line
+78 | But because textual order matters, we will preserve the ordering given in your translation
 ```
 
- Notes should be encoded as inline footnotes. E.g., instead of
+Notes should be kept in a separate file, referencing the full URN of the line and, optionally, lemma to which they correspond. So instead of writing something like this:
 
 ```
-[13] to get his daughter's release, bringing with him a ransom [apoina] beyond telling, [n:=I-1.372]
+13 | to get his daughter's release, bringing with him a ransom [apoina] beyond telling, [n:=I-1.372]
 ```
 
-write
+write:
 
 ```
-[13] to get his daughter's release, bringing with him a ransom [apoina] beyond telling,^[=I-1.372]
+13 | to get his daughter's release, bringing with him a ransom [apoina] beyond telling,
+```
+
+and in another file -- e.g., `urn:cts:greekLit:tlg0012.tlg001.ahcip-notes.md` -- write:
+
+```markdown
+---
+# The same rules for metadata apply here.
+title: The Homeric Iliad
+description: "Notes on _Iliad_ 1 for AHCIP."
+translators:
+    - Casey Dué
+    - Mary Ebbott
+    - Douglas Frame
+    - Leonard Muellner
+    - Gregory Nagy
+target_urn: "urn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1"
+urn: "urn:cts:greekLit:tlg0012.tlg001.ahcip-notes:1"
+separator: "."
+
+---
+
+13 | =I-1.372
 ```
 
 (Ideally, we would also change the citation to the full CTS URN: `urn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1.372`.)
+
+This separation makes it easier to add further annotations programmatically without interfering with the underlying structure of the manually curated, archival form of the text.
 
 You can use the full range of Unicode characters here. Instead of `me>nis` or `psukhe>`, write `mênis` and `psukê`. (You can also use a macron instead of a circumflex, if you prefer -- just be consistent.)
 
@@ -96,7 +122,9 @@ You can use the full range of Unicode characters here. Instead of `me>nis` or `p
 At times, you might wish to indicate the presence of a named entity in the line. To do so, you should format the entity as a link to its [Wikidata](https://wikidata.org) page, with the class of the entity included in curly brackets after the URL. For example:
 
 ```
-[1] The anger [mênis] of [Peleus](https://www.wikidata.org/wiki/Q178641){.person}' son [Achilles](https://www.wikidata.org/wiki/Q41746){.person}, goddess, perform its song --
+1 | The anger [mênis] of [Peleus](https://www.wikidata.org/wiki/Q178641){.person}' son [Achilles](https://www.wikidata.org/wiki/Q41746){.person}, goddess, perform its song --
 ```
 
 The goal is to use these manual annotations to help train a model for automating parts of this process.
+
+Available entity classes are `.person`, `.location`, and `.object`.
