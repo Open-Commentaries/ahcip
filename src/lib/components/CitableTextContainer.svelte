@@ -11,22 +11,29 @@
 	export let text: string;
 </script>
 
-<div class="align-baseline flex justify-between">
-	<button class="float-left mr-4" on:click={() => dispatch('scrollTranslationIntoView', citation)}>
-		<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
-	</button>
-	<div class="text-left indent-hanging">
+<div class="align-baseline flex justify-between w-full">
+	<p class="max-w-prose w-3/4 indent-hanging">
 		{text}
-	</div>
+	</p>
 	{#if commentUrns.length > 0}
-		<button
-			class="bg-secondary hover:opacity-70 w-6"
+		<a
+			href={`#${citation}`}
+			role="button"
+			class="bg-secondary hover:opacity-70 w-6 text-center inline-block"
 			on:click={() => dispatch('highlightComments', commentUrns)}
-			data-citation={citation}>{citation}</button
+			data-citation={citation}>{citation}</a
 		>
 	{:else}
-		<span class="text-center w-6">{citation}</span>
+		<span class="text-center w-6 inline-block">{citation}</span>
 	{/if}
+	<a
+		href={`#${citation}-translation`}
+		role="button"
+		class="inline-block mr-4"
+		on:click={() => dispatch('scrollTranslationIntoView', citation)}
+	>
+		<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
+	</a>
 </div>
 
 <style>
