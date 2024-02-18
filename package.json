@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"cts-urn": "github:pletcher/cts-urn",
 		"eta": "^3.2.0",
 		"lodash.snakecase": "^4.1.1",
 		"yaml": "^2.3.4"
