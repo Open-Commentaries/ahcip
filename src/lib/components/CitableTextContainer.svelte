@@ -11,7 +11,7 @@
 	export let text: string;
 </script>
 
-<div class="align-baseline">
+<div class="align-baseline flex justify-between">
 	<button class="float-left mr-4" on:click={() => dispatch('scrollTranslationIntoView', citation)}>
 		<TranslationIcon className="h-5 w-5 text-secondary-content hover:opacity-80" />
 	</button>
@@ -20,12 +20,12 @@
 	</div>
 	{#if commentUrns.length > 0}
 		<button
-			class="bg-secondary hover:opacity-70 float-right w-8"
+			class="bg-secondary hover:opacity-70 w-6"
 			on:click={() => dispatch('highlightComments', commentUrns)}
 			data-citation={citation}>{citation}</button
 		>
 	{:else}
-		<span class="float-right text-center w-8">{citation}</span>
+		<span class="text-center w-6">{citation}</span>
 	{/if}
 </div>
 
