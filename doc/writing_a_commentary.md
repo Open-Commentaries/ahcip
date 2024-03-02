@@ -45,13 +45,13 @@ After the separator, you can add citation information:
 ```markdown
 ---
 
-target_citation: "1.1@μῆνιν"
+target_citation: 1.1@μῆνιν
 ```
 
 This citation information will be appended to the `target_urn` that you set in the YAML header, yielding, in this case, `urn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1.1@μῆνιν`.
-This means that you must use a fully resolved citation without abbreviations. E.g., `target_citation: "1.1-5"` is invalid: the parser might just fail, or it might interpret it
+This means that you must use a fully resolved citation without abbreviations. E.g., `target_citation: 1.1-5` is invalid: the parser might just fail, or it might interpret it
 as saying, "This comment covers everything from _Iliad_ 1.1 to the end of Book 5." Instead, to add a comment on lines 1 through 5 in Book 1, you would write,
-`target_citation: "1.1-1.5"`.
+`target_citation: 1.1-1.5`.
 
 Note that `target_citation` can also be used to refer to this comment by appending it to the commentary's URN: `urn:cts:greekLit:tlg0012.tlg001.ahcip:1.1@μῆνιν`. In this
 second case, we're overloading what the citation fragment means in CTS URN terms. To get around this issue, you could also supply your own unique string as a `citation`:
@@ -59,8 +59,8 @@ second case, we're overloading what the citation fragment means in CTS URN terms
 ```markdown
 ---
 
-target_citation: "1.1@μῆνιν"
-citation: "citation-1"
+target_citation: 1.1@μῆνιν
+citation: citation-1
 ```
 
 You can also include an `authors` property, listing the usernames (separated by commas) of authors who have worked specifically on this comment.
@@ -68,9 +68,9 @@ You can also include an `authors` property, listing the usernames (separated by 
 ```markdown
 ---
 
-target_citation: "1.1@μῆνιν"
-citation: "citation-1"
-authors: "gnagy, lmuellner, lslatkin"
+target_citation: 1.1@μῆνιν
+citation: citation-1
+authors: gnagy, lmuellner, lslatkin
 ```
 
 Each comment should also have a title, but it can be an empty string if you don't want a title rendered for this comment. So a full example might look something like this:
@@ -78,8 +78,8 @@ Each comment should also have a title, but it can be an empty string if you don'
 ```markdown
 ---
 
-target_citation: "1.1@μῆνιν"
-citation: "citation-1"
+target_citation: 1.1@μῆνιν
+citation: citation-1
 
 # My title
 
