@@ -1,21 +1,13 @@
-+++
+authors: <%~ it.authors.map(author => author.username).join(', ') %>
+
+citation: <%= it.citation %>
+
 <% if (it.tags.length > 0) { %>
-tags:
-<% it.tags.forEach(function(tag) { %>
-- "<%= tag.name %>"
-<% }) %>
+tags: <%~ it.tags.map(tag => tag.name).join(', ') %>
+
 <% } %>
-citable_urn: "<%= it.citable_urn %>"
-target_urn: "<%= it.urn %>"
-title: "<%= it.title %>"
 
-authors:
-<% it.authors.forEach(function(author) { %>
-- email: "<%= author.email %>"
-  name: "<%= author.name %>"
-  username: "<%= author.username %>"
-<% }) %>
+# <%~ it.title %>
 
-+++
 
 <%~ it.text %>

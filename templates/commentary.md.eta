@@ -1,0 +1,20 @@
+---
+urn: "<%= it.urn %>"
+target_urn: "<%= it.target_urn %>"
+title: "<%= it.title || it.urn %>"
+
+authors:
+<% it.allAuthors.forEach(function(author) { %>
+- email: "<%= author.email %>"
+  name: "<%= author.name %>"
+  username: "<%= author.username %>"
+<% }) %>
+---
+
+<% it.comments.forEach(function(comment) { %>
+<%~ include("./comment.md.eta", comment) %>
+
+
+---
+
+<% }) %>

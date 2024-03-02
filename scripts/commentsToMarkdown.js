@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import snakeCase from 'lodash.snakecase';
 import { Eta } from 'eta';
 
 const COMMENTS_JSONL = './ahcip.jsonl';
-const COMMENTS_DIR = './comments';
+const COMMENTS_DIR = './commentaries';
 
 const eta = new Eta({ views: path.join('./templates') });
 
@@ -16,12 +15,9 @@ function commentsToMarkdown() {
 		.filter((l) => l.trim() !== '')
 		.reduce((acc, raw) => {
 			const comment = JSON.parse(raw);
-			const [_urn, _cts, _collection, workComponent, passageComponent] = comment.urn.split(':');
+			const [_urn, _cts, _collection, workComponent, _passageComponent] = comment.urn.split(':');
 			const [textGroup, work, _version] = workComponent.split('.');
-			const startPassage = passageComponent.split('-')[0];
-			const withoutSubsection = startPassage.split('@')[0];
-			const startBook = withoutSubsection.split('.')[0];
-			const key = `${textGroup}:${work}:${startBook}`;
+			const key = `${textGroup}.${work}`;
 
 			return {
 				...acc,
@@ -30,38 +26,43 @@ function commentsToMarkdown() {
 		}, {});
 
 	Object.keys(grouped).forEach((key) => {
-		const passageDir = `${COMMENTS_DIR}/${key}`;
+		const destFile = `${COMMENTS_DIR}/${key}.md`;
 
-		try {
-			fs.mkdirSync(passageDir, true);
-		} catch (e) {
-			if (e.code !== 'EEXIST') {
-				throw e;
-			}
-		}
+		let allAuthors = [];
 
-		grouped[key].forEach((comment) => {
-			const authors = comment.users.map((user) => {
+		const comments = grouped[key]
+			.map((comment) => {
+				const [_urn, _cts, _collection, _workComponent, citation] = comment.urn.split(':');
+				const authors = comment.users.map((user) => {
+					const author = {
+						...user,
+						name: nameFromUsername(user.username)
+					};
+
+					if (typeof allAuthors.find((a) => a.username === user.username) === 'undefined') {
+						allAuthors.push(author);
+					}
+
+					return author;
+				});
+
 				return {
-					...user,
-					name: nameFromUsername(user.username)
+					...comment,
+					authors,
+					citation
 				};
-			});
+			})
+			.sort((a, b) => a.citation - b.citation);
 
-			const rendered = eta.render('./comment.md.eta', {
-				...comment,
-				authors
-			});
+		const commentary = {
+			urn: `urn:cts:greekLit:${key}.ahcip`,
+			target_urn: `urn:cts:greekLit:${key}.perseus-grc2`,
+			comments,
+			allAuthors
+		};
+		const rendered = eta.render('./commentary.md.eta', commentary);
 
-			const title = snakeCase(comment.citable_urn);
-			const dest = `${passageDir}/${title}.md`;
-
-			if (fs.existsSync(dest)) {
-				console.warn('File already exists!', comment.title, authors);
-			}
-
-			fs.writeFileSync(dest, rendered);
-		});
+		fs.writeFileSync(`${destFile}`, rendered);
 	});
 }
 

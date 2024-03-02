@@ -1,4 +1,4 @@
-+++
+---
 urn: "<%= it.urn %>"
 title: "<%= it.title %>"
 authors:
@@ -6,6 +6,6 @@ authors:
 - <%= author %>
 <% }) %>
 
-+++
+---
 
 <%~ it.text %>
