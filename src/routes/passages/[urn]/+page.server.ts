@@ -2,13 +2,16 @@ import fs from 'fs';
 import YAML from 'yaml';
 import { error } from '@sveltejs/kit';
 
+import { parseCommentaryMarkdown } from '$lib/pipelines/commentary.js';
+
 import type { Card, Comment, Line } from '$lib/types/commentary.type';
 
 export const prerender = true;
 
+const COMMENTARIES_DIR = fs.readdirSync('commentaries');
 const PASSAGE_DIR = fs.readdirSync('passages');
 
-export const load = ({ params: { urn = '' } }) => {
+export const load = async ({ params: { urn = '' } }) => {
 	const [_urn_s, _cts, collection, workComponent, passageComponent] = urn.split(':');
 	const [textGroup, work, _version] = workComponent.split('.');
 	const startPassage = passageComponent.split('-')[0];
@@ -30,42 +33,20 @@ export const load = ({ params: { urn = '' } }) => {
 		return error(404);
 	}
 
-	const commentsDir = `comments/${textGroup}:${work}:${startBook}`;
+	const commentaryRegexp = new RegExp(`${textGroup}.${work}\*\.md$`)
 
-	const commentFiles = fs.readdirSync(commentsDir);
-	const comments = commentFiles
-		.map((file) => {
-			const raw = fs.readFileSync(`${commentsDir}/${file}`).toString('utf-8');
-			const [_, yaml, body] = raw.split('+++');
-			const attrs = YAML.parse(yaml);
+	const comments = COMMENTARIES_DIR.filter(f => {
+		return commentaryRegexp.test(f);
+	}).flatMap(f => {
+		const commentaryFile = `commentaries/${f}`;
+		const { comments, metadata } = parseCommentaryMarkdown(commentaryFile);
 
-			return {
-				...attrs,
-				body
-			};
-		})
-		.sort((a: Comment, b: Comment) => {
-			const urnA = a.target_urn;
-			const urnB = b.target_urn;
+		return comments;
+	}).filter((c: Comment) => {
+		const cStartBook = c.citation.split('.')[0];
 
-			const citationA = urnA.split(':').at(-1);
-			const startA = citationA?.split('-')[0];
-			const startLineA = startA?.split('.').at(-1);
-
-			const citationB = urnB.split(':').at(-1);
-			const startB = citationB?.split('-')[0];
-			const startLineB = startB?.split('.').at(-1);
-
-			if (startLineA && startLineB) {
-				return parseInt(startLineA) < parseInt(startLineB) ? -1 : 1;
-			}
-
-			if (!startLineA) return -1;
-
-			if (!startLineB) return 1;
-
-			return 0;
-		});
+		return cStartBook === startBook;
+	});
 
 	const cardsFile = relevantFiles.find((f) => f.endsWith('_cards.json'));
 	const linesFile = relevantFiles.find((f) => f.endsWith('_lines.json'));
@@ -77,7 +58,7 @@ export const load = ({ params: { urn = '' } }) => {
 		cards: cardsFile ? getCards(cardsFile).sort((cardA: Card, cardB: Card) => {
 			return parseInt(cardA.n) < parseInt(cardB.n) ? -1 : 1;
 		}) : [],
-		comments,
+		comments: comments.flat(),
 		lines: linesFile ? readFile(linesFile).sort((lineA: Line, lineB: Line) => {
 			return parseInt(lineA.n) < parseInt(lineB.n) ? -1 : 1;
 		}) : [],

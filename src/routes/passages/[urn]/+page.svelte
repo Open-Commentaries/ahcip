@@ -18,8 +18,7 @@
 
 	function getCommentsForLine(n: string) {
 		return comments.filter((comment: Comment) => {
-			const [_urn, _cts, _collection, _workComponent, citation] = comment.target_urn.split(':');
-			const [start, _end] = citation.split('-');
+			const [start, _end] = comment.citation.split('-');
 			const [_startBook, startLine] = start.split('.');
 
 			if (n === startLine) {
@@ -112,7 +111,7 @@
 			{/each}
 		</section>
 		<section class="overflow-y-scroll col-span-2 max-h-screen">
-			{#each comments as comment (comment.citable_urn)}
+			{#each comments as comment}
 				<CollapsibleComment {comment} />
 			{/each}
 		</section>

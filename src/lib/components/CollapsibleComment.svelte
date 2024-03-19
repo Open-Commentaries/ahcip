@@ -15,16 +15,16 @@
 	<div class="collapse-title">
 		<h3 class="text-sm font-medium text-primary-content cursor-pointer">
 			<span class="text-sm font-light text-slate-600">
-				{comment.title}
+				{comment.citation}
 			</span>
 		</h3>
 		<h4 class="text-sm font-medium text-primary-content cursor-pointer">
 			<small class="mt-1 mx-w-2xl text-sm text-slate-600">
-				{comment.authors.map((a) => a.name).join(', ')}
+				{comment.authors?.map((a) => a?.name).join(', ')}
 			</small>
 		</h4>
 	</div>
 	<div class="collapse-content float-right">
-		<p class="max-w-2xl text-sm text-gray-800">{@html comment.body}</p>
+		<p class="max-w-2xl text-sm text-gray-800">{@html comment.text}</p>
 	</div>
 </div>

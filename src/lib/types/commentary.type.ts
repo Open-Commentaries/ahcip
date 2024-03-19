@@ -18,12 +18,13 @@ export type Tag = {
 
 export type Comment = {
     authors: Author[];
-    body: string;
     citable_urn: string;
+    citation: string;
     isHighlighted?: boolean;
     target_urn: string;
     tags: Tag[];
     title: string;
+    text: string;
 }
 
 export type Line = {
