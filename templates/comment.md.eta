@@ -1,11 +1,13 @@
-authors: <%~ it.authors.map(author => author.username).join(', ') %>
+@<%= it.urn %>
 
-citation: <%= it.citation %>
+:authors: <%~ it.authors.map(author => author.username).join(', ') %>
+
+:citation: <%= it.citation %>
 
 <% if (it.tags.length > 0) { %>
-tags: <%~ it.tags.map(tag => tag.name).join(', ') %>
-
+:tags: <%~ it.tags.map(tag => tag.name).join(', ') %>
 <% } %>
+
 
 # <%~ it.title %>
 

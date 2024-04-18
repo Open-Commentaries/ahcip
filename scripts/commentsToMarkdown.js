@@ -49,7 +49,8 @@ function commentsToMarkdown() {
 				return {
 					...comment,
 					authors,
-					citation
+					citation,
+					urn: comment.urn
 				};
 			})
 			.sort((a, b) => a.citation - b.citation);
