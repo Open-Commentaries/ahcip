@@ -1,0 +1,33 @@
+<%= @nav %>
+
+<main class="main index-main">
+  <header class="index-header">
+    <h1>A Homeric Commentary in Progress</h1>
+    <p class="index-subtitle">The Homeric Iliad</p>
+    <p class="index-translators">Translated by Casey Due, Mary Ebbott, Douglas Frame, Leonard Muellner, and Gregory Nagy</p>
+  </header>
+
+  <div class="index-content">
+    <h2>Books</h2>
+    <div class="book-grid">
+      <%= for book_info <- @books do %>
+        <a href="book_<%= book_info.number %>.html" class="book-card <%= if book_info.has_scholar, do: "has-scholar", else: "butler-only" %>">
+          <span class="book-number">Scroll <%= book_info.number %></span>
+          <%= if book_info.has_scholar do %>
+            <span class="book-status"><%= book_info.line_count %> lines translated</span>
+          <% else %>
+            <span class="book-status">Butler translation</span>
+          <% end %>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</main>
+
+<aside class="commentary">
+  <h2>About</h2>
+  <div class="about-content">
+    <p>This interactive reading environment presents a new translation of Homer's Iliad, created by a team of scholars.</p>
+    <p>Where the scholars' translation is not yet available, Samuel Butler's prose translation (revised by Timothy Power and Gregory Nagy) is provided as a reference.</p>
+  </div>
+</aside>

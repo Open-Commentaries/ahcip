@@ -1,0 +1,13 @@
+<nav class="nav" aria-label="Book navigation">
+  <h2 class="nav-title">The Iliad</h2>
+  <ul class="nav-list">
+    <%= for book_info <- @books do %>
+      <li class="nav-item <%= if book_info.number == @current_book, do: "active" %>">
+        <a href="book_<%= book_info.number %>.html"
+           class="<%= if book_info.has_scholar, do: "has-scholar", else: "butler-only" %>">
+          Scroll <%= book_info.number %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</nav>

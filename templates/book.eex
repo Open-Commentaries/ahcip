@@ -1,0 +1,62 @@
+<%= @nav %>
+
+<main class="main">
+  <header class="book-header">
+    <h1><%= @display_title %></h1>
+    <%= if @preamble do %>
+      <div class="preamble"><%= @preamble %></div>
+    <% end %>
+    <%= if length(@translators) > 0 do %>
+      <p class="translators">Translated by <%= Enum.join(@translators, ", ") %></p>
+    <% end %>
+  </header>
+
+  <div class="book-content">
+    <%= for item <- @content do %>
+      <%= case item do %>
+        <% {:scholar_line, line} -> %>
+          <div class="line" id="<%= AHCIP.CrossRef.line_id(@book_number, line.number) %>">
+            <span class="line-number"><%= line.number %></span>
+            <span class="line-text"><%= AHCIP.Renderer.render_line_text(line, @book_number) %></span>
+          </div>
+        <% {:butler_gap, gap} -> %>
+          <div class="butler-gap">
+            <details>
+              <summary>Lines <%= gap.start_line %>&#8211;<%= gap.end_line %>: Scholar translation not yet available</summary>
+              <div class="butler-text">
+                <p class="butler-attribution">Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy</p>
+                <%= for paragraph <- String.split(gap.butler_text, "\n\n") do %>
+                  <p><%= paragraph %></p>
+                <% end %>
+              </div>
+            </details>
+          </div>
+      <% end %>
+    <% end %>
+  </div>
+</main>
+
+<aside class="commentary">
+  <h2>Commentary</h2>
+  <%= for item <- @content do %>
+    <%= case item do %>
+      <% {:scholar_line, line} -> %>
+        <%= for {ann, idx} <- Enum.with_index(line.annotations) do %>
+          <%= if ann.type in [:note, :variant, :editorial] do %>
+            <div class="note-card" data-line="<%= line.number %>">
+              <details id="note-<%= @book_number %>-<%= line.number %>-<%= idx %>">
+                <summary>
+                  <span class="note-line-ref">Line <%= line.number %></span>
+                  <span class="note-type"><%= AHCIP.Renderer.note_type_label(ann.type) %></span>
+                </summary>
+                <div class="note-content">
+                  <%= AHCIP.Renderer.render_annotation_content(ann) %>
+                </div>
+              </details>
+            </div>
+          <% end %>
+        <% end %>
+      <% _ -> %>
+    <% end %>
+  <% end %>
+</aside>
