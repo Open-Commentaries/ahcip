@@ -143,9 +143,14 @@ defmodule AHCIP.ParserTest do
 
   describe "classify_annotation/1" do
     test "identifies Greek glosses" do
-      assert %Annotation{type: :greek_gloss, content: "me>nis"} = Parser.classify_annotation("me>nis")
-      assert %Annotation{type: :greek_gloss, content: "algos pl."} = Parser.classify_annotation("algos pl.")
-      assert %Annotation{type: :greek_gloss, content: "psukhe> pl."} = Parser.classify_annotation("psukhe> pl.")
+      assert %Annotation{type: :greek_gloss, content: "me>nis"} =
+               Parser.classify_annotation("me>nis")
+
+      assert %Annotation{type: :greek_gloss, content: "algos pl."} =
+               Parser.classify_annotation("algos pl.")
+
+      assert %Annotation{type: :greek_gloss, content: "psukhe> pl."} =
+               Parser.classify_annotation("psukhe> pl.")
     end
 
     test "identifies notes" do
@@ -191,10 +196,14 @@ defmodule AHCIP.ParserTest do
     end
 
     test "identifies editorial placeholders" do
-      assert %Annotation{type: :editorial} = Parser.classify_annotation("note needed about body vs. soul")
+      assert %Annotation{type: :editorial} =
+               Parser.classify_annotation("note needed about body vs. soul")
+
       assert %Annotation{type: :editorial} = Parser.classify_annotation("needs note")
       assert %Annotation{type: :editorial} = Parser.classify_annotation("stopped here 2/24/06")
-      assert %Annotation{type: :editorial} = Parser.classify_annotation("check peitho-s in book 1")
+
+      assert %Annotation{type: :editorial} =
+               Parser.classify_annotation("check peitho-s in book 1")
     end
   end
 
@@ -242,7 +251,10 @@ defmodule AHCIP.ParserTest do
 
   describe "parse_verse_line/1" do
     test "produces Line struct with clean text and annotations" do
-      line = Parser.parse_verse_line({"1", "The anger [me>nis] of Peleus' son Achilles, goddess, perform its song --"})
+      line =
+        Parser.parse_verse_line(
+          {"1", "The anger [me>nis] of Peleus' son Achilles, goddess, perform its song --"}
+        )
 
       assert %Line{} = line
       assert line.number == "1"

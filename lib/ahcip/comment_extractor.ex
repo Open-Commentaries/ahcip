@@ -16,12 +16,32 @@ defmodule AHCIP.CommentExtractor do
     revisioncomment: "public.alexandria_app_revisioncomment"
   }
 
-  @comment_columns [:id, :urn, :privacy, :project_id, :comment_citation_urn, :featured, :updated_at]
+  @comment_columns [
+    :id,
+    :urn,
+    :privacy,
+    :project_id,
+    :comment_citation_urn,
+    :featured,
+    :updated_at
+  ]
   @comment_commenters_columns [:id, :comment_id, :customuser_id]
   @customuser_columns [
-    :id, :password, :last_login, :is_superuser, :username,
-    :first_name, :last_name, :email, :is_staff, :is_active,
-    :date_joined, :picture, :bio, :tagline, :full_name
+    :id,
+    :password,
+    :last_login,
+    :is_superuser,
+    :username,
+    :first_name,
+    :last_name,
+    :email,
+    :is_staff,
+    :is_active,
+    :date_joined,
+    :picture,
+    :bio,
+    :tagline,
+    :full_name
   ]
   @revisionbase_columns [:id, :text, :text_raw, :title, :created_at, :updated_at]
   @revisioncomment_columns [:revisionbase_ptr_id, :comment_id]
@@ -35,7 +55,10 @@ defmodule AHCIP.CommentExtractor do
 
     # Parse all relevant tables
     comments = extract_table(raw, @tables.comment, @comment_columns)
-    comment_commenters = extract_table(raw, @tables.comment_commenters, @comment_commenters_columns)
+
+    comment_commenters =
+      extract_table(raw, @tables.comment_commenters, @comment_commenters_columns)
+
     users = extract_table(raw, @tables.customuser, @customuser_columns)
     revisionbases = extract_table(raw, @tables.revisionbase, @revisionbase_columns)
     revisioncomments = extract_table(raw, @tables.revisioncomment, @revisioncomment_columns)
@@ -63,7 +86,13 @@ defmodule AHCIP.CommentExtractor do
     entries =
       homer_comments
       |> Enum.map(fn comment ->
-        build_entry(comment, revisions_by_comment, revisionbase_map, commenters_by_comment, user_map)
+        build_entry(
+          comment,
+          revisions_by_comment,
+          revisionbase_map,
+          commenters_by_comment,
+          user_map
+        )
       end)
       |> Enum.reject(&is_nil/1)
       |> Enum.sort_by(&{&1.work, &1.book, &1.start_line})
@@ -76,16 +105,24 @@ defmodule AHCIP.CommentExtractor do
     length(entries)
   end
 
-  defp build_entry(comment, revisions_by_comment, revisionbase_map, commenters_by_comment, user_map) do
+  defp build_entry(
+         comment,
+         revisions_by_comment,
+         revisionbase_map,
+         commenters_by_comment,
+         user_map
+       ) do
     # Find newest revision for this comment
     revision =
       case Map.get(revisions_by_comment, comment.id) do
-        nil -> nil
+        nil ->
+          nil
+
         rev_links ->
           rev_links
           |> Enum.map(fn rc -> Map.get(revisionbase_map, rc.revisionbase_ptr_id) end)
           |> Enum.reject(&is_nil/1)
-          |> Enum.max_by(&(&1.created_at), fn -> nil end)
+          |> Enum.max_by(& &1.created_at, fn -> nil end)
       end
 
     case revision do
@@ -202,7 +239,9 @@ defmodule AHCIP.CommentExtractor do
 
   defp parse_draftjs(text) do
     case null_to_nil(text) do
-      nil -> nil
+      nil ->
+        nil
+
       str ->
         case JSON.decode(str) do
           {:ok, decoded} -> decoded

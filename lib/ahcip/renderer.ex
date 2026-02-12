@@ -3,7 +3,7 @@ defmodule AHCIP.Renderer do
   Renders parsed book data into static HTML files using EEx templates.
   """
 
-  alias AHCIP.{CrossRef, Annotation}
+  alias AHCIP.{CrossRef, Annotation, CommentaryParser}
 
   @templates_dir Path.join([__DIR__, "..", "..", "templates"]) |> Path.expand()
 
@@ -15,7 +15,8 @@ defmodule AHCIP.Renderer do
     File.mkdir_p!(Path.join(output_dir, "css"))
 
     book_infos = build_book_infos(books_with_content)
-    comments_by_book = load_comments(output_dir)
+    commentary_dir = Application.get_env(:ahcip, :commentary_dir, "commentary")
+    comments_by_book = load_comments(commentary_dir)
 
     # Render index
     index_html = render_index(book_infos)
@@ -42,7 +43,8 @@ defmodule AHCIP.Renderer do
 
       %{
         number: n,
-        has_scholar: MapSet.member?(scholar_books, n) && book != nil && length(elem(book, 0).lines) > 0,
+        has_scholar:
+          MapSet.member?(scholar_books, n) && book != nil && length(elem(book, 0).lines) > 0,
         line_count: if(book, do: length(elem(book, 0).lines), else: 0)
       }
     end
@@ -115,7 +117,9 @@ defmodule AHCIP.Renderer do
 
     text =
       Enum.reduce(glosses, text, fn gloss, acc ->
-        String.replace(acc, gloss, ~s(<span class="greek-gloss">[#{escape_html(gloss)}]</span>), global: false)
+        String.replace(acc, gloss, ~s(<span class="greek-gloss">[#{escape_html(gloss)}]</span>),
+          global: false
+        )
       end)
 
     # Add cross-ref links
@@ -164,9 +168,16 @@ defmodule AHCIP.Renderer do
 
   defp integer_to_superscript(n) do
     superscripts = %{
-      ?0 => "\u2070", ?1 => "\u00B9", ?2 => "\u00B2", ?3 => "\u00B3",
-      ?4 => "\u2074", ?5 => "\u2075", ?6 => "\u2076", ?7 => "\u2077",
-      ?8 => "\u2078", ?9 => "\u2079"
+      ?0 => "\u2070",
+      ?1 => "\u00B9",
+      ?2 => "\u00B2",
+      ?3 => "\u00B3",
+      ?4 => "\u2074",
+      ?5 => "\u2075",
+      ?6 => "\u2076",
+      ?7 => "\u2077",
+      ?8 => "\u2078",
+      ?9 => "\u2079"
     }
 
     n
@@ -205,19 +216,14 @@ defmodule AHCIP.Renderer do
   end
 
   @doc """
-  Load comments from comments.json, grouped by Iliad book number.
+  Load comments from per-author commentary markdown files, grouped by Iliad book number.
   Returns %{book_number => [comment, ...]} sorted by start_line.
-  Gracefully returns empty map if file is missing.
+  Gracefully returns empty map if directory is missing.
   """
-  def load_comments(output_dir) do
-    path = Path.join(output_dir, "comments.json")
-
-    if File.exists?(path) do
-      path
-      |> File.read!()
-      |> Jason.decode!()
+  def load_comments(commentary_dir) do
+    if File.dir?(commentary_dir) do
+      CommentaryParser.load(commentary_dir)
       |> Enum.filter(&(&1["work"] == "iliad"))
-      |> Enum.map(&render_comment_html/1)
       |> Enum.group_by(& &1["book"])
       |> Enum.into(%{}, fn {book, comments} ->
         {book, Enum.sort_by(comments, & &1["start_line"])}
@@ -227,25 +233,7 @@ defmodule AHCIP.Renderer do
     end
   end
 
-  defp render_comment_html(comment) do
-    content = comment["content"]
-
-    html =
-      cond do
-        is_map(content) && Map.has_key?(content, "raw") ->
-          content["raw"]
-
-        is_map(content) && Map.has_key?(content, "blocks") ->
-          render_draftjs(content)
-
-        true ->
-          ""
-      end
-
-    Map.put(comment, "content_html", html)
-  end
-
-  defp render_draftjs(%{"blocks" => blocks, "entityMap" => entity_map}) do
+  def render_draftjs(%{"blocks" => blocks, "entityMap" => entity_map}) do
     blocks
     |> Enum.map(&render_draftjs_block(&1, entity_map))
     |> Enum.join("\n")
@@ -334,10 +322,6 @@ defmodule AHCIP.Renderer do
   end
 
   defp macronize(text) do
-    """
-    The >'s have already been escaped, but we still
-    need to turn them into macrons.
-    """
     text
     |> String.replace("e&gt;", "ē")
     |> String.replace("o&gt;", "ō")

@@ -76,19 +76,32 @@ defmodule AHCIP.Parser do
       content
     else
       content
-      |> replace_byte(0xD2, "\"")   # Mac Roman left double quote
-      |> replace_byte(0xD3, "\"")   # Mac Roman right double quote
-      |> replace_byte(0xD4, "'")    # Mac Roman left single quote
-      |> replace_byte(0xD5, "'")    # Mac Roman right single quote
-      |> replace_byte(0xD0, "--")   # Mac Roman em dash
-      |> replace_byte(0xD1, "--")   # Mac Roman en dash
-      |> replace_byte(0xC9, "...")  # Mac Roman ellipsis
-      |> replace_byte(0x93, "\"")   # Windows-1252 left double quote
-      |> replace_byte(0x94, "\"")   # Windows-1252 right double quote
-      |> replace_byte(0x91, "'")    # Windows-1252 left single quote
-      |> replace_byte(0x92, "'")    # Windows-1252 right single quote
-      |> replace_byte(0x96, "--")   # Windows-1252 en dash
-      |> replace_byte(0x97, "--")   # Windows-1252 em dash
+      # Mac Roman left double quote
+      |> replace_byte(0xD2, "\"")
+      # Mac Roman right double quote
+      |> replace_byte(0xD3, "\"")
+      # Mac Roman left single quote
+      |> replace_byte(0xD4, "'")
+      # Mac Roman right single quote
+      |> replace_byte(0xD5, "'")
+      # Mac Roman em dash
+      |> replace_byte(0xD0, "--")
+      # Mac Roman en dash
+      |> replace_byte(0xD1, "--")
+      # Mac Roman ellipsis
+      |> replace_byte(0xC9, "...")
+      # Windows-1252 left double quote
+      |> replace_byte(0x93, "\"")
+      # Windows-1252 right double quote
+      |> replace_byte(0x94, "\"")
+      # Windows-1252 left single quote
+      |> replace_byte(0x91, "'")
+      # Windows-1252 right single quote
+      |> replace_byte(0x92, "'")
+      # Windows-1252 en dash
+      |> replace_byte(0x96, "--")
+      # Windows-1252 em dash
+      |> replace_byte(0x97, "--")
       |> sanitize_utf8()
     end
   end
@@ -137,7 +150,12 @@ defmodule AHCIP.Parser do
             # Last resort: just look for [N] to find body start
             case Regex.run(~r/^(.*?)(\[\d)/, rest, capture: :all) do
               [_, header, bracket_start] ->
-                {preamble, nil, [], bracket_start <> String.slice(rest, (String.length(header) + String.length(bracket_start))..-1//1)}
+                {preamble, nil, [],
+                 bracket_start <>
+                   String.slice(
+                     rest,
+                     (String.length(header) + String.length(bracket_start))..-1//1
+                   )}
 
               _ ->
                 {preamble, nil, [], rest}
@@ -148,7 +166,10 @@ defmodule AHCIP.Parser do
 
   defp extract_preamble(content) do
     if String.starts_with?(content, "Translators' Introduction:") do
-      case Regex.run(~r/^(Translators' Introduction:.*?)(?=The Homeric Iliad|Translated by)/s, content) do
+      case Regex.run(
+             ~r/^(Translators' Introduction:.*?)(?=The Homeric Iliad|Translated by)/s,
+             content
+           ) do
         [_, preamble] ->
           rest = String.slice(content, String.length(preamble)..-1//1) |> String.trim_leading()
           {String.trim(preamble), rest}

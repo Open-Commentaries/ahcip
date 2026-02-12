@@ -27,3 +27,4 @@ CLAUDE.md
 output
 *_opencommentary.db
 .DS_Store
+.envrc

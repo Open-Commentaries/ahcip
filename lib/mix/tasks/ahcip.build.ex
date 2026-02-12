@@ -18,8 +18,8 @@ defmodule Mix.Tasks.Ahcip.Build do
   def run(_args) do
     Mix.Task.run("app.start")
 
-    scholar_dir = Application.get_env(:ahcip, :scholar_content_dir)
-    butler_path = Application.get_env(:ahcip, :butler_xml_path)
+    scholar_dir = Application.get_env(:ahcip, :translation_dir)
+    butler_path = Application.get_env(:ahcip, :butler_iliad_tei_path)
     output_dir = Application.get_env(:ahcip, :output_dir)
 
     Mix.shell().info("Building AHCIP site...")
@@ -108,7 +108,10 @@ defmodule Mix.Tasks.Ahcip.Build do
       all_books
       |> Enum.count(fn {book, _} -> length(book.lines) == 0 end)
 
-    Mix.shell().info("  Scholar translations: #{scholar_count} books, #{total_scholar_lines} lines")
+    Mix.shell().info(
+      "  Scholar translations: #{scholar_count} books, #{total_scholar_lines} lines"
+    )
+
     Mix.shell().info("  Butler-only books: #{butler_only}")
     Mix.shell().info("  Total books: #{length(all_books)}")
     Mix.shell().info("  Output files: #{length(all_books) + 1} HTML pages + CSS")

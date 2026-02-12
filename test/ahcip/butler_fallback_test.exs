@@ -46,6 +46,7 @@ defmodule AHCIP.ButlerFallbackTest do
     items = ButlerFallback.merge(book, mock_butler())
 
     scholar_items = Enum.filter(items, fn {type, _} -> type == :scholar_line end)
+
     internal_gaps =
       Enum.filter(items, fn
         {:butler_gap, g} -> g.start_line > 1 && g.start_line < 20

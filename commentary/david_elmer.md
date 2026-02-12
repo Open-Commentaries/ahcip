@@ -1,0 +1,61 @@
+---
+author: David Elmer
+shortname: elmer
+---
+
+@urn:cts:greekLit:tlg0012.tlg001:23.140
+:citation_urn: urn:cts:CHS:Commentaries.AHCIP:Iliad.23.140.C8XWYgj
+:created_at: 2020-03-12T16:45:44.493Z
+:updated_at: 2020-03-12T16:45:44.493Z
+
+Here and some fifty lines later (23.193) are the only two occurrences in the *Iliad* of the ἔνθ᾽ αὖτ᾽ ἄλλ᾽ ἐνόησε (“then he/she thought of other things”) formula, which occurs with much greater frequency in the *Odyssey*. In that poem, the formula functions as a marker of a more or less significant discontinuity: a change of scene or a turn of the plot in a substantially new direction (see *Odyssey *2.382). In this instance, there is no such discontinuity, at least in terms of the scene or the forward movement of the action. Instead of a sudden departure in a new direction, we find a ‘zooming in’ on the goal of the action, from the Myrmidons as they march in Patroklos’ funeral procession to Achilles standing at the pyre. The discontinuity consists rather in the transition to a ritual act of special significance: Achilles’ dedication of the lock of hair that Peleus had vowed would be offered to the river Sperkheios on Achilles’ return to Phthia. The subsequent occurrence of the formula likewise marks the shift to an especially significant ritual act, namely, the lighting of Patroklos’ funeral pyre. The formulaic marker of discontinuity thus serves to highlight the most critical ritual moments in the otherwise continuous narrative of Patroklos’ funeral. Comparison with the usage of the formula in the *Odyssey* suggests further layers of possible meaning. At *Odyssey* 23.242, a variant of the formula occurs in a context in which, again, there is no immediately apparent discontinuity. And, again, this occurrence is followed by another a short while later (23.344). These two instances enclose what is arguably the most significant moment in the *Odyssey*: the reunion of Odysseus and Penelope, which Aristophanes of Byzantium and Aristarchus identified as the poem’s τέλος (see *Odyssey *23.242). One might similarly view the ritual act enclosed by the *Iliad*’s two occurrences of the formula as the τέλος of that poem, for, by shearing the lock of hair he had saved for Sperkheios, Achilles ritually formalizes his destiny to die at Troy. In the *Odyssey*, furthermore, the ἄλλ᾽ ἐνόησε formula, which is used most often with Athena as subject, serves as an index of narrative control: it highlights the fact that Athena prompts and guides the action (see *Odyssey *2.382). In *Iliad* 23, Achilles emerges as a comparable director of the action. Not only does he dictate the ritual procedures of Patroklos’ funeral; during the subsequent games he directs contests that restage, in various ways, many of the poem’s principal themes. Finally, it is tempting to draw some connection between the fact that, in the *Odyssey*, the formula is restricted to female subjects (Athena, Helen, Nausikaa, Penelope) and the fact that, in the *Iliad*, it refers exclusively to Achilles’ involvement in funerary ritual. As a mourner, Achilles participates in a sphere of action that is typically dominated by women (see Alexiou 2002 and Dué 2006: ch. 1). The application to Achilles of a formula that is otherwise associated with female actors may serve to highlight his assumption of a very different social role than he has hitherto occupied.
+
+Bibliographical References
+
+Alexiou, M. 2002. *The Ritual Lament in Greek Tradition.* Rev. ed. Lanham, MD.
+
+Dué, C. 2006. *The Captive Woman’s Lament in Greek Tragedy*. Austin.
+
+---
+
+@urn:cts:greekLit:tlg0012.tlg002:2.382
+:citation_urn: urn:cts:CHS:Commentaries.AHCIP:Odyssey.2.382.YkSsBmF
+:created_at: 2020-03-12T16:46:01.529Z
+:updated_at: 2020-03-12T16:46:01.529Z
+
+This line marks the first occurrence in the *Odyssey* of a formulaic expression"then he/she thought of other things"(ἔνθ᾽ αὖτ᾽ ἀλλ᾽ ἐνόησε) that occurs, with minor variations, eleven times in the *Odyssey* and twice in the *Iliad*. The formula shows interesting patterns of restriction in both poems. In the *Odyssey*, it is always used with a female subject (Athena [2.382, 2.393, 4.795, 5.382, 6.112, 18.187, 23.242, 23.344], Helen [4.219], Nausikaa [6.251], or Penelope [16.409]). In the *Iliad*, it is used exclusively of Achilles (23.140, 23.193). See *Iliad* 23.140 for discussion of the two Iliadic instances; here I concentrate on the formula’s occurrences in the *Odyssey*.
+
+\r\nFrom a narratological point of view, the expression has an important function: as noted by de Jong 2001:66, it “highlights a new, often sudden or unexpected turn in the story,” in this case “the—abrupt—change of scene from Telemachus to Athena.” In other words, the formula marks the development of the plot in a new direction that is not a mere continuation of what has preceded. (*Odyssey** *23.242 is a significant exception.) Furthermore, it links this new development with the intervention of some specific agent, who is thus momentarily represented as controlling the plot. De Jong 2001:66 notes that the frequency with which the expression is used of Athena corresponds to the goddess’s “role of ‘director’ of the story of the *Odyssey*.” Occurrences of the formula with Helen, Nausikaa, and Penelope as subjects extend this plot-making power to other prominent women. In this way, a convenient narrative device serves also to underscore one of the poem’s major thematic concerns, namely, the way in which the story of Odysseus’ homecoming—the plot of the *Odyssey*—depends upon the favorable disposition of certain women, above all Penelope. The poem has numerous ways of signaling that its plot hinges on female agents (see *Odyssey *11.226, *Odyssey *11.436-39). This should not, however, be interpreted as a subversive gesture: as stressed by Murnaghan 2005, Athena as “source and sponsor” of the *Odyssey*’s plot works to uphold the authority of the patriarchal *oikos*.
+
+\r\n\r\nReferences
+
+\r\nde Jong, Irene J. F. 2001. *A Narratological Commentary on the *Odyssey. Cambridge and New York.
+
+\r\nMurnaghan, Sheila. 1995. “The Plan of Athena.” In *The Distaff Side: Representing the Female in Homer’s *Odyssey (ed. B. Cohen) 61-80. New York and Oxford.
+
+---
+
+@urn:cts:greekLit:tlg0012.tlg002:11.226
+:citation_urn: urn:cts:CHS:Commentaries.AHCIP:Odyssey.11.226.sW5i9P8
+:created_at: 2020-03-12T16:46:24.212Z
+:updated_at: 2020-03-12T16:46:24.212Z
+
+The so-called “Catalogue of Heroines” is bracketed by references to Persephone’s role in summoning and then dispersing the heroines whose appearances occasion the various entries in the Catalogue. Here, Odysseus stresses that Persephone “bid” the *psukhai* of the heroines to approach the animals he had slaughtered; at *Odyssey* 11.385-86, resuming his narration after an “intermezzo” in which he converses with Arete and Alkinoos, Odysseus transitions to the “Catalogue of Heroes” by explaining that Agamemnon appeared “when reverend Persephone scattered in various directions the *psukhai* of the women.” Odysseus thus presents Persephone as the ‘director’ of this portion of his narrative, a position that corresponds to that of Athena as ‘director’ of the plot of the *Odyssey* (on Athena as ‘director,’ see Murnaghan 2005, de Jong 2001:66). The emphasis on Persephone, then, is one of several reminders of the fact that the story of Odysseus’ homecoming unfolds as a result of Athena’s active intervention (see note on *Odyssey *2.382). It also points to the importance of another female sponsor, Arete, at this particular moment in Odysseus’ story. Odysseus has been advised by Athena that his hopes for a homecoming depend especially on Arete's good will (*Odyssey* 7.75-9; the importance of Arete in this regard seems to figure the importance of Penelope as the woman on whose good will Odysseus’ homecoming ultimately depends). The “Catalogue of Heroines” has been described as “Odysseus’ gift to Arete” (Pache 1999:28), an effort to appeal to her interests just as the “Catalogue of Heroes” explicitly answers Alkinoos’ request to hear about the *psukhai *of those who fell at Troy. The appeal is a success: Arete responds by urging the Phaeacians to present Odysseus with additional gifts. By underscoring the importance of Persephone as the one who directs the Catalogue, Odysseus may subtly suggest to his patroness that she has the power to direct the subsequent course of his own story.\r\n\r\n \r\n\r\nReferences\r\n\r\nde Jong, I. J. F. 2001. *A Narratological Commentary on the *Odyssey. Cambridge and New York.\r\n\r\nMurnaghan, S. 1995. “The Plan of Athena.” In *The Distaff Side: Representing the Female in Homer’s *Odyssey (ed. B. Cohen) 61-80. New York and Oxford.\r\n\r\nPache, Corinne. 1999. “Odysseus and the Phaeacians.” In *Nine Essays on Homer* (eds. M. Carlisle and O. Levaniouk) 21-33. Lanham, MD.
+
+---
+
+@urn:cts:greekLit:tlg0012.tlg002:11.436-11.439
+:citation_urn: urn:cts:CHS:Commentaries.AHCIP:Odyssey.11.436-11.439.X582W29
+:created_at: 2020-03-12T16:46:27.015Z
+:updated_at: 2020-03-12T16:46:27.015Z
+
+Odysseus characterizes the suffering attendant on the Trojan expedition—including the many deaths depicted in the *Iliad*—as a consequence of Zeus’ displeasure and the “will (βουλαί) of women.” This description substantially modifies the causal framework put forward by the *Iliad*, which presents the events it describes as the result of “the will of Zeus” (Διὸς βουλή, as in *Iliad* 1.5) alone. Odysseus’ reconfiguration of Iliadic causality reflects the distinctive vision of the *Odyssey*, which portrays female figures as exercising considerable control over events: Athena, with the support of Zeus, is the divine sponsor of the plot (see Murnaghan 2005), and the success of Odysseus’ homecoming is repeatedly represented as depending on the goodwill of various women, above all Penelope. (See also* Odyssey *2.382, 11.226).\r\n\r\n \r\n\r\nReferences\r\n\r\nMurnaghan, S. 1995. “The Plan of Athena.” In *The Distaff Side: Representing the Female in Homer’s *Odyssey (ed. B. Cohen) 61-80. New York and Oxford.
+
+---
+
+@urn:cts:greekLit:tlg0012.tlg002:23.242
+:citation_urn: urn:cts:CHS:Commentaries.AHCIP:Odyssey.23.242.H5axuFH
+:created_at: 2020-03-12T16:46:47.547Z
+:updated_at: 2020-03-12T16:46:47.547Z
+
+The “he/she thought of other things” (ἄλλ᾽ ἐνόησε) formula ordinarily signals a change of scene or turn of the plot in a substantially new direction (see *Odyssey *2.382). Here, exceptionally, it marks a continuation of the current scene: Athena devises a way to *avoid* a narrative shift. The remarkable reversal of normal usage draws attention to the passage that follows (*Odyssey** *23.247-343), a passage that is concluded by another instance of the formula, used, as usual, to signal a change of scene engineered by Athena (*Odyssey* 23.344; this is an instance of “ring composition”). The lines thus enclosed describe the long-awaited reunion of Penelope and Odysseus, and include the verse that Aristophanes of Byzantium and Aristarchus, according to the scholia, designated as the τέλος (the “end” or “fulfillment”—the meaning of this remark is much debated) of the *Odyssey* (see 23.296). The passage also includes the recapitulation of prior events by both Penelope and Odysseus. The integration of their respective stories (Penelope narrates what has happened on Ithaka in Odysseus’ absence, while Odysseus relates the tale of his wanderings) not only figures the reunion of the lovers; it also reconstitutes in a straightforward, linear fashion the *fabula* of the *Odyssey*, which has been presented by the poem’s master narrator in a self-consciously disjointed manner (compare de Jong 2001:563). The bracketing of these signal acts of narration by references to Athena’s agency underscores the goddess’s role as “source and sponsor of the plot” (quotation from Murnaghan 2005:61): it is Athena who makes possible the recapitulation of the plot on this occasion, just as it is she who sets in motion and directs events throughout the poem.\r\n\r\n \r\n\r\nReferences\r\n\r\nde Jong, I. J. F. 2001. *A Narratological Commentary on the *Odyssey. Cambridge and New York.\r\n\r\nMurnaghan, S. 1995. “The Plan of Athena.” In *The Distaff Side: Representing the Female in Homer’s *Odyssey (ed. B. Cohen) 61-80. New York and Oxford.
