@@ -234,42 +234,172 @@ body {
   border-bottom: 1px solid var(--color-border);
 }
 
-.note-card {
+/* Commentary cards */
+.commentary-card {
   margin-bottom: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-white);
 }
 
-.note-card details {
-  border-left: 3px solid var(--color-border);
-  padding-left: 0.75rem;
-}
-
-.note-card details[open] {
-  border-left-color: var(--color-accent);
-}
-
-.note-card summary {
+.commentary-card details > summary {
   cursor: pointer;
+  list-style: none;
+  padding: 0.5rem 0.75rem;
   font-family: var(--font-sans);
-  font-size: 0.85rem;
-  padding: 0.25rem 0;
-  user-select: none;
-}
-
-.note-line-ref {
-  font-weight: 600;
+  font-size: 0.8rem;
+  line-height: 1.4;
   color: var(--color-text);
 }
 
-.note-type {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  margin-left: 0.5rem;
+.commentary-card details > summary::-webkit-details-marker {
+  display: none;
 }
 
-.note-content {
-  font-size: 0.9rem;
-  padding: 0.5rem 0;
+.commentary-card details > summary::before {
+  content: "\25b6";
+  display: inline-block;
+  font-size: 0.6em;
+  margin-right: 0.4em;
+  transition: transform 0.15s;
+}
+
+.commentary-card details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.commentary-lines {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.commentary-card-title {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.commentary-card-body {
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.commentary-authors {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.4rem;
+}
+
+.commentary-card-body p {
+  margin-bottom: 0.5rem;
+}
+
+.commentary-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.commentary-card-body em {
+  font-style: italic;
+}
+
+.commentary-card-body a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--color-accent);
+}
+
+.commentary-card-body a:hover {
+  color: #6b3410;
+  border-bottom-style: solid;
+}
+
+.commentary-card-body img {
+  max-width: 100%;
+  height: auto;
+  margin: 0.5rem 0;
+  border-radius: 2px;
+}
+
+.commentary-card-body blockquote {
+  border-left: 2px solid var(--color-border);
+  padding-left: 0.75rem;
+  margin: 0.5rem 0;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Inline annotation popovers */
+.annotation-marker {
+  position: relative;
+  display: inline;
+}
+
+.annotation-details {
+  display: inline;
+}
+
+.annotation-trigger {
+  display: inline;
+  cursor: pointer;
+  list-style: none;
+  color: var(--color-accent);
+  margin: 0 0.1em;
+}
+
+.annotation-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.annotation-trigger sup {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.annotation-trigger:hover sup {
+  color: #6b3410;
+}
+
+.annotation-popover {
+  display: block;
+  position: absolute;
+  bottom: 1.8em;
+  left: 0;
+  z-index: 10;
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  padding: 0.6rem 0.8rem;
+  min-width: 200px;
+  max-width: 350px;
+  width: max-content;
+  font-size: 0.85rem;
   line-height: 1.5;
+}
+
+.annotation-type {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.annotation-text {
+  display: block;
+  color: var(--color-text);
 }
 
 /* Index page */

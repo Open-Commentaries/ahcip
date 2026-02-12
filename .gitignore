@@ -25,3 +25,5 @@ ahcip-*.tar
 CLAUDE.md
 .claude
 output
+*_opencommentary.db
+.DS_Store

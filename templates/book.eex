@@ -38,25 +38,20 @@
 
 <aside class="commentary">
   <h2>Commentary</h2>
-  <%= for item <- @content do %>
-    <%= case item do %>
-      <% {:scholar_line, line} -> %>
-        <%= for {ann, idx} <- Enum.with_index(line.annotations) do %>
-          <%= if ann.type in [:note, :variant, :editorial] do %>
-            <div class="note-card" data-line="<%= line.number %>">
-              <details id="note-<%= @book_number %>-<%= line.number %>-<%= idx %>">
-                <summary>
-                  <span class="note-line-ref">Line <%= line.number %></span>
-                  <span class="note-type"><%= AHCIP.Renderer.note_type_label(ann.type) %></span>
-                </summary>
-                <div class="note-content">
-                  <%= AHCIP.Renderer.render_annotation_content(ann) %>
-                </div>
-              </details>
-            </div>
+  <%= for comment <- @comments do %>
+    <article class="commentary-card" id="commentary-<%= comment["start_line"] %>-<%= comment["end_line"] %>">
+      <details>
+        <summary class="commentary-card-header">
+          <span class="commentary-lines">Lines <%= comment["start_line"] %>&ndash;<%= comment["end_line"] %></span>
+          <%= if comment["title"] do %>
+            <span class="commentary-card-title"><%= comment["title"] %></span>
           <% end %>
-        <% end %>
-      <% _ -> %>
-    <% end %>
+        </summary>
+        <div class="commentary-card-body">
+          <span class="commentary-authors"><%= Enum.join(comment["authors"], ", ") %></span>
+          <%= comment["content_html"] %>
+        </div>
+      </details>
+    </article>
   <% end %>
 </aside>

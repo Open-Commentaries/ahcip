@@ -15,6 +15,7 @@ defmodule AHCIP.Renderer do
     File.mkdir_p!(Path.join(output_dir, "css"))
 
     book_infos = build_book_infos(books_with_content)
+    comments_by_book = load_comments(output_dir)
 
     # Render index
     index_html = render_index(book_infos)
@@ -22,7 +23,8 @@ defmodule AHCIP.Renderer do
 
     # Render each book
     for {book, content} <- books_with_content do
-      book_html = render_book(book, content, book_infos)
+      book_comments = Map.get(comments_by_book, book.number, [])
+      book_html = render_book(book, content, book_infos, book_comments)
       File.write!(Path.join(output_dir, "book_#{book.number}.html"), book_html)
     end
 
@@ -64,7 +66,7 @@ defmodule AHCIP.Renderer do
   @doc """
   Render a single book page.
   """
-  def render_book(book, content, book_infos) do
+  def render_book(book, content, book_infos, comments \\ []) do
     nav = render_nav(book_infos, book.number)
     display_title = AHCIP.ButlerFallback.display_title(book)
 
@@ -77,7 +79,8 @@ defmodule AHCIP.Renderer do
           preamble: book.preamble,
           translators: book.translators,
           content: content,
-          book_number: book.number
+          book_number: book.number,
+          comments: comments
         ]
       )
 
@@ -99,7 +102,7 @@ defmodule AHCIP.Renderer do
   end
 
   @doc """
-  Render a line's text with inline Greek glosses styled.
+  Render a line's text with inline Greek glosses styled and annotation popovers.
   """
   def render_line_text(line, _book_number) do
     text = line.text
@@ -112,7 +115,7 @@ defmodule AHCIP.Renderer do
 
     text =
       Enum.reduce(glosses, text, fn gloss, acc ->
-        String.replace(acc, gloss, ~s(<span class="greek-gloss">#{escape_html(gloss)}</span>), global: false)
+        String.replace(acc, gloss, ~s(<span class="greek-gloss">[#{escape_html(gloss)}]</span>), global: false)
       end)
 
     # Add cross-ref links
@@ -125,11 +128,52 @@ defmodule AHCIP.Renderer do
       |> Enum.flat_map(& &1.refs)
       |> Enum.map(&CrossRef.render_link/1)
 
-    if length(ref_links) > 0 do
-      text <> ~s( <span class="cross-refs">[) <> Enum.join(ref_links, ", ") <> "]</span>"
-    else
-      text
-    end
+    text =
+      if length(ref_links) > 0 do
+        text <> ~s( <span class="cross-refs">[) <> Enum.join(ref_links, ", ") <> "]</span>"
+      else
+        text
+      end
+
+    # Add inline annotation popovers for notes, variants, and editorial markers
+    inline_annotations =
+      line.annotations
+      |> Enum.filter(&(&1.type in [:note, :variant, :editorial]))
+      |> Enum.with_index(1)
+
+    popover_html =
+      Enum.map(inline_annotations, fn {ann, idx} ->
+        superscript = integer_to_superscript(idx)
+        type_label = note_type_label(ann.type)
+        content = render_annotation_content(ann)
+
+        ~s(<span class="annotation-marker">) <>
+          ~s(<details class="annotation-details">) <>
+          ~s(<summary class="annotation-trigger"><sup>#{superscript}</sup></summary>) <>
+          ~s(<span class="annotation-popover">) <>
+          ~s(<span class="annotation-type">#{type_label}</span>) <>
+          ~s(<span class="annotation-text">#{content}</span>) <>
+          ~s(</span>) <>
+          ~s(</details>) <>
+          ~s(</span>)
+      end)
+      |> Enum.join("")
+
+    macronize(text) <> popover_html
+  end
+
+  defp integer_to_superscript(n) do
+    superscripts = %{
+      ?0 => "\u2070", ?1 => "\u00B9", ?2 => "\u00B2", ?3 => "\u00B3",
+      ?4 => "\u2074", ?5 => "\u2075", ?6 => "\u2076", ?7 => "\u2077",
+      ?8 => "\u2078", ?9 => "\u2079"
+    }
+
+    n
+    |> Integer.to_string()
+    |> String.to_charlist()
+    |> Enum.map(&Map.get(superscripts, &1, &1))
+    |> List.to_string()
   end
 
   @doc """
@@ -160,12 +204,143 @@ defmodule AHCIP.Renderer do
     escape_html(content)
   end
 
+  @doc """
+  Load comments from comments.json, grouped by Iliad book number.
+  Returns %{book_number => [comment, ...]} sorted by start_line.
+  Gracefully returns empty map if file is missing.
+  """
+  def load_comments(output_dir) do
+    path = Path.join(output_dir, "comments.json")
+
+    if File.exists?(path) do
+      path
+      |> File.read!()
+      |> Jason.decode!()
+      |> Enum.filter(&(&1["work"] == "iliad"))
+      |> Enum.map(&render_comment_html/1)
+      |> Enum.group_by(& &1["book"])
+      |> Enum.into(%{}, fn {book, comments} ->
+        {book, Enum.sort_by(comments, & &1["start_line"])}
+      end)
+    else
+      %{}
+    end
+  end
+
+  defp render_comment_html(comment) do
+    content = comment["content"]
+
+    html =
+      cond do
+        is_map(content) && Map.has_key?(content, "raw") ->
+          content["raw"]
+
+        is_map(content) && Map.has_key?(content, "blocks") ->
+          render_draftjs(content)
+
+        true ->
+          ""
+      end
+
+    Map.put(comment, "content_html", html)
+  end
+
+  defp render_draftjs(%{"blocks" => blocks, "entityMap" => entity_map}) do
+    blocks
+    |> Enum.map(&render_draftjs_block(&1, entity_map))
+    |> Enum.join("\n")
+  end
+
+  defp render_draftjs_block(%{"text" => text, "type" => type} = block, entity_map) do
+    inline_styles = Map.get(block, "inlineStyleRanges", [])
+    entity_ranges = Map.get(block, "entityRanges", [])
+
+    rendered_text = apply_draftjs_formatting(text, inline_styles, entity_ranges, entity_map)
+
+    case type do
+      "blockquote" -> "<blockquote>#{rendered_text}</blockquote>"
+      "header-two" -> "<h4>#{rendered_text}</h4>"
+      _ -> "<p>#{rendered_text}</p>"
+    end
+  end
+
+  defp apply_draftjs_formatting(text, inline_styles, entity_ranges, entity_map) do
+    chars = String.graphemes(text)
+    len = length(chars)
+
+    if len == 0 do
+      ""
+    else
+      # Build per-character style/entity tags
+      {opens, closes} = build_formatting_tags(len, inline_styles, entity_ranges, entity_map)
+
+      chars
+      |> Enum.with_index()
+      |> Enum.map(fn {char, i} ->
+        open_tags = Map.get(opens, i, "")
+        close_tags = Map.get(closes, i, "")
+        open_tags <> escape_html(char) <> close_tags
+      end)
+      |> Enum.join()
+    end
+  end
+
+  defp build_formatting_tags(len, inline_styles, entity_ranges, entity_map) do
+    # Collect all ranges with their open/close tags
+    ranges =
+      Enum.map(inline_styles, fn %{"offset" => offset, "length" => length, "style" => style} ->
+        tag = style_to_tag(style)
+        {offset, offset + length, tag}
+      end) ++
+        Enum.flat_map(entity_ranges, fn %{"offset" => offset, "length" => length, "key" => key} ->
+          entity = Map.get(entity_map, to_string(key), %{})
+          entity_to_tags(entity, offset, length)
+        end)
+
+    # Build maps of open/close tags per character index
+    Enum.reduce(ranges, {%{}, %{}}, fn {start, stop, {open, close}}, {opens, closes} ->
+      stop = min(stop, len)
+      start = min(start, len - 1)
+
+      opens = Map.update(opens, start, open, &(&1 <> open))
+      closes = Map.update(closes, stop - 1, close, &(close <> &1))
+      {opens, closes}
+    end)
+  end
+
+  defp style_to_tag("ITALIC"), do: {"<em>", "</em>"}
+  defp style_to_tag("BOLD"), do: {"<strong>", "</strong>"}
+  defp style_to_tag("UNDERLINE"), do: {"<u>", "</u>"}
+  defp style_to_tag(_), do: {"", ""}
+
+  defp entity_to_tags(%{"type" => "LINK", "data" => %{"url" => url}}, offset, length) do
+    [{offset, offset + length, {~s(<a href="#{escape_html(url)}">), "</a>"}}]
+  end
+
+  defp entity_to_tags(%{"type" => "IMAGE", "data" => data}, offset, length) do
+    src = escape_html(data["src"] || "")
+    alt = escape_html(data["alt"] || "")
+    [{offset, offset + length, {~s(<img src="#{src}" alt="#{alt}" loading="lazy">), ""}}]
+  end
+
+  defp entity_to_tags(_, _offset, _length), do: []
+
   defp escape_html(text) do
     text
     |> String.replace("&", "&amp;")
     |> String.replace("<", "&lt;")
     |> String.replace(">", "&gt;")
     |> String.replace("\"", "&quot;")
+  end
+
+  defp macronize(text) do
+    """
+    The >'s have already been escaped, but we still
+    need to turn them into macrons.
+    """
+    text
+    |> String.replace("e&gt;", "ē")
+    |> String.replace("o&gt;", "ō")
   end
 
   defp copy_css(output_dir) do
