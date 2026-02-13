@@ -64,7 +64,7 @@ defmodule AHCIP.CommentaryParser do
         markdown_body = Enum.join(body_lines, "\n") |> String.trim()
 
         content_html =
-          case Earmark.as_html(markdown_body) do
+          case Earmark.as_html(markdown_body, smartypants: true) do
             {:ok, html, _} -> html
             {:error, html, _} -> html
           end

@@ -2,12 +2,12 @@ defmodule AHCIP do
   @moduledoc """
   A Homeric Commentary in Progress — Static Site Generator.
 
-  Generates a static HTML reading environment for Homer's Iliad,
-  combining scholar translations with Samuel Butler's prose translation
+  Generates a static HTML reading environment for Homer's Iliad, Odyssey,
+  and the Homeric Hymns, combining scholar translations with prose translations
   as fallback for untranslated sections.
   """
 
-  @file_mapping %{
+  @iliad_file_mapping %{
     "Iliad 01.txt" => 1,
     "Iliad 02.txt" => 2,
     "Iliad 03.txt" => 3,
@@ -22,5 +22,8 @@ defmodule AHCIP do
     "Iliad 23.txt" => 23
   }
 
-  def file_mapping, do: @file_mapping
+  def iliad_file_mapping, do: @iliad_file_mapping
+
+  @deprecated "Use iliad_file_mapping/0 instead"
+  def file_mapping, do: @iliad_file_mapping
 end

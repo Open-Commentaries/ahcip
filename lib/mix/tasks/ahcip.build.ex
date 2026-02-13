@@ -1,6 +1,6 @@
 defmodule Mix.Tasks.Ahcip.Build do
   @moduledoc """
-  Builds the static HTML site from scholar translations and Butler fallback.
+  Builds the static HTML site from scholar translations and TEI fallback texts.
 
   ## Usage
 
@@ -12,6 +12,8 @@ defmodule Mix.Tasks.Ahcip.Build do
 
   use Mix.Task
 
+  alias AHCIP.{WorkRegistry, TEIParser, ButlerFallback, Book}
+
   @shortdoc "Build the AHCIP static site"
 
   @impl Mix.Task
@@ -19,41 +21,120 @@ defmodule Mix.Tasks.Ahcip.Build do
     Mix.Task.run("app.start")
 
     scholar_dir = Application.get_env(:ahcip, :translation_dir)
-    butler_path = Application.get_env(:ahcip, :butler_iliad_tei_path)
+    data_dir = Application.get_env(:ahcip, :data_dir)
     output_dir = Application.get_env(:ahcip, :output_dir)
 
     Mix.shell().info("Building AHCIP site...")
     Mix.shell().info("  Scholar content: #{scholar_dir}")
-    Mix.shell().info("  Butler XML: #{butler_path}")
+    Mix.shell().info("  TEI data dir: #{data_dir}")
     Mix.shell().info("  Output: #{output_dir}")
     Mix.shell().info("")
 
-    # Step 1: Parse scholar translations
-    Mix.shell().info("Parsing scholar translations...")
-    scholar_books = parse_scholar_files(scholar_dir)
-    Mix.shell().info("  Parsed #{length(scholar_books)} scholar files")
+    works_with_content =
+      WorkRegistry.works()
+      |> Enum.map(fn work -> build_work(work, data_dir, scholar_dir) end)
+      |> Enum.reject(&is_nil/1)
 
-    # Step 2: Parse Butler XML
-    Mix.shell().info("Parsing Butler XML...")
-    butler_data = AHCIP.ButlerParser.parse_file(butler_path)
-    Mix.shell().info("  Parsed #{map_size(butler_data)} books from Butler")
-
-    # Step 3: Create book entries for all 24 books (including Butler-only)
-    Mix.shell().info("Merging content...")
-    all_books = build_all_books(scholar_books, butler_data)
-
-    # Step 4: Render site
+    # Render site
     Mix.shell().info("Rendering HTML...")
-    AHCIP.Renderer.render_site(all_books, output_dir)
+    AHCIP.Renderer.render_site(works_with_content, output_dir)
 
     # Report
     Mix.shell().info("")
     Mix.shell().info("Build complete!")
-    report_stats(all_books)
+    report_stats(works_with_content)
+  end
+
+  defp build_work(work, data_dir, scholar_dir) do
+    tei_path = Path.join(data_dir, work.tei_path)
+
+    unless File.exists?(tei_path) do
+      Mix.shell().info("  Skipping #{work.title}: TEI file not found at #{tei_path}")
+      nil
+    else
+      Mix.shell().info("Processing #{work.title}...")
+
+      # Parse TEI
+      tei_data = TEIParser.parse_file(tei_path, work.tei_format)
+
+      # Build sections
+      sections =
+        case work.section_type do
+          :book ->
+            build_book_sections(work, tei_data, scholar_dir)
+
+          :hymn ->
+            build_hymn_sections(work, tei_data)
+        end
+
+      Mix.shell().info("  #{length(sections)} section(s)")
+      {work, sections}
+    end
+  end
+
+  defp build_book_sections(work, tei_data, scholar_dir) do
+    # For the Iliad, merge with scholar translations
+    scholar_by_number =
+      if work.has_scholar_translations do
+        parse_scholar_files(scholar_dir)
+        |> Enum.map(fn book -> {book.number, book} end)
+        |> Enum.into(%{})
+      else
+        %{}
+      end
+
+    for section_num <- work.sections do
+      book =
+        case Map.get(scholar_by_number, section_num) do
+          nil ->
+            %Book{
+              number: section_num,
+              title: nil,
+              translators: [],
+              lines: [],
+              work_slug: work.slug
+            }
+
+          scholar_book ->
+            %{scholar_book | work_slug: work.slug}
+        end
+
+      content = ButlerFallback.merge(book, tei_data)
+      {book, content}
+    end
+  end
+
+  defp build_hymn_sections(work, tei_data) do
+    # Hymns have a single section with all lines as a butler_gap
+    # (no scholar translations)
+    title =
+      case tei_data do
+        %{title: t} when is_binary(t) -> t
+        _ -> work.title
+      end
+
+    sections_data =
+      case tei_data do
+        %{sections: s} -> s
+        _ -> tei_data
+      end
+
+    for section_num <- work.sections do
+      book = %Book{
+        number: section_num,
+        title: title,
+        translators: [],
+        lines: [],
+        work_slug: work.slug
+      }
+
+      content = ButlerFallback.merge(book, sections_data)
+      {book, content}
+    end
   end
 
   defp parse_scholar_files(scholar_dir) do
-    AHCIP.file_mapping()
+    AHCIP.iliad_file_mapping()
     |> Enum.map(fn {filename, _book_num} ->
       path = Path.join(scholar_dir, filename)
 
@@ -67,53 +148,23 @@ defmodule Mix.Tasks.Ahcip.Build do
     |> Enum.reject(&is_nil/1)
   end
 
-  defp build_all_books(scholar_books, butler_data) do
-    scholar_by_number =
-      scholar_books
-      |> Enum.map(fn book -> {book.number, book} end)
-      |> Enum.into(%{})
+  defp report_stats(works_with_content) do
+    for {work, sections} <- works_with_content do
+      total_lines =
+        sections
+        |> Enum.map(fn {book, _} -> length(book.lines) end)
+        |> Enum.sum()
 
-    for book_num <- 1..24 do
-      book =
-        case Map.get(scholar_by_number, book_num) do
-          nil ->
-            # Butler-only book
-            %AHCIP.Book{
-              number: book_num,
-              title: nil,
-              translators: [],
-              lines: []
-            }
-
-          scholar_book ->
-            scholar_book
-        end
-
-      content = AHCIP.ButlerFallback.merge(book, butler_data)
-      {book, content}
+      Mix.shell().info(
+        "  #{work.title}: #{length(sections)} sections, #{total_lines} scholar lines"
+      )
     end
-  end
 
-  defp report_stats(all_books) do
-    total_scholar_lines =
-      all_books
-      |> Enum.map(fn {book, _} -> length(book.lines) end)
+    total_pages =
+      works_with_content
+      |> Enum.map(fn {_, sections} -> length(sections) end)
       |> Enum.sum()
 
-    scholar_count =
-      all_books
-      |> Enum.count(fn {book, _} -> length(book.lines) > 0 end)
-
-    butler_only =
-      all_books
-      |> Enum.count(fn {book, _} -> length(book.lines) == 0 end)
-
-    Mix.shell().info(
-      "  Scholar translations: #{scholar_count} books, #{total_scholar_lines} lines"
-    )
-
-    Mix.shell().info("  Butler-only books: #{butler_only}")
-    Mix.shell().info("  Total books: #{length(all_books)}")
-    Mix.shell().info("  Output files: #{length(all_books) + 1} HTML pages + CSS")
+    Mix.shell().info("  Total: #{total_pages} pages + index + CSS")
   end
 end

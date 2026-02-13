@@ -3,7 +3,7 @@ defmodule AHCIP.CrossRef do
   Handles cross-reference parsing and HTML link generation.
 
   Cross-refs use the format "I-BOOK.LINE" (e.g., "I-1.372").
-  These are rendered as links to `book_N.html#line-N-LINE`.
+  These are rendered as links to `/passages/<slug>/<book>.html#line-<book>-<line>`.
   """
 
   @doc """
@@ -19,9 +19,11 @@ defmodule AHCIP.CrossRef do
 
   @doc """
   Generate an HTML href for a cross-reference.
+
+  Defaults to Iliad paths for backward compatibility with the "I-BOOK.LINE" format.
   """
   def to_href({book, line}) do
-    "book_#{book}.html#line-#{book}-#{line}"
+    to_href("tlg0012.tlg001", book, line)
   end
 
   def to_href(ref_string) when is_binary(ref_string) do
@@ -29,6 +31,13 @@ defmodule AHCIP.CrossRef do
       nil -> "#"
       parsed -> to_href(parsed)
     end
+  end
+
+  @doc """
+  Generate an HTML href with explicit work context.
+  """
+  def to_href(work_slug, book, line) do
+    "/passages/#{work_slug}/#{book}.html#line-#{book}-#{line}"
   end
 
   @doc """

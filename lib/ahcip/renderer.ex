@@ -5,7 +5,7 @@ defmodule AHCIP.Renderer do
 
   require EEx
 
-  alias AHCIP.{CrossRef, Annotation, CommentaryParser}
+  alias AHCIP.{CrossRef, Annotation, CommentaryParser, WorkRegistry}
 
   @templates_dir Path.join([__DIR__, "..", "..", "templates"]) |> Path.expand()
 
@@ -13,26 +13,54 @@ defmodule AHCIP.Renderer do
     :assigns
   ])
 
+  # Attribution strings for fallback translations
+  @iliad_attribution "Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy"
+  @odyssey_attribution "Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy"
+  @hymn_attribution "Translation by Hugh G. Evelyn-White"
+
   @doc """
-  Render the entire site: index page + all book pages.
+  Render the entire site: index page + all work/section pages.
+
+  Expects a list of `{work, [{book, content}]}` tuples.
   """
-  def render_site(books_with_content, output_dir) do
+  def render_site(works_with_content, output_dir) do
     File.mkdir_p!(output_dir)
     File.mkdir_p!(Path.join(output_dir, "css"))
 
-    book_infos = build_book_infos(books_with_content)
+    all_works = WorkRegistry.works()
     commentary_dir = Application.get_env(:ahcip, :commentary_dir, "commentary")
-    comments_by_book = load_comments(commentary_dir)
+    all_comments = load_all_comments(commentary_dir)
 
     # Render index
-    index_html = render_index(book_infos)
+    nav_groups = build_nav_groups(all_works, nil)
+    work_groups = build_index_groups(works_with_content)
+    index_html = render_index(nav_groups, work_groups)
     File.write!(Path.join(output_dir, "index.html"), index_html)
 
-    # Render each book
-    for {book, content} <- books_with_content do
-      book_comments = Map.get(comments_by_book, book.number, [])
-      book_html = render_book(book, content, book_infos, book_comments)
-      File.write!(Path.join(output_dir, "book_#{book.number}.html"), book_html)
+    # Render each work's sections
+    for {work, sections_with_content} <- works_with_content do
+      work_dir = Path.join([output_dir, "passages", work.slug])
+      File.mkdir_p!(work_dir)
+
+      for {book, content} <- sections_with_content do
+        section_slug = "#{work.slug}/#{book.number}"
+        nav_groups = build_nav_groups(all_works, section_slug)
+        comments = get_comments_for_section(all_comments, work, book.number)
+        display_title = AHCIP.ButlerFallback.display_title(book, work)
+        attribution = fallback_attribution(work)
+
+        section_html =
+          render_section(book, content, nav_groups, comments, display_title, attribution)
+
+        filename =
+          if work.section_type == :hymn do
+            "index.html"
+          else
+            "#{book.number}.html"
+          end
+
+        File.write!(Path.join(work_dir, filename), section_html)
+      end
     end
 
     # Copy CSS
@@ -41,42 +69,206 @@ defmodule AHCIP.Renderer do
     :ok
   end
 
-  defp build_book_infos(books_with_content) do
-    scholar_books = MapSet.new(Enum.map(books_with_content, fn {book, _} -> book.number end))
+  defp fallback_attribution(%{slug: "tlg0012.tlg001"}), do: @iliad_attribution
+  defp fallback_attribution(%{slug: "tlg0012.tlg002"}), do: @odyssey_attribution
+  defp fallback_attribution(%{section_type: :hymn}), do: @hymn_attribution
+  defp fallback_attribution(_), do: ""
 
-    for n <- 1..24 do
-      book = Enum.find(books_with_content, fn {b, _} -> b.number == n end)
+  defp build_nav_groups(works, current_slug) do
+    # Group: Iliad, Odyssey, then all Hymns under one group
+    iliad = Enum.find(works, &(&1.slug == "tlg0012.tlg001"))
+    odyssey = Enum.find(works, &(&1.slug == "tlg0012.tlg002"))
+    hymns = Enum.filter(works, &(&1.section_type == :hymn))
 
-      %{
-        number: n,
-        has_scholar:
-          MapSet.member?(scholar_books, n) && book != nil && length(elem(book, 0).lines) > 0,
-        line_count: if(book, do: length(elem(book, 0).lines), else: 0)
-      }
+    groups = []
+
+    groups =
+      if iliad do
+        items =
+          for n <- iliad.sections do
+            slug = "#{iliad.slug}/#{n}"
+
+            %{
+              href: "/passages/#{iliad.slug}/#{n}.html",
+              label: "#{iliad.section_label} #{n}",
+              active: current_slug == slug,
+              css_class: if(iliad.has_scholar_translations, do: "has-scholar", else: "butler-only")
+            }
+          end
+
+        is_open = current_slug != nil && String.starts_with?(current_slug, iliad.slug)
+        groups ++ [%{title: iliad.title, items: items, open: is_open}]
+      else
+        groups
+      end
+
+    groups =
+      if odyssey do
+        items =
+          for n <- odyssey.sections do
+            slug = "#{odyssey.slug}/#{n}"
+
+            %{
+              href: "/passages/#{odyssey.slug}/#{n}.html",
+              label: "#{odyssey.section_label} #{n}",
+              active: current_slug == slug,
+              css_class: "butler-only"
+            }
+          end
+
+        is_open = current_slug != nil && String.starts_with?(current_slug, odyssey.slug)
+        groups ++ [%{title: odyssey.title, items: items, open: is_open}]
+      else
+        groups
+      end
+
+    if length(hymns) > 0 do
+      items =
+        for hymn <- hymns do
+          slug = "#{hymn.slug}/1"
+
+          %{
+            href: "/passages/#{hymn.slug}/index.html",
+            label: hymn.title,
+            active: current_slug == slug,
+            css_class: "butler-only"
+          }
+        end
+
+      is_open = current_slug != nil && String.starts_with?(current_slug, "tlg0013")
+      groups ++ [%{title: "Homeric Hymns", items: items, open: is_open}]
+    else
+      groups
+    end
+  end
+
+  defp build_index_groups(works_with_content) do
+    works_map =
+      works_with_content
+      |> Enum.map(fn {work, sections} -> {work.slug, {work, sections}} end)
+      |> Enum.into(%{})
+
+    groups = []
+
+    # Iliad
+    groups =
+      case Map.get(works_map, "tlg0012.tlg001") do
+        {work, sections} ->
+          items =
+            for {book, _content} <- sections do
+              %{
+                href: "/passages/#{work.slug}/#{book.number}.html",
+                label: "#{work.section_label} #{book.number}",
+                status:
+                  if(length(book.lines) > 0,
+                    do: "#{length(book.lines)} lines translated",
+                    else: "Butler translation"
+                  ),
+                css_class:
+                  if(length(book.lines) > 0, do: "has-scholar", else: "butler-only")
+              }
+            end
+
+          groups ++
+            [
+              %{
+                title: "The Iliad",
+                subtitle:
+                  "Translated by Casey Due, Mary Ebbott, Douglas Frame, Leonard Muellner, and Gregory Nagy",
+                items: items
+              }
+            ]
+
+        nil ->
+          groups
+      end
+
+    # Odyssey
+    groups =
+      case Map.get(works_map, "tlg0012.tlg002") do
+        {work, sections} ->
+          items =
+            for {book, _content} <- sections do
+              %{
+                href: "/passages/#{work.slug}/#{book.number}.html",
+                label: "#{work.section_label} #{book.number}",
+                status: "Butler/Power/Nagy translation",
+                css_class: "butler-only"
+              }
+            end
+
+          groups ++
+            [
+              %{
+                title: "The Odyssey",
+                subtitle:
+                  "Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy",
+                items: items
+              }
+            ]
+
+        nil ->
+          groups
+      end
+
+    # Homeric Hymns
+    hymn_works =
+      works_with_content
+      |> Enum.filter(fn {work, _} -> work.section_type == :hymn end)
+      |> Enum.sort_by(fn {work, _} -> work.slug end)
+
+    if length(hymn_works) > 0 do
+      items =
+        for {work, _sections} <- hymn_works do
+          %{
+            href: "/passages/#{work.slug}/index.html",
+            label: work.title,
+            status: "Evelyn-White translation",
+            css_class: "butler-only"
+          }
+        end
+
+      groups ++
+        [
+          %{
+            title: "Homeric Hymns",
+            subtitle: "Translation by Hugh G. Evelyn-White",
+            items: items
+          }
+        ]
+    else
+      groups
     end
   end
 
   @doc """
   Render the index page.
   """
-  def render_index(book_infos) do
-    nav = render_nav(book_infos, 0)
+  def render_index(nav_groups, work_groups) do
+    nav =
+      EEx.eval_file(
+        Path.join(@templates_dir, "nav.eex"),
+        assigns: [nav_groups: nav_groups]
+      )
 
     content =
       EEx.eval_file(
         Path.join(@templates_dir, "index.eex"),
-        assigns: [nav: nav, books: book_infos]
+        assigns: [nav: nav, work_groups: work_groups]
       )
 
     render_layout("Home", content)
   end
 
   @doc """
-  Render a single book page.
+  Render a single section page.
   """
-  def render_book(book, content, book_infos, comments \\ []) do
-    nav = render_nav(book_infos, book.number)
-    display_title = AHCIP.ButlerFallback.display_title(book)
+  def render_section(book, content, nav_groups, comments, display_title, attribution) do
+    nav =
+      EEx.eval_file(
+        Path.join(@templates_dir, "nav.eex"),
+        assigns: [nav_groups: nav_groups]
+      )
 
     book_content =
       EEx.eval_file(
@@ -88,18 +280,12 @@ defmodule AHCIP.Renderer do
           translators: book.translators,
           content: content,
           book_number: book.number,
-          comments: comments
+          comments: comments,
+          fallback_attribution: attribution
         ]
       )
 
     render_layout(display_title, book_content)
-  end
-
-  defp render_nav(book_infos, current_book) do
-    EEx.eval_file(
-      Path.join(@templates_dir, "nav.eex"),
-      assigns: [books: book_infos, current_book: current_book]
-    )
   end
 
   defp render_layout(title, content) do
@@ -110,10 +296,42 @@ defmodule AHCIP.Renderer do
   end
 
   @doc """
+  Load all comments from commentary directory, grouped by work and section.
+  Returns %{"work:section" => [comment, ...]} sorted by start_line.
+  """
+  def load_all_comments(commentary_dir) do
+    if File.dir?(commentary_dir) do
+      CommentaryParser.load(commentary_dir)
+      |> Enum.group_by(fn c -> "#{c["work"]}:#{c["book"]}" end)
+      |> Enum.into(%{}, fn {key, comments} ->
+        {key, Enum.sort_by(comments, & &1["start_line"])}
+      end)
+    else
+      %{}
+    end
+  end
+
+  defp get_comments_for_section(all_comments, work, section_number) do
+    work_name =
+      case work.slug do
+        "tlg0012.tlg001" -> "iliad"
+        "tlg0012.tlg002" -> "odyssey"
+        slug when is_binary(slug) ->
+          if String.starts_with?(slug, "tlg0013"), do: "hymn", else: nil
+      end
+
+    if work_name do
+      Map.get(all_comments, "#{work_name}:#{section_number}", [])
+    else
+      []
+    end
+  end
+
+  @doc """
   Render a line's text with inline Greek glosses styled and annotation popovers.
   """
   def render_line_text(line, _book_number) do
-    text = line.text
+    text = smartquotes(line.text)
 
     # Style Greek glosses inline
     glosses =
@@ -213,24 +431,6 @@ defmodule AHCIP.Renderer do
     escape_html(content)
   end
 
-  @doc """
-  Load comments from per-author commentary markdown files, grouped by Iliad book number.
-  Returns %{book_number => [comment, ...]} sorted by start_line.
-  Gracefully returns empty map if directory is missing.
-  """
-  def load_comments(commentary_dir) do
-    if File.dir?(commentary_dir) do
-      CommentaryParser.load(commentary_dir)
-      |> Enum.filter(&(&1["work"] == "iliad"))
-      |> Enum.group_by(& &1["book"])
-      |> Enum.into(%{}, fn {book, comments} ->
-        {book, Enum.sort_by(comments, & &1["start_line"])}
-      end)
-    else
-      %{}
-    end
-  end
-
   def render_draftjs(%{"blocks" => blocks, "entityMap" => entity_map}) do
     blocks
     |> Enum.map(&render_draftjs_block(&1, entity_map))
@@ -323,6 +523,37 @@ defmodule AHCIP.Renderer do
     text
     |> String.replace("e&gt;", "ē")
     |> String.replace("o&gt;", "ō")
+  end
+
+  @doc """
+  Convert straight quotes and apostrophes to their curly/smart equivalents.
+  """
+  def smartquotes(text) do
+    text
+    # Apostrophes in contractions first (word'word)
+    |> String.replace(~r/(\w)'(\w)/, "\\1\u2019\\2")
+    # Double quotes via toggle (odd = open, even = close)
+    |> replace_double_quotes()
+    # Opening single quote after whitespace or start of string
+    |> String.replace(~r/(^|\s)'/, "\\1\u2018")
+    # Remaining single quotes → right single quote (closing/apostrophe)
+    |> String.replace("'", "\u2019")
+  end
+
+  defp replace_double_quotes(text) do
+    parts = String.split(text, "\"", parts: :infinity)
+
+    {result, _} =
+      Enum.reduce(parts, {"", true}, fn segment, {acc, is_open} ->
+        if acc == "" do
+          {segment, is_open}
+        else
+          quote_char = if is_open, do: "\u201C", else: "\u201D"
+          {acc <> quote_char <> segment, !is_open}
+        end
+      end)
+
+    result
   end
 
   defp copy_css(output_dir) do

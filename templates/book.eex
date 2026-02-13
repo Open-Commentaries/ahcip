@@ -24,9 +24,9 @@
             <details>
               <summary>Lines <%= gap.start_line %>&#8211;<%= gap.end_line %>: Scholar translation not yet available</summary>
               <div class="butler-text">
-                <p class="butler-attribution">Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy</p>
+                <p class="butler-attribution"><%= @fallback_attribution %></p>
                 <%= for paragraph <- String.split(gap.butler_text, "\n\n") do %>
-                  <p><%= paragraph %></p>
+                  <p><%= AHCIP.Renderer.smartquotes(paragraph) %></p>
                 <% end %>
               </div>
             </details>

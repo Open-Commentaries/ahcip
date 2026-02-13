@@ -5,8 +5,9 @@ defmodule AHCIP.Book do
           preamble: String.t() | nil,
           translators: [String.t()],
           lines: [AHCIP.Line.t()],
-          source_file: String.t() | nil
+          source_file: String.t() | nil,
+          work_slug: String.t() | nil
         }
 
-  defstruct [:number, :title, :preamble, :source_file, translators: [], lines: []]
+  defstruct [:number, :title, :preamble, :source_file, :work_slug, translators: [], lines: []]
 end
