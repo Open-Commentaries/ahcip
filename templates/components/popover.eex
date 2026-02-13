@@ -1,0 +1,9 @@
+<span class="annotation-marker">
+    <details class="annotation-details">
+        <summary class="annotation-trigger"><sup><%= @superscript %></sup></summary>
+        <span class="annotation-popover">
+            <span class="annotation-type"><%= @type_label %></span>
+            <span class="annotation-text"><%= @content %></span>
+        </span>
+    </details>
+</span>

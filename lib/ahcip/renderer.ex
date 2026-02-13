@@ -3,9 +3,15 @@ defmodule AHCIP.Renderer do
   Renders parsed book data into static HTML files using EEx templates.
   """
 
+  require EEx
+
   alias AHCIP.{CrossRef, Annotation, CommentaryParser}
 
   @templates_dir Path.join([__DIR__, "..", "..", "templates"]) |> Path.expand()
+
+  EEx.function_from_file(:def, :popover, Path.join([@templates_dir, "components", "popover.eex"]), [
+    :assigns
+  ])
 
   @doc """
   Render the entire site: index page + all book pages.
@@ -151,15 +157,7 @@ defmodule AHCIP.Renderer do
         type_label = note_type_label(ann.type)
         content = render_annotation_content(ann)
 
-        ~s(<span class="annotation-marker">) <>
-          ~s(<details class="annotation-details">) <>
-          ~s(<summary class="annotation-trigger"><sup>#{superscript}</sup></summary>) <>
-          ~s(<span class="annotation-popover">) <>
-          ~s(<span class="annotation-type">#{type_label}</span>) <>
-          ~s(<span class="annotation-text">#{content}</span>) <>
-          ~s(</span>) <>
-          ~s(</details>) <>
-          ~s(</span>)
+        popover(superscript: superscript, type_label: type_label, content: content)
       end)
       |> Enum.join("")
 
