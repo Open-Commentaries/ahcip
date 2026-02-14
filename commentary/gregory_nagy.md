@@ -15544,7 +15544,7 @@ Athena intervenes in the feuding between the relatives of the suitors on one sid
 
 ---
 
-@urn:cts:greekLit:tlg0013.tlg001:1.122-1.124
+@urn:cts:greekLit:tlg0012.tlg001:16.122-16.124
 :citation_urn: urn:cts:CHS:Commentaries.AHCIP:HomericHymns.1.122-1.124.8ksTWCz
 :created_at: 2020-03-12T16:46:52.098Z
 :updated_at: 2020-03-12T16:46:52.098Z
@@ -15555,7 +15555,7 @@ See also the comment on I.13.688.
 
 ---
 
-@urn:cts:greekLit:tlg0013.tlg001:1.414-1.421
+@urn:cts:greekLit:tlg0012.tlg001:16.414-16.421
 :citation_urn: urn:cts:CHS:Commentaries.AHCIP:HomericHymns.1.414-1.421.uD3NCsN
 :created_at: 2020-03-12T16:46:52.139Z
 :updated_at: 2020-03-12T16:46:52.139Z

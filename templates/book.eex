@@ -42,7 +42,11 @@
     <article class="commentary-card" id="commentary-<%= comment["start_line"] %>-<%= comment["end_line"] %>">
       <details>
         <summary class="commentary-card-header">
-          <span class="commentary-lines">Lines <%= comment["start_line"] %>&ndash;<%= comment["end_line"] %></span>
+          <%= if comment["start_line"] == comment["end_line"] do %>
+            <span class="commentary-lines">Line <%= comment["start_line"] %></span>
+          <% else %>
+            <span class="commentary-lines">Lines <%= comment["start_line"] %>&ndash;<%= comment["end_line"] %></span>
+          <% end %>
           <%= if comment["title"] do %>
             <span class="commentary-card-title"><%= comment["title"] %></span>
           <% end %>

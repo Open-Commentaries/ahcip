@@ -312,16 +312,16 @@ defmodule AHCIP.Renderer do
   end
 
   defp get_comments_for_section(all_comments, work, section_number) do
-    work_name =
+    {work_name, comment_book} =
       case work.slug do
-        "tlg0012.tlg001" -> "iliad"
-        "tlg0012.tlg002" -> "odyssey"
-        slug when is_binary(slug) ->
-          if String.starts_with?(slug, "tlg0013"), do: "hymn", else: nil
+        "tlg0012.tlg001" -> {"iliad", section_number}
+        "tlg0012.tlg002" -> {"odyssey", section_number}
+        "tlg0013.tlg" <> padded_num -> {"hymn", String.to_integer(padded_num)}
+        _ -> {nil, nil}
       end
 
     if work_name do
-      Map.get(all_comments, "#{work_name}:#{section_number}", [])
+      Map.get(all_comments, "#{work_name}:#{comment_book}", [])
     else
       []
     end
