@@ -1,6 +1,6 @@
-defmodule AHCIP.Parser do
+defmodule Kodon.Parser do
   @moduledoc """
-  Parses scholar translation .txt files into %AHCIP.Book{} structs.
+  Parses scholar translation .txt files into %Kodon.Book{} structs.
 
   Handles multiple format variations across the translation files:
   - Single long lines with no newlines between verses
@@ -9,7 +9,7 @@ defmodule AHCIP.Parser do
   - Tab-separated format (Iliad 22)
   """
 
-  alias AHCIP.{Book, Line, Annotation}
+  alias Kodon.{Book, Line, Annotation}
 
   # Matches line numbers like [1], [40a], [302 v.l.], [001]
   # Must NOT match [n:...], [=...], [me>nis], etc.

@@ -1,6 +1,6 @@
-defmodule AHCIP.HtmlToMarkdown do
+defmodule Kodon.HtmlToMarkdown do
   @moduledoc """
-  Converts a subset of HTML (as found in AHCIP comment content) to Markdown.
+  Converts a subset of HTML (as found in Kodon comment content) to Markdown.
 
   Handles: <p>, <em>, <i>, <strong>, <a>, <img>, <br>, <ol>/<li>, <span>.
   Passes through: <u>, <sub>, <sup> (no standard Markdown equivalent).

@@ -1,4 +1,4 @@
-defmodule AHCIP.CrossRef do
+defmodule Kodon.CrossRef do
   @moduledoc """
   Handles cross-reference parsing and HTML link generation.
 

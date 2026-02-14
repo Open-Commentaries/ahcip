@@ -1,4 +1,4 @@
-defmodule AHCIP.CommentExtractor do
+defmodule Kodon.CommentExtractor do
   @moduledoc """
   Extracts scholarly commentary from a PostgreSQL text-format dump file.
 

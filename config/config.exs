@@ -1,6 +1,6 @@
 import Config
 
-config :ahcip,
+config :kodon,
  output_dir: "output",
   site_title: "A Homeric Commentary in Progress",
   commentary_dir: "commentary",

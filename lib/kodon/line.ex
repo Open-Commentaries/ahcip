@@ -1,10 +1,10 @@
-defmodule AHCIP.Line do
+defmodule Kodon.Line do
   @type t :: %__MODULE__{
           number: String.t(),
           sort_key: {integer(), String.t()},
           text: String.t(),
           raw_text: String.t(),
-          annotations: [AHCIP.Annotation.t()]
+          annotations: [Kodon.Annotation.t()]
         }
 
   defstruct [:number, :sort_key, :text, :raw_text, annotations: []]

@@ -1,4 +1,4 @@
-defmodule AHCIP.Annotation do
+defmodule Kodon.Annotation do
   @type annotation_type ::
           :greek_gloss
           | :note

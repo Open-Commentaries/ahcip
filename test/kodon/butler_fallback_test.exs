@@ -1,7 +1,7 @@
-defmodule AHCIP.ButlerFallbackTest do
+defmodule Kodon.ButlerFallbackTest do
   use ExUnit.Case, async: true
 
-  alias AHCIP.{Book, Line, ButlerFallback}
+  alias Kodon.{Book, Line, ButlerFallback}
 
   # Simple mock butler data for testing
   defp mock_butler do

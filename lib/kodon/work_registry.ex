@@ -1,4 +1,4 @@
-defmodule AHCIP.WorkRegistry do
+defmodule Kodon.WorkRegistry do
   @moduledoc """
   Central registry of known works and their metadata.
 

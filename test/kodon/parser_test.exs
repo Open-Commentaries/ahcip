@@ -1,7 +1,7 @@
-defmodule AHCIP.ParserTest do
+defmodule Kodon.ParserTest do
   use ExUnit.Case, async: true
 
-  alias AHCIP.{Parser, Line, Annotation}
+  alias Kodon.{Parser, Line, Annotation}
 
   @fixtures_dir Path.join([__DIR__, "..", "fixtures"]) |> Path.expand()
 
@@ -274,7 +274,7 @@ defmodule AHCIP.ParserTest do
     test "parses Book 1 excerpt" do
       book = Parser.parse_file(Path.join(@fixtures_dir, "book_01_excerpt.txt"))
 
-      assert %AHCIP.Book{} = book
+      assert %Kodon.Book{} = book
       assert book.number == 1
       assert book.title == "SCROLL I-1"
       assert length(book.translators) == 5

@@ -1,10 +1,10 @@
-defmodule AHCIP.CommentaryFormatter do
+defmodule Kodon.CommentaryFormatter do
   @moduledoc """
   Reads comments.json, groups by primary author, and writes per-author
   commentary markdown files to the output directory.
   """
 
-  alias AHCIP.{HtmlToMarkdown, Renderer}
+  alias Kodon.{HtmlToMarkdown, Renderer}
 
   @work_order %{"iliad" => 0, "odyssey" => 1, "hymn" => 2}
 

@@ -1,4 +1,4 @@
-defmodule AHCIP.ButlerFallback do
+defmodule Kodon.ButlerFallback do
   @moduledoc """
   Detects gaps in scholar translations and merges with fallback text.
 
@@ -6,7 +6,7 @@ defmodule AHCIP.ButlerFallback do
   "Lines X-Y: Scholar translation not yet available" with expandable fallback text.
   """
 
-  alias AHCIP.{Book, Line}
+  alias Kodon.{Book, Line}
 
   @type content_item ::
           {:scholar_line, Line.t()}
@@ -26,11 +26,11 @@ defmodule AHCIP.ButlerFallback do
   - `{:butler_gap, %{start_line, end_line, butler_text}}` for gaps
   """
   def merge(book, tei_data) do
-    last_line = AHCIP.TEIParser.book_last_line(tei_data, book.number)
+    last_line = Kodon.TEIParser.book_last_line(tei_data, book.number)
 
     if length(book.lines) == 0 do
       # Entire section is fallback
-      text = AHCIP.TEIParser.lookup(tei_data, book.number, 1, last_line)
+      text = Kodon.TEIParser.lookup(tei_data, book.number, 1, last_line)
 
       if text != "" do
         [{:butler_gap, %{start_line: 1, end_line: last_line, butler_text: text}}]
@@ -103,7 +103,7 @@ defmodule AHCIP.ButlerFallback do
     # Only create a gap if it spans at least 2 lines (small gaps between
     # contiguous lines with sub-numbers like 40a are not real gaps)
     if end_line - start_line >= 1 do
-      text = AHCIP.TEIParser.lookup(tei_data, section_number, start_line, end_line)
+      text = Kodon.TEIParser.lookup(tei_data, section_number, start_line, end_line)
 
       if text != "" do
         [{:butler_gap, %{start_line: start_line, end_line: end_line, butler_text: text}}]

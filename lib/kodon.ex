@@ -1,4 +1,4 @@
-defmodule AHCIP do
+defmodule Kodon do
   @moduledoc """
   A Homeric Commentary in Progress — Static Site Generator.
 

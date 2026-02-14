@@ -1,11 +1,11 @@
-defmodule AHCIP.Renderer do
+defmodule Kodon.Renderer do
   @moduledoc """
   Renders parsed book data into static HTML files using EEx templates.
   """
 
   require EEx
 
-  alias AHCIP.{CrossRef, Annotation, CommentaryParser, WorkRegistry}
+  alias Kodon.{CrossRef, Annotation, CommentaryParser, WorkRegistry}
 
   @templates_dir Path.join([__DIR__, "..", "..", "templates"]) |> Path.expand()
 
@@ -28,7 +28,7 @@ defmodule AHCIP.Renderer do
     File.mkdir_p!(Path.join(output_dir, "css"))
 
     all_works = WorkRegistry.works()
-    commentary_dir = Application.get_env(:ahcip, :commentary_dir, "commentary")
+    commentary_dir = Application.get_env(:kodon, :commentary_dir, "commentary")
     all_comments = load_all_comments(commentary_dir)
 
     # Render index
@@ -46,7 +46,7 @@ defmodule AHCIP.Renderer do
         section_slug = "#{work.slug}/#{book.number}"
         nav_groups = build_nav_groups(all_works, section_slug)
         comments = get_comments_for_section(all_comments, work, book.number)
-        display_title = AHCIP.ButlerFallback.display_title(book, work)
+        display_title = Kodon.ButlerFallback.display_title(book, work)
         attribution = fallback_attribution(work)
 
         section_html =

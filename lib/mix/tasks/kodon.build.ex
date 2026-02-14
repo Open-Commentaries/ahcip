@@ -1,10 +1,10 @@
-defmodule Mix.Tasks.Ahcip.Build do
+defmodule Mix.Tasks.Kodon.Build do
   @moduledoc """
   Builds the static HTML site from scholar translations and TEI fallback texts.
 
   ## Usage
 
-      mix ahcip.build
+      mix kodon.build
 
   Reads content from configured paths, parses, merges, and renders
   HTML output to the configured output directory.
@@ -12,19 +12,19 @@ defmodule Mix.Tasks.Ahcip.Build do
 
   use Mix.Task
 
-  alias AHCIP.{WorkRegistry, TEIParser, ButlerFallback, Book}
+  alias Kodon.{WorkRegistry, TEIParser, ButlerFallback, Book}
 
-  @shortdoc "Build the AHCIP static site"
+  @shortdoc "Build the Kodon static site"
 
   @impl Mix.Task
   def run(_args) do
     Mix.Task.run("app.start")
 
-    scholar_dir = Application.get_env(:ahcip, :translation_dir)
-    data_dir = Application.get_env(:ahcip, :data_dir)
-    output_dir = Application.get_env(:ahcip, :output_dir)
+    scholar_dir = Application.get_env(:kodon, :translation_dir)
+    data_dir = Application.get_env(:kodon, :data_dir)
+    output_dir = Application.get_env(:kodon, :output_dir)
 
-    Mix.shell().info("Building AHCIP site...")
+    Mix.shell().info("Building Kodon site...")
     Mix.shell().info("  Scholar content: #{scholar_dir}")
     Mix.shell().info("  TEI data dir: #{data_dir}")
     Mix.shell().info("  Output: #{output_dir}")
@@ -37,7 +37,7 @@ defmodule Mix.Tasks.Ahcip.Build do
 
     # Render site
     Mix.shell().info("Rendering HTML...")
-    AHCIP.Renderer.render_site(works_with_content, output_dir)
+    Kodon.Renderer.render_site(works_with_content, output_dir)
 
     # Report
     Mix.shell().info("")
@@ -134,12 +134,12 @@ defmodule Mix.Tasks.Ahcip.Build do
   end
 
   defp parse_scholar_files(scholar_dir) do
-    AHCIP.iliad_file_mapping()
+    Kodon.iliad_file_mapping()
     |> Enum.map(fn {filename, _book_num} ->
       path = Path.join(scholar_dir, filename)
 
       if File.exists?(path) do
-        AHCIP.Parser.parse_file(path)
+        Kodon.Parser.parse_file(path)
       else
         Mix.shell().info("  WARNING: #{filename} not found, skipping")
         nil

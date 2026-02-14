@@ -1,10 +1,10 @@
-defmodule Mix.Tasks.Ahcip.ExtractComments do
+defmodule Mix.Tasks.Kodon.ExtractComments do
   @moduledoc """
   Extracts scholarly commentary from a PostgreSQL dump file to JSON.
 
   ## Usage
 
-      mix ahcip.extract_comments [dump_path]
+      mix kodon.extract_comments [dump_path]
 
   Parses the pg_dump file, filters to the homer project, selects the
   newest revision of each comment, and writes JSON to the output directory.
@@ -23,10 +23,10 @@ defmodule Mix.Tasks.Ahcip.ExtractComments do
     dump_path =
       case args do
         [path | _] -> path
-        [] -> Application.get_env(:ahcip, :commentary_dump_path)
+        [] -> Application.get_env(:kodon, :commentary_dump_path)
       end
 
-    output_dir = Application.get_env(:ahcip, :output_dir)
+    output_dir = Application.get_env(:kodon, :output_dir)
     output_path = Path.join(output_dir, "comments.json")
 
     Mix.shell().info("Extracting comments...")
@@ -34,7 +34,7 @@ defmodule Mix.Tasks.Ahcip.ExtractComments do
     Mix.shell().info("  Output: #{output_path}")
     Mix.shell().info("")
 
-    count = AHCIP.CommentExtractor.extract(dump_path, output_path)
+    count = Kodon.CommentExtractor.extract(dump_path, output_path)
 
     Mix.shell().info("Extracted #{count} comments to #{output_path}")
   end

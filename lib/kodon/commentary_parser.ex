@@ -1,10 +1,10 @@
-defmodule AHCIP.CommentaryParser do
+defmodule Kodon.CommentaryParser do
   @moduledoc """
   Parses per-author commentary markdown files from the `commentary/` directory
   into comment maps suitable for rendering in the site.
   """
 
-  alias AHCIP.CommentExtractor
+  alias Kodon.CommentExtractor
 
   @doc """
   Load all commentary files from `commentary_dir` and return a flat list of comment maps.

@@ -1,11 +1,11 @@
-defmodule Mix.Tasks.Ahcip.Server do
+defmodule Mix.Tasks.Kodon.Server do
   @moduledoc """
   Starts a local development server for the built site.
 
   ## Usage
 
-      mix ahcip.server          # serves on port 4000
-      mix ahcip.server 8080     # serves on custom port
+      mix kodon.server          # serves on port 4000
+      mix kodon.server 8080     # serves on custom port
 
   Serves static files from the output directory with proper MIME types.
   """
@@ -38,11 +38,11 @@ defmodule Mix.Tasks.Ahcip.Server do
       end
 
     output_dir =
-      Application.get_env(:ahcip, :output_dir, "output")
+      Application.get_env(:kodon, :output_dir, "output")
       |> Path.expand()
 
     unless File.dir?(output_dir) do
-      Mix.raise("Output directory #{output_dir} not found. Run `mix ahcip.build` first.")
+      Mix.raise("Output directory #{output_dir} not found. Run `mix kodon.build` first.")
     end
 
     {:ok, socket} = :gen_tcp.listen(port, [:binary, packet: :http_bin, active: false, reuseaddr: true])

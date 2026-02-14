@@ -1,10 +1,10 @@
-defmodule Mix.Tasks.Ahcip.FormatCommentary do
+defmodule Mix.Tasks.Kodon.FormatCommentary do
   @moduledoc """
   Formats extracted comments into per-author commentary markdown files.
 
   ## Usage
 
-      mix ahcip.format_commentary [json_path] [output_dir]
+      mix kodon.format_commentary [json_path] [output_dir]
 
   Reads comments from JSON (default: output/comments.json), groups by
   primary author, and writes one markdown file per author to the output
@@ -23,7 +23,7 @@ defmodule Mix.Tasks.Ahcip.FormatCommentary do
       case args do
         [json, dir | _] -> {json, dir}
         [json | _] -> {json, "commentary"}
-        [] -> {Path.join(Application.get_env(:ahcip, :output_dir, "output"), "comments.json"), "commentary"}
+        [] -> {Path.join(Application.get_env(:kodon, :output_dir, "output"), "comments.json"), "commentary"}
       end
 
     Mix.shell().info("Formatting commentary...")
@@ -31,7 +31,7 @@ defmodule Mix.Tasks.Ahcip.FormatCommentary do
     Mix.shell().info("  Output: #{output_dir}")
     Mix.shell().info("")
 
-    results = AHCIP.CommentaryFormatter.format(json_path, output_dir)
+    results = Kodon.CommentaryFormatter.format(json_path, output_dir)
 
     for {filename, count} <- results do
       Mix.shell().info("  #{filename}: #{count} comments")

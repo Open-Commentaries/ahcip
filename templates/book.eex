@@ -15,9 +15,9 @@
     <%= for item <- @content do %>
       <%= case item do %>
         <% {:scholar_line, line} -> %>
-          <div class="line" id="<%= AHCIP.CrossRef.line_id(@book_number, line.number) %>">
+          <div class="line" id="<%= Kodon.CrossRef.line_id(@book_number, line.number) %>">
             <span class="line-number"><%= line.number %></span>
-            <span class="line-text"><%= AHCIP.Renderer.render_line_text(line, @book_number) %></span>
+            <span class="line-text"><%= Kodon.Renderer.render_line_text(line, @book_number) %></span>
           </div>
         <% {:butler_gap, gap} -> %>
           <div class="butler-gap">
@@ -26,7 +26,7 @@
               <div class="butler-text">
                 <p class="butler-attribution"><%= @fallback_attribution %></p>
                 <%= for paragraph <- String.split(gap.butler_text, "\n\n") do %>
-                  <p><%= AHCIP.Renderer.smartquotes(paragraph) %></p>
+                  <p><%= Kodon.Renderer.smartquotes(paragraph) %></p>
                 <% end %>
               </div>
             </details>

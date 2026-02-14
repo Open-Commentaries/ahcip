@@ -1,4 +1,4 @@
-defmodule AHCIP.TEIParser do
+defmodule Kodon.TEIParser do
   @moduledoc """
   Parses TEI XML translations into structured lookups.
 
