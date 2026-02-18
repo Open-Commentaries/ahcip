@@ -12,36 +12,48 @@
   </header>
 
   <div class="book-content">
+    <% is_hymn = String.starts_with?(@work_slug || "", "tlg0013") %>
+    <% scaife_ref = fn n ->
+      if is_hymn, do: to_string(n), else: "#{@book_number}.#{n}"
+    end %>
     <%= for item <- @content do %>
       <%= case item do %>
         <% {:scholar_line, line} -> %>
           <div class="line" id="<%= Kodon.CrossRef.line_id(@book_number, line.number) %>">
             <span class="line-number"><%= line.number %></span>
             <div class="line-text">
-              <%= Kodon.Renderer.render_line_text(line, @book_number) %>
               <%= case Map.get(@greek_lines, to_string(line.number)) do %>
                 <% nil -> %>
+                  <%= Kodon.Renderer.render_line_text(line, @book_number) %>
                 <% greek_text -> %>
-                  <details class="greek-source">
-                    <summary class="greek-source-toggle">Greek</summary>
-                    <span class="greek-source-text" lang="grc"><%= greek_text %></span>
+                  <span class="greek-primary" lang="grc"><%= greek_text %></span>
+                  <details class="translation-source">
+                    <summary class="translation-toggle">Translation</summary>
+                    <div class="translation-text">
+                      <%= Kodon.Renderer.render_line_text(line, @book_number) %>
+                    </div>
                   </details>
               <% end %>
             </div>
           </div>
         <% {:fallback_gap, gap} -> %>
-          <div class="butler-gap">
-            <details>
-              <summary>Lines <%= gap.start_line %>&#8211;<%= gap.end_line %>: Scholar translation not yet available</summary>
-              <div class="butler-text">
-                <p class="butler-attribution"><%= @fallback_attribution %></p>
-                <%= if gap.rendered_html do %>
-                  <%= gap.rendered_html %>
-                <% else %>
-                  <p><em>Fallback text not available</em></p>
-                <% end %>
-              </div>
-            </details>
+          <%= for line_num <- gap.start_line..gap.end_line do %>
+            <%= case Map.get(@greek_lines, to_string(line_num)) do %>
+              <% nil -> %>
+              <% greek_text -> %>
+                <div class="line" id="line-<%= @book_number %>-<%= line_num %>">
+                  <span class="line-number"><%= line_num %></span>
+                  <div class="line-text">
+                    <span class="greek-primary" lang="grc"><%= greek_text %></span>
+                  </div>
+                </div>
+            <% end %>
+          <% end %>
+          <div class="scaife-gap">
+            <a href="https://scaife.perseus.org/reader/urn:cts:greekLit:<%= @work_slug %>:<%= scaife_ref.(gap.start_line) %>-<%= scaife_ref.(gap.end_line) %>/"
+               target="_blank" rel="noopener noreferrer" class="scaife-ref">
+              Read lines <%= gap.start_line %>&#8211;<%= gap.end_line %> in translation on Scaife &#8599;
+            </a>
           </div>
       <% end %>
     <% end %>

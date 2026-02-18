@@ -139,8 +139,11 @@ defmodule AHCIP.FallbackMerge do
     l_elements =
       parsed.elements
       |> Enum.filter(&(&1.tagname == "l" && &1.attrs["n"] != nil))
-      |> Enum.map(fn el ->
-        {String.to_integer(el.attrs["n"]), el}
+      |> Enum.flat_map(fn el ->
+        case parse_line_n(el.attrs["n"]) do
+          nil -> []
+          sort_key -> [{sort_key, el}]
+        end
       end)
       |> Enum.sort_by(&elem(&1, 0))
 
@@ -162,7 +165,9 @@ defmodule AHCIP.FallbackMerge do
   defp last_line_number({:line, l_elements, _other}) do
     case l_elements do
       [] -> 0
-      list -> list |> List.last() |> elem(0)
+      list ->
+        {[{base, _} | _], _el} = List.last(list)
+        base
     end
   end
 
@@ -176,7 +181,7 @@ defmodule AHCIP.FallbackMerge do
 
   defp elements_for_range({:line, l_elements, _other}, start_line, end_line) do
     l_elements
-    |> Enum.filter(fn {n, _el} -> n >= start_line && n <= end_line end)
+    |> Enum.filter(fn {[{base, _} | _], _el} -> base >= start_line && base <= end_line end)
     |> Enum.map(&elem(&1, 1))
   end
 
@@ -247,5 +252,32 @@ defmodule AHCIP.FallbackMerge do
     else
       []
     end
+  end
+
+  # Parse a TEI line citation into a sortable list of {integer, suffix} tuples,
+  # one per "."-separated component. Each component is a decimal number with an
+  # optional single letter a–e (case-insensitive) appended.
+  #
+  # Examples:
+  #   "132"     -> [{132, ""}]
+  #   "132a"    -> [{132, "a"}]
+  #   "1.5"     -> [{1, ""}, {5, ""}]
+  #   "5.4.3.3" -> [{5, ""}, {4, ""}, {3, ""}, {3, ""}]
+  #   "1.457b"  -> [{1, ""}, {457, "b"}]
+  #
+  # Returns nil if any component cannot be parsed, so callers can skip the element.
+  defp parse_line_n(n_str) do
+    parts = String.split(n_str, ".")
+
+    parsed =
+      Enum.map(parts, fn part ->
+        case Regex.run(~r/^(\d+)([a-eA-E])?$/, part) do
+          [_, base, suffix] -> {String.to_integer(base), String.downcase(suffix)}
+          [_, base] -> {String.to_integer(base), ""}
+          _ -> nil
+        end
+      end)
+
+    if Enum.all?(parsed, &(&1 != nil)), do: parsed, else: nil
   end
 end
