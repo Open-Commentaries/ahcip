@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt><title>Test Homeric Hymn</title></titleStmt>
+      <publicationStmt><p>Test</p></publicationStmt>
+      <sourceDesc><p>Test source</p></sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div type="edition" n="urn:cts:greekLit:tlg0013.tlg003.test-eng1" xml:lang="eng">
+        <div type="textpart" subtype="section" n="1">
+          <head>To Dionysus</head>
+          <l n="1">I will tell of Dionysus, the son of glorious Semele,</l>
+          <l n="2">how he appeared on a jutting headland by the shore</l>
+          <l n="3">of the fruitless sea, seeming like a stripling</l>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>

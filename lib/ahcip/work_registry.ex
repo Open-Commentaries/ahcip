@@ -1,6 +1,6 @@
-defmodule Kodon.WorkRegistry do
+defmodule AHCIP.WorkRegistry do
   @moduledoc """
-  Central registry of known works and their metadata.
+  Central registry of known Homeric works and their metadata.
 
   Each work entry describes how to find, parse, and route a CTS text.
   """
@@ -68,6 +68,7 @@ defmodule Kodon.WorkRegistry do
   @doc """
   Returns the Iliad work entry.
   """
+  @spec iliad() :: work()
   def iliad do
     %{
       urn: "urn:cts:greekLit:tlg0012.tlg001",
@@ -85,6 +86,7 @@ defmodule Kodon.WorkRegistry do
   @doc """
   Returns the Odyssey work entry.
   """
+  @spec odyssey() :: work()
   def odyssey do
     %{
       urn: "urn:cts:greekLit:tlg0012.tlg002",
@@ -102,6 +104,7 @@ defmodule Kodon.WorkRegistry do
   @doc """
   Returns work entries for all 33 Homeric Hymns.
   """
+  @spec hymns() :: [work()]
   def hymns do
     for n <- 1..33 do
       padded = String.pad_leading(Integer.to_string(n), 3, "0")
@@ -131,5 +134,6 @@ defmodule Kodon.WorkRegistry do
   @doc """
   Get the fallback hymn title for a given hymn number.
   """
+  @spec hymn_title(integer()) :: String.t()
   def hymn_title(n), do: Map.get(@hymn_titles, n, "Hymn #{n}")
 end

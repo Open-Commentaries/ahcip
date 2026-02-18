@@ -1,10 +1,6 @@
-defmodule Kodon do
+defmodule AHCIP.Translations do
   @moduledoc """
-  A Homeric Commentary in Progress — Static Site Generator.
-
-  Generates a static HTML reading environment for Homer's Iliad, Odyssey,
-  and the Homeric Hymns, combining scholar translations with prose translations
-  as fallback for untranslated sections.
+  Maps scholar translation filenames to Iliad book numbers.
   """
 
   @iliad_file_mapping %{
@@ -22,8 +18,9 @@ defmodule Kodon do
     "Iliad 23.txt" => 23
   }
 
+  @doc """
+  Returns the mapping of scholar translation filenames to Iliad book numbers.
+  """
+  @spec iliad_file_mapping() :: %{String.t() => integer()}
   def iliad_file_mapping, do: @iliad_file_mapping
-
-  @deprecated "Use iliad_file_mapping/0 instead"
-  def file_mapping, do: @iliad_file_mapping
 end

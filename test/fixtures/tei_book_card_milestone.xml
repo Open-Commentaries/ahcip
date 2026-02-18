@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.stoa.org/epidoc/schema/latest/tei-epidoc.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt><title>Test Iliad Translation</title></titleStmt>
+      <publicationStmt><p>Test</p></publicationStmt>
+      <sourceDesc><p>Test source</p></sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div type="edition" n="urn:cts:greekLit:tlg0012.tlg001.test-eng1" xml:lang="eng">
+        <div type="textpart" subtype="book" n="1">
+          <div type="textpart" subtype="card" n="1">
+            <p>
+              <milestone unit="line" n="1"/>
+              Sing, O goddess, the anger of Achilles son of Peleus, that brought
+              countless ills upon the Achaeans.
+            </p>
+            <p>
+              <milestone unit="line" n="5"/>
+              Many a brave soul did it send hurrying down to Hades.
+            </p>
+          </div>
+          <div type="textpart" subtype="card" n="2">
+            <p>
+              <milestone unit="line" n="10"/>
+              For so were the counsels of great Zeus fulfilled.
+            </p>
+          </div>
+        </div>
+        <div type="textpart" subtype="book" n="2">
+          <div type="textpart" subtype="card" n="1">
+            <p>
+              <milestone unit="line" n="1"/>
+              Now the rest of the gods and men slept through the night.
+            </p>
+          </div>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>
