@@ -50,7 +50,7 @@
             <% end %>
           <% end %>
           <div class="scaife-gap">
-            <a href="https://scaife.perseus.org/reader/urn:cts:greekLit:<%= @work_slug %>:<%= scaife_ref.(gap.start_line) %>-<%= scaife_ref.(gap.end_line) %>/"
+            <a href="<%= @scaife_url %>:<%= scaife_ref.(gap.start_line) %>-<%= scaife_ref.(gap.end_line) %>/"
                target="_blank" rel="noopener noreferrer" class="scaife-ref">
               Read lines <%= gap.start_line %>&#8211;<%= gap.end_line %> in translation on Scaife &#8599;
             </a>

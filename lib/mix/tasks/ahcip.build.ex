@@ -172,7 +172,7 @@ defmodule Mix.Tasks.Ahcip.Build do
         attribution = fallback_attribution(work)
 
         section_html =
-          Renderer.render_section(book, content, nav_groups, comments, display_title, attribution, greek_lines)
+          Renderer.render_section(book, content, nav_groups, comments, display_title, attribution, greek_lines, work.scaife_url)
 
         filename =
           if work.section_type == :hymn do

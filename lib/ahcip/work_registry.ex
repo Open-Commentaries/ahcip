@@ -11,6 +11,7 @@ defmodule AHCIP.WorkRegistry do
 
   @type work :: %{
           urn: String.t(),
+          scaife_url: String.t(),
           slug: String.t(),
           title: String.t(),
           section_label: String.t(),
@@ -72,6 +73,7 @@ defmodule AHCIP.WorkRegistry do
   def iliad do
     %{
       urn: "urn:cts:greekLit:tlg0012.tlg001",
+      scaife_url: "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0012.tlg001.perseus-eng4",
       slug: "tlg0012.tlg001",
       title: "The Iliad",
       section_label: "Scroll",
@@ -90,6 +92,7 @@ defmodule AHCIP.WorkRegistry do
   def odyssey do
     %{
       urn: "urn:cts:greekLit:tlg0012.tlg002",
+      scaife_url: "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0012.tlg002.perseus-eng4",
       slug: "tlg0012.tlg002",
       title: "The Odyssey",
       section_label: "Scroll",
@@ -111,6 +114,7 @@ defmodule AHCIP.WorkRegistry do
 
       %{
         urn: "urn:cts:greekLit:tlg0013.tlg#{padded}",
+        scaife_url: "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0013.tlg#{padded}.perseus-eng2",
         slug: "tlg0013.tlg#{padded}",
         title: Map.get(@hymn_titles, n, "Hymn #{n}"),
         section_label: "Hymn",
