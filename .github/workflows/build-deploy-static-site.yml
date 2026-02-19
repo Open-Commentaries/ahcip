@@ -58,11 +58,14 @@ jobs:
       uses: actions/download-artifact@v5
       with:
         name: translation-output
+        path: translation
+    - name: List contents of translation directory
+      run: ls -R translation
     - name: Build site
       run: mix ahcip.build
     - name: Upload static files as artifact
       id: deployment
-      uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+      uses: actions/upload-pages-artifact@v3
       with:
         path: output/
 
