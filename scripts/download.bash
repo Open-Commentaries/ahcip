@@ -10,7 +10,7 @@
 
 URL="https://content.dropboxapi.com/2/files/download_zip"
 TRANSLATION_ARGS="Dropbox-API-Arg: {\"path\":\"/A Homeric translation IP/\"}"
-TRANSLATION_DESTINATION="./translation/ahcip.zip"
+TRANSLATION_DESTINATION="translation/ahcip.zip"
 
 # Check for required tools
 if ! command -v jq &> /dev/null; then
