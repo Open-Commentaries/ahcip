@@ -38,13 +38,16 @@ defmodule Mix.Tasks.Ahcip.Build do
 
     # Render site
     Mix.shell().info("Rendering HTML...")
-    url_prefix = Application.get_env(:kodon, :url_prefix, "")
-    render_site(works_with_content, output_dir <> url_prefix)
+    render_site(works_with_content, output_dir)
 
     # Report
     Mix.shell().info("")
     Mix.shell().info("Build complete!")
     report_stats(works_with_content)
+  end
+
+  defp url_prefix do
+    Application.get_env(:kodon, :url_prefix, "")
   end
 
   defp build_work(work, data_dir, translation_dir) do
@@ -206,7 +209,7 @@ defmodule Mix.Tasks.Ahcip.Build do
             slug = "#{iliad.slug}/#{n}"
 
             %{
-              href: "/passages/#{iliad.slug}/#{n}.html",
+              href: "#{url_prefix()}/passages/#{iliad.slug}/#{n}.html",
               label: "#{iliad.section_label} #{n}",
               active: current_slug == slug,
               css_class:
@@ -227,7 +230,7 @@ defmodule Mix.Tasks.Ahcip.Build do
             slug = "#{odyssey.slug}/#{n}"
 
             %{
-              href: "/passages/#{odyssey.slug}/#{n}.html",
+              href: "#{url_prefix()}/passages/#{odyssey.slug}/#{n}.html",
               label: "#{odyssey.section_label} #{n}",
               active: current_slug == slug,
               css_class: "butler-only"
@@ -246,7 +249,7 @@ defmodule Mix.Tasks.Ahcip.Build do
           slug = "#{hymn.slug}/1"
 
           %{
-            href: "/passages/#{hymn.slug}/index.html",
+            href: "#{url_prefix()}/passages/#{hymn.slug}/index.html",
             label: hymn.title,
             active: current_slug == slug,
             css_class: "butler-only"
@@ -274,7 +277,7 @@ defmodule Mix.Tasks.Ahcip.Build do
           items =
             for {book, _content, _greek} <- sections do
               %{
-                href: "/passages/#{work.slug}/#{book.number}.html",
+                href: "#{url_prefix()}/passages/#{work.slug}/#{book.number}.html",
                 label: "#{work.section_label} #{book.number}",
                 status:
                   if(length(book.lines) > 0,
@@ -305,7 +308,7 @@ defmodule Mix.Tasks.Ahcip.Build do
           items =
             for {book, _content, _greek} <- sections do
               %{
-                href: "/passages/#{work.slug}/#{book.number}.html",
+                href: "#{url_prefix()}/passages/#{work.slug}/#{book.number}.html",
                 label: "#{work.section_label} #{book.number}",
                 status: "Greek text",
                 css_class: "butler-only"
@@ -333,7 +336,7 @@ defmodule Mix.Tasks.Ahcip.Build do
       items =
         for {work, _sections} <- hymn_works do
           %{
-            href: "/passages/#{work.slug}/index.html",
+            href: "#{url_prefix()}/passages/#{work.slug}/index.html",
             label: work.title,
             status: "Greek text",
             css_class: "butler-only"
