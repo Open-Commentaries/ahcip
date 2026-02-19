@@ -7,8 +7,6 @@ defmodule AHCIP.WorkRegistry do
 
   @type section_type :: :book | :hymn
 
-  @type tei_format :: :book_card_milestone | :line_elements
-
   @type work :: %{
           urn: String.t(),
           scaife_url: String.t(),
@@ -16,7 +14,6 @@ defmodule AHCIP.WorkRegistry do
           title: String.t(),
           section_label: String.t(),
           section_type: section_type(),
-          tei_format: tei_format(),
           tei_path: String.t(),
           sections: [integer()],
           has_scholar_translations: boolean()
@@ -78,8 +75,7 @@ defmodule AHCIP.WorkRegistry do
       title: "The Iliad",
       section_label: "Scroll",
       section_type: :book,
-      tei_format: :book_card_milestone,
-      tei_path: "tlg0012/tlg001/tlg0012.tlg001.perseus-eng4.xml",
+      tei_path: "tlg0012/tlg001/tlg0012.tlg001.perseus-grc2.xml",
       sections: Enum.to_list(1..24),
       has_scholar_translations: true
     }
@@ -97,8 +93,7 @@ defmodule AHCIP.WorkRegistry do
       title: "The Odyssey",
       section_label: "Scroll",
       section_type: :book,
-      tei_format: :book_card_milestone,
-      tei_path: "tlg0012/tlg002/tlg0012.tlg002.perseus-eng4.xml",
+      tei_path: "tlg0012/tlg002/tlg0012.tlg002.perseus-grc2.xml",
       sections: Enum.to_list(1..24),
       has_scholar_translations: false
     }
@@ -119,8 +114,7 @@ defmodule AHCIP.WorkRegistry do
         title: Map.get(@hymn_titles, n, "Hymn #{n}"),
         section_label: "Hymn",
         section_type: :hymn,
-        tei_format: :line_elements,
-        tei_path: "tlg0013/tlg#{padded}/tlg0013.tlg#{padded}.perseus-eng2.xml",
+        tei_path: "tlg0013/tlg#{padded}/tlg0013.tlg#{padded}.perseus-grc2.xml",
         sections: [1],
         has_scholar_translations: false
       }

@@ -1,18 +1,16 @@
 defmodule AHCIP.FallbackMerge do
   @moduledoc """
-  Detects gaps in scholar translations and merges with fallback TEI elements.
+  Detects gaps in scholar translations and builds a mixed content list.
 
-  Takes a `%Kodon.TEIParser{}` struct and a `%Kodon.Book{}` with scholar
-  translations, producing a mixed list of scholar lines and fallback gaps.
+  Takes a `%Kodon.Book{}` with scholar translations and the parsed Greek lines
+  for a section, producing an ordered list of scholar lines and fallback gaps.
 
-  Gaps contain the original TEI elements (not flat text), which can be
-  pre-rendered via `Kodon.Renderer.render_children/1` before passing to
-  templates.
+  Gaps carry only start/end line numbers; the caller's template is responsible
+  for looking up the Greek text from `greek_lines` and linking out to Scaife
+  for translations.
   """
 
   alias Kodon.{Book, Line}
-  alias Kodon.TEIParser
-  alias Kodon.TEIParser.Element
 
   @type content_item ::
           {:scholar_line, Line.t()}
@@ -20,54 +18,33 @@ defmodule AHCIP.FallbackMerge do
 
   @type gap_info :: %{
           start_line: integer(),
-          end_line: integer(),
-          elements: [Element.t()],
-          rendered_html: String.t() | nil
+          end_line: integer()
         }
 
   @doc """
-  Merge a scholar book with fallback TEI data.
+  Merge a scholar book with Greek line data.
 
   Returns a list of content items in line-number order:
   - `{:scholar_line, %Line{}}` for translated lines
-  - `{:fallback_gap, %{start_line, end_line, elements, rendered_html}}` for gaps
+  - `{:fallback_gap, %{start_line, end_line}}` for untranslated ranges
 
   ## Parameters
 
   - `book` — `%Book{}` with scholar translations (may have empty `lines`)
-  - `parsed` — `%TEIParser{}` struct from SAX parsing
-  - `tei_format` — `:book_card_milestone` or `:line_elements`
-  - `book_number` — which book/section to extract from the TEI
-  - `opts` — keyword list; pass `render: true` to pre-render gap elements to HTML
+  - `greek_lines` — `%{line_number_string => greek_text}` map for this section
   """
-  @spec merge(Book.t(), TEIParser.t(), atom(), integer(), keyword()) :: [content_item()]
-  def merge(book, parsed, tei_format, book_number, opts \\ []) do
-    line_data = extract_line_data(parsed, tei_format, book_number)
-    last_line = last_line_number(line_data)
+  @spec merge(Book.t(), %{String.t() => String.t()}) :: [content_item()]
+  def merge(book, greek_lines) do
+    last_line = last_greek_line(greek_lines)
 
-    items =
-      if length(book.lines) == 0 do
-        if last_line > 0 do
-          elements = elements_for_range(line_data, 1, last_line)
-          [{:fallback_gap, %{start_line: 1, end_line: last_line, elements: elements, rendered_html: nil}}]
-        else
-          []
-        end
+    if length(book.lines) == 0 do
+      if last_line > 0 do
+        [{:fallback_gap, %{start_line: 1, end_line: last_line}}]
       else
-        merge_with_gaps(book, line_data, last_line)
+        []
       end
-
-    if Keyword.get(opts, :render, false) do
-      Enum.map(items, fn
-        {:fallback_gap, gap} ->
-          html = Kodon.Renderer.render_children(gap.elements)
-          {:fallback_gap, %{gap | rendered_html: html}}
-
-        other ->
-          other
-      end)
     else
-      items
+      merge_with_gaps(book, last_line)
     end
   end
 
@@ -91,103 +68,9 @@ defmodule AHCIP.FallbackMerge do
     "Scroll #{number}"
   end
 
-  # --- Line data extraction ---
+  # --- Gap detection ---
 
-  # For book_card_milestone: extract milestone-based line info from <p> elements
-  # For line_elements: extract <l n="N"> elements
-
-  defp extract_line_data(parsed, :book_card_milestone, book_number) do
-    book_n = to_string(book_number)
-
-    # Find textparts for this book (cards within the book)
-    book_textpart_urns =
-      parsed.textparts
-      |> Enum.filter(fn tp ->
-        case tp.location do
-          [^book_n | _] -> true
-          _ -> false
-        end
-      end)
-      |> Enum.map(& &1.urn)
-      |> MapSet.new()
-
-    # Get elements belonging to these textparts
-    elements =
-      parsed.elements
-      |> Enum.filter(&MapSet.member?(book_textpart_urns, &1.textpart_urn))
-
-    # Extract milestone line numbers and associate with parent elements
-    milestones =
-      elements
-      |> Enum.flat_map(fn el ->
-        el.children
-        |> Enum.filter(fn
-          %Element{tagname: "milestone", attrs: %{"unit" => "line"}} -> true
-          _ -> false
-        end)
-        |> Enum.map(fn ms ->
-          {String.to_integer(ms.attrs["n"]), el}
-        end)
-      end)
-      |> Enum.sort_by(&elem(&1, 0))
-
-    {:milestone, milestones, elements}
-  end
-
-  defp extract_line_data(parsed, :line_elements, _book_number) do
-    # For hymns, all <l> elements are direct top-level elements
-    l_elements =
-      parsed.elements
-      |> Enum.filter(&(&1.tagname == "l" && &1.attrs["n"] != nil))
-      |> Enum.flat_map(fn el ->
-        case parse_line_n(el.attrs["n"]) do
-          nil -> []
-          sort_key -> [{sort_key, el}]
-        end
-      end)
-      |> Enum.sort_by(&elem(&1, 0))
-
-    # Also collect non-line elements (like <head>) for context
-    other_elements =
-      parsed.elements
-      |> Enum.filter(&(&1.tagname != "l"))
-
-    {:line, l_elements, other_elements}
-  end
-
-  defp last_line_number({:milestone, milestones, _elements}) do
-    case milestones do
-      [] -> 0
-      list -> list |> List.last() |> elem(0)
-    end
-  end
-
-  defp last_line_number({:line, l_elements, _other}) do
-    case l_elements do
-      [] -> 0
-      list ->
-        {[{base, _} | _], _el} = List.last(list)
-        base
-    end
-  end
-
-  defp elements_for_range({:milestone, milestones, _elements}, start_line, end_line) do
-    # Collect parent elements that contain milestones in the range
-    milestones
-    |> Enum.filter(fn {n, _el} -> n >= start_line && n <= end_line end)
-    |> Enum.map(&elem(&1, 1))
-    |> Enum.uniq_by(& &1.index)
-  end
-
-  defp elements_for_range({:line, l_elements, _other}, start_line, end_line) do
-    l_elements
-    |> Enum.filter(fn {[{base, _} | _], _el} -> base >= start_line && base <= end_line end)
-    |> Enum.map(&elem(&1, 1))
-  end
-
-  # --- Gap detection (same algorithm as old ButlerFallback) ---
-
-  defp merge_with_gaps(book, line_data, last_line) do
+  defp merge_with_gaps(book, last_line) do
     scholar_lines =
       book.lines
       |> Enum.map(fn line -> {elem(line.sort_key, 0), line} end)
@@ -198,26 +81,23 @@ defmodule AHCIP.FallbackMerge do
 
     items = []
 
-    # Gap before first scholar line
     items =
       if first_scholar > 1 do
-        items ++ make_gap(line_data, 1, first_scholar - 1)
+        items ++ make_gap(1, first_scholar - 1)
       else
         items
       end
 
-    # Interleave scholar lines and gaps between them
-    items = items ++ interleave_lines_and_gaps(scholar_lines, line_data)
+    items = items ++ interleave_lines_and_gaps(scholar_lines)
 
-    # Gap after last scholar line
     if last_scholar < last_line do
-      items ++ make_gap(line_data, last_scholar + 1, last_line)
+      items ++ make_gap(last_scholar + 1, last_line)
     else
       items
     end
   end
 
-  defp interleave_lines_and_gaps(scholar_lines, line_data) do
+  defp interleave_lines_and_gaps(scholar_lines) do
     scholar_lines
     |> Enum.chunk_every(2, 1)
     |> Enum.flat_map(fn
@@ -229,7 +109,7 @@ defmodule AHCIP.FallbackMerge do
         scholar = [{:scholar_line, line}]
 
         if gap_end >= gap_start do
-          scholar ++ make_gap(line_data, gap_start, gap_end)
+          scholar ++ make_gap(gap_start, gap_end)
         else
           scholar
         end
@@ -239,45 +119,25 @@ defmodule AHCIP.FallbackMerge do
     end)
   end
 
-  defp make_gap(line_data, start_line, end_line) do
-    # Only create a gap if it spans at least 2 lines
-    if end_line - start_line >= 1 do
-      elements = elements_for_range(line_data, start_line, end_line)
-
-      if elements != [] do
-        [{:fallback_gap, %{start_line: start_line, end_line: end_line, elements: elements, rendered_html: nil}}]
-      else
-        []
-      end
-    else
-      []
-    end
+  defp make_gap(start_line, end_line) when end_line >= start_line do
+    [{:fallback_gap, %{start_line: start_line, end_line: end_line}}]
   end
 
-  # Parse a TEI line citation into a sortable list of {integer, suffix} tuples,
-  # one per "."-separated component. Each component is a decimal number with an
-  # optional single letter a–e (case-insensitive) appended.
-  #
-  # Examples:
-  #   "132"     -> [{132, ""}]
-  #   "132a"    -> [{132, "a"}]
-  #   "1.5"     -> [{1, ""}, {5, ""}]
-  #   "5.4.3.3" -> [{5, ""}, {4, ""}, {3, ""}, {3, ""}]
-  #   "1.457b"  -> [{1, ""}, {457, "b"}]
-  #
-  # Returns nil if any component cannot be parsed, so callers can skip the element.
-  defp parse_line_n(n_str) do
-    parts = String.split(n_str, ".")
+  defp make_gap(_start_line, _end_line), do: []
 
-    parsed =
-      Enum.map(parts, fn part ->
-        case Regex.run(~r/^(\d+)([a-eA-E])?$/, part) do
-          [_, base, suffix] -> {String.to_integer(base), String.downcase(suffix)}
-          [_, base] -> {String.to_integer(base), ""}
-          _ -> nil
-        end
-      end)
+  # Determine the last line number from the Greek lines map.
+  # Uses only the leading integer of each citation key (e.g. "132a" -> 132).
+  defp last_greek_line(greek_lines) when map_size(greek_lines) == 0, do: 0
 
-    if Enum.all?(parsed, &(&1 != nil)), do: parsed, else: nil
+  defp last_greek_line(greek_lines) do
+    greek_lines
+    |> Map.keys()
+    |> Enum.map(fn n_str ->
+      case Integer.parse(n_str) do
+        {n, _} -> n
+        :error -> 0
+      end
+    end)
+    |> Enum.max()
   end
 end

@@ -28,3 +28,5 @@ output
 *_opencommentary.db
 .DS_Store
 .envrc
+translation/*
+!translation/.gitkeep

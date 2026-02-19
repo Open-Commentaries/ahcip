@@ -1,44 +1,39 @@
 defmodule Mix.Tasks.Ahcip.Build do
   @moduledoc """
-  Builds the AHCIP static HTML site from scholar translations and TEI fallback texts.
+  Builds the AHCIP static HTML site from scholar translations and Greek TEI source.
 
   ## Usage
 
       mix ahcip.build
 
-  Reads content from configured paths, parses, merges, and renders
-  HTML output to the configured output directory.
+  Reads Greek TEI files from the configured data directory, merges with any
+  available scholar translations, and renders static HTML to the output directory.
   """
 
   use Mix.Task
 
   alias AHCIP.{WorkRegistry, Translations, GreekSource, FallbackMerge}
-  alias Kodon.{TEIParser, Book, Renderer}
+  alias Kodon.{Book, Renderer}
 
   @shortdoc "Build the AHCIP static site"
-
-  # Attribution strings for fallback translations
-  @iliad_attribution "Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy"
-  @odyssey_attribution "Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy"
-  @hymn_attribution "Translation by Hugh G. Evelyn-White"
 
   @impl Mix.Task
   def run(_args) do
     Mix.Task.run("app.start")
 
-    scholar_dir = Application.get_env(:kodon, :translation_dir)
+    translation_zip = Application.get_env(:ahcip, :translation_zip)
     data_dir = fetch_required_env!(:data_dir)
     output_dir = Application.get_env(:kodon, :output_dir, "output")
 
     Mix.shell().info("Building AHCIP site...")
-    Mix.shell().info("  Scholar content: #{scholar_dir}")
+    Mix.shell().info("  Contributed translation content: #{translation_zip}")
     Mix.shell().info("  TEI data dir: #{data_dir}")
     Mix.shell().info("  Output: #{output_dir}")
     Mix.shell().info("")
 
     works_with_content =
       WorkRegistry.works()
-      |> Enum.map(fn work -> build_work(work, data_dir, scholar_dir) end)
+      |> Enum.map(fn work -> build_work(work, data_dir, translation_zip) end)
       |> Enum.reject(&is_nil/1)
 
     # Render site
@@ -51,29 +46,21 @@ defmodule Mix.Tasks.Ahcip.Build do
     report_stats(works_with_content)
   end
 
-  defp build_work(work, data_dir, scholar_dir) do
+  defp build_work(work, data_dir, translation_zip) do
     tei_path = Path.join(data_dir, work.tei_path)
 
     unless File.exists?(tei_path) do
-      Mix.shell().info("  Skipping #{work.title}: TEI file not found at #{tei_path}")
+      Mix.shell().info("  Skipping #{work.title}: Greek TEI not found at #{tei_path}")
       nil
     else
       Mix.shell().info("Processing #{work.title}...")
 
-      # Parse TEI
-      parsed = TEIParser.parse(tei_path)
+      greek_data = load_greek_data(work, tei_path)
 
-      # Load Greek source text
-      greek_data = load_greek_data(work, data_dir)
-
-      # Build sections
       sections =
         case work.section_type do
-          :book ->
-            build_book_sections(work, parsed, scholar_dir, greek_data)
-
-          :hymn ->
-            build_hymn_sections(work, parsed, greek_data)
+          :book -> build_book_sections(work, translation_zip, greek_data)
+          :hymn -> build_hymn_sections(work, greek_data)
         end
 
       Mix.shell().info("  #{length(sections)} section(s)")
@@ -81,10 +68,10 @@ defmodule Mix.Tasks.Ahcip.Build do
     end
   end
 
-  defp build_book_sections(work, parsed, scholar_dir, greek_data) do
+  defp build_book_sections(work, translation_zip, greek_data) do
     scholar_by_number =
       if work.has_scholar_translations do
-        parse_scholar_files(scholar_dir)
+        parse_scholar_files(translation_zip)
         |> Enum.map(fn book -> {book.number, book} end)
         |> Enum.into(%{})
       else
@@ -107,13 +94,13 @@ defmodule Mix.Tasks.Ahcip.Build do
             %{scholar_book | work_slug: work.slug}
         end
 
-      content = FallbackMerge.merge(book, parsed, work.tei_format, section_num, render: true)
       greek_lines = Map.get(greek_data, section_num, %{})
+      content = FallbackMerge.merge(book, greek_lines)
       {book, content, greek_lines}
     end
   end
 
-  defp build_hymn_sections(work, parsed, greek_data) do
+  defp build_hymn_sections(work, greek_data) do
     for section_num <- work.sections do
       book = %Book{
         number: section_num,
@@ -123,25 +110,46 @@ defmodule Mix.Tasks.Ahcip.Build do
         work_slug: work.slug
       }
 
-      content = FallbackMerge.merge(book, parsed, work.tei_format, section_num, render: true)
       greek_lines = Map.get(greek_data, section_num, %{})
+      content = FallbackMerge.merge(book, greek_lines)
       {book, content, greek_lines}
     end
   end
 
-  defp parse_scholar_files(scholar_dir) do
-    Translations.iliad_file_mapping()
-    |> Enum.map(fn {filename, _book_num} ->
-      path = Path.join(scholar_dir, filename)
+  defp parse_scholar_files(translation_zip) do
+    cwd = File.cwd!()
 
-      if File.exists?(path) do
-        Kodon.Parser.parse_file(path)
-      else
-        Mix.shell().info("  WARNING: #{filename} not found, skipping")
-        nil
-      end
-    end)
-    |> Enum.reject(&is_nil/1)
+    :ok = Path.dirname(translation_zip) |> File.cd!()
+    {:ok, files} = :zip.unzip(String.to_charlist(Path.basename(translation_zip)))
+
+    files = files |> Enum.reject(&File.dir?/1) |> Enum.map(&to_string/1)
+
+    translations =
+      Translations.iliad_file_mapping()
+      |> Enum.map(fn {filename, _book_num} ->
+        path = files |> Enum.find(fn f -> String.ends_with?(f, filename) end)
+
+        if File.exists?(path) do
+          Kodon.Parser.parse_file(path)
+        else
+          Mix.shell().info("  WARNING: #{filename} not found, skipping")
+          nil
+        end
+      end)
+      |> Enum.reject(&is_nil/1)
+
+    File.cd!(cwd)
+
+    translations
+  end
+
+  defp load_greek_data(work, tei_path) do
+    Mix.shell().info("  Loading Greek: #{work.tei_path}")
+
+    case work.section_type do
+      :book -> GreekSource.parse_books(tei_path)
+      :hymn -> GreekSource.parse_hymn(tei_path)
+    end
   end
 
   # --- Site rendering ---
@@ -169,17 +177,21 @@ defmodule Mix.Tasks.Ahcip.Build do
         nav_groups = build_nav_groups(all_works, section_slug)
         comments = get_comments_for_section(all_comments, work, book.number)
         display_title = FallbackMerge.display_title(book, work)
-        attribution = fallback_attribution(work)
 
         section_html =
-          Renderer.render_section(book, content, nav_groups, comments, display_title, attribution, greek_lines, work.scaife_url)
+          Renderer.render_section(
+            book,
+            content,
+            nav_groups,
+            comments,
+            display_title,
+            "",
+            greek_lines,
+            work.scaife_url
+          )
 
         filename =
-          if work.section_type == :hymn do
-            "index.html"
-          else
-            "#{book.number}.html"
-          end
+          if work.section_type == :hymn, do: "index.html", else: "#{book.number}.html"
 
         File.write!(Path.join(work_dir, filename), section_html)
       end
@@ -190,11 +202,6 @@ defmodule Mix.Tasks.Ahcip.Build do
 
     :ok
   end
-
-  defp fallback_attribution(%{slug: "tlg0012.tlg001"}), do: @iliad_attribution
-  defp fallback_attribution(%{slug: "tlg0012.tlg002"}), do: @odyssey_attribution
-  defp fallback_attribution(%{section_type: :hymn}), do: @hymn_attribution
-  defp fallback_attribution(_), do: ""
 
   defp build_nav_groups(works, current_slug) do
     iliad = Enum.find(works, &(&1.slug == "tlg0012.tlg001"))
@@ -213,7 +220,8 @@ defmodule Mix.Tasks.Ahcip.Build do
               href: "/passages/#{iliad.slug}/#{n}.html",
               label: "#{iliad.section_label} #{n}",
               active: current_slug == slug,
-              css_class: if(iliad.has_scholar_translations, do: "has-scholar", else: "butler-only")
+              css_class:
+                if(iliad.has_scholar_translations, do: "has-scholar", else: "butler-only")
             }
           end
 
@@ -271,7 +279,6 @@ defmodule Mix.Tasks.Ahcip.Build do
 
     groups = []
 
-    # Iliad
     groups =
       case Map.get(works_map, "tlg0012.tlg001") do
         {work, sections} ->
@@ -283,10 +290,9 @@ defmodule Mix.Tasks.Ahcip.Build do
                 status:
                   if(length(book.lines) > 0,
                     do: "#{length(book.lines)} lines translated",
-                    else: "Butler translation"
+                    else: "Greek text"
                   ),
-                css_class:
-                  if(length(book.lines) > 0, do: "has-scholar", else: "butler-only")
+                css_class: if(length(book.lines) > 0, do: "has-scholar", else: "butler-only")
               }
             end
 
@@ -304,7 +310,6 @@ defmodule Mix.Tasks.Ahcip.Build do
           groups
       end
 
-    # Odyssey
     groups =
       case Map.get(works_map, "tlg0012.tlg002") do
         {work, sections} ->
@@ -313,7 +318,7 @@ defmodule Mix.Tasks.Ahcip.Build do
               %{
                 href: "/passages/#{work.slug}/#{book.number}.html",
                 label: "#{work.section_label} #{book.number}",
-                status: "Butler/Power/Nagy translation",
+                status: "Greek text",
                 css_class: "butler-only"
               }
             end
@@ -322,8 +327,6 @@ defmodule Mix.Tasks.Ahcip.Build do
             [
               %{
                 title: "The Odyssey",
-                subtitle:
-                  "Translation by Samuel Butler, revised by Timothy Power and Gregory Nagy",
                 items: items
               }
             ]
@@ -332,7 +335,6 @@ defmodule Mix.Tasks.Ahcip.Build do
           groups
       end
 
-    # Homeric Hymns
     hymn_works =
       works_with_content
       |> Enum.filter(fn {work, _} -> work.section_type == :hymn end)
@@ -344,19 +346,12 @@ defmodule Mix.Tasks.Ahcip.Build do
           %{
             href: "/passages/#{work.slug}/index.html",
             label: work.title,
-            status: "Evelyn-White translation",
+            status: "Greek text",
             css_class: "butler-only"
           }
         end
 
-      groups ++
-        [
-          %{
-            title: "Homeric Hymns",
-            subtitle: "Translation by Hugh G. Evelyn-White",
-            items: items
-          }
-        ]
+      groups ++ [%{title: "Homeric Hymns", items: items}]
     else
       groups
     end
@@ -379,26 +374,9 @@ defmodule Mix.Tasks.Ahcip.Build do
   end
 
   defp fetch_required_env!(key) do
-    case Application.get_env(:kodon, key) do
-      nil -> Mix.raise("Missing required config: config :kodon, #{key}: \"path/to/dir\"")
+    case Application.get_env(:ahcip, key) do
+      nil -> Mix.raise("Missing required config: config :ahcip, #{key}: \"path/to/dir\"")
       value -> value
-    end
-  end
-
-  defp load_greek_data(work, data_dir) do
-    greek_rel_path = GreekSource.greek_path(work.tei_path)
-    greek_abs_path = Path.join(data_dir, greek_rel_path)
-
-    if File.exists?(greek_abs_path) do
-      Mix.shell().info("  Loading Greek source: #{greek_rel_path}")
-
-      case work.section_type do
-        :book -> GreekSource.parse_books(greek_abs_path)
-        :hymn -> GreekSource.parse_hymn(greek_abs_path)
-      end
-    else
-      Mix.shell().info("  Greek source not found: #{greek_rel_path}")
-      %{}
     end
   end
 
