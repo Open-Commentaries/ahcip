@@ -15,27 +15,9 @@ permissions:
   contents: read
 
 jobs:
-  download_translations:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - shell: bash
-      env:
-        DROPBOX_API_ACCESS_TOKEN: ${{ secrets.DROPBOX_API_ACCESS_TOKEN }}
-        DROPBOX_CLIENT_ID: ${{ secrets.DROPBOX_CLIENT_ID }}
-        DROPBOX_CLIENT_SECRET: ${{ secrets.DROPBOX_CLIENT_SECRET }}
-        DROPBOX_CLIENT_REFRESH_TOKEN: ${{ secrets.DROPBOX_CLIENT_REFRESH_TOKEN }}
-      run: |
-        scripts/download.bash
-    - name: Upload translation output
-      uses: actions/upload-artifact@v4
-      with:
-        name: translation-output
-        path: translation/ahcip.zip
   # Build job
   build:
     # Specify runner +  build & upload the static files as an artifact
-    needs: download_translations
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -54,13 +36,21 @@ jobs:
       run: mix deps.get
     # - name: Run tests
     #   run: mix test
-    - name: Download translations
-      uses: actions/download-artifact@v5
-      with:
-        name: translation-output
-        path: translation
-    - name: List contents of translation directory
-      run: ls -R translation
+    # - name: Download translations
+    #   uses: actions/download-artifact@v5
+    #   with:
+    #     name: translation-output
+    #     path: translation
+    # - name: List contents of translation directory
+    #   run: ls -R translation
+    - shell: bash
+      env:
+        DROPBOX_API_ACCESS_TOKEN: ${{ secrets.DROPBOX_API_ACCESS_TOKEN }}
+        DROPBOX_CLIENT_ID: ${{ secrets.DROPBOX_CLIENT_ID }}
+        DROPBOX_CLIENT_SECRET: ${{ secrets.DROPBOX_CLIENT_SECRET }}
+        DROPBOX_CLIENT_REFRESH_TOKEN: ${{ secrets.DROPBOX_CLIENT_REFRESH_TOKEN }}
+      run: |
+        scripts/download.bash
     - name: Build site
       run: mix ahcip.build
     - name: Upload static files as artifact
