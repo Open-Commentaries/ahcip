@@ -38,7 +38,8 @@ defmodule Mix.Tasks.Ahcip.Build do
 
     # Render site
     Mix.shell().info("Rendering HTML...")
-    render_site(works_with_content, output_dir)
+    url_prefix = Application.get_env(:kodon, :url_prefix, "")
+    render_site(works_with_content, output_dir <> url_prefix)
 
     # Report
     Mix.shell().info("")
