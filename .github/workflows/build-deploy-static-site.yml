@@ -25,7 +25,7 @@ jobs:
         DROPBOX_CLIENT_SECRET: ${{ secrets.DROPBOX_CLIENT_SECRET }}
         DROPBOX_CLIENT_REFRESH_TOKEN: ${{ secrets.DROPBOX_CLIENT_REFRESH_TOKEN }}
       run: |
-        ./scripts/download.bash
+        scripts/download.bash
     - name: Upload translation output
       uses: actions/upload-artifact@v4
       with:
