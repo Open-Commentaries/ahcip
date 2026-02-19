@@ -51,6 +51,8 @@ jobs:
         DROPBOX_CLIENT_REFRESH_TOKEN: ${{ secrets.DROPBOX_CLIENT_REFRESH_TOKEN }}
       run: |
         scripts/download.bash
+    - name: List contents of translation directory
+      run: ls translation
     - name: Build site
       run: mix ahcip.build
     - name: Upload static files as artifact
