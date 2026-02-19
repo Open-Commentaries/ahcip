@@ -59,3 +59,7 @@ fi
 
 # Cleanup temporary file (if not used)
 rm -f "$temp_file"
+
+unzip "$TRANSLATION_DESTINATION" -d "translation/ahcip"
+
+rm "$TRANSLATION_DESTINATION"

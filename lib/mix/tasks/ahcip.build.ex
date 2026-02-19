@@ -21,19 +21,19 @@ defmodule Mix.Tasks.Ahcip.Build do
   def run(_args) do
     Mix.Task.run("app.start")
 
-    translation_zip = Application.get_env(:ahcip, :translation_zip)
+    translation_dir = Application.get_env(:ahcip, :translation_dir)
     data_dir = fetch_required_env!(:data_dir)
     output_dir = Application.get_env(:kodon, :output_dir, "output")
 
     Mix.shell().info("Building AHCIP site...")
-    Mix.shell().info("  Contributed translation content: #{translation_zip}")
+    Mix.shell().info("  Contributed translation content: #{translation_dir}")
     Mix.shell().info("  TEI data dir: #{data_dir}")
     Mix.shell().info("  Output: #{output_dir}")
     Mix.shell().info("")
 
     works_with_content =
       WorkRegistry.works()
-      |> Enum.map(fn work -> build_work(work, data_dir, translation_zip) end)
+      |> Enum.map(fn work -> build_work(work, data_dir, translation_dir) end)
       |> Enum.reject(&is_nil/1)
 
     # Render site
@@ -46,7 +46,7 @@ defmodule Mix.Tasks.Ahcip.Build do
     report_stats(works_with_content)
   end
 
-  defp build_work(work, data_dir, translation_zip) do
+  defp build_work(work, data_dir, translation_dir) do
     tei_path = Path.join(data_dir, work.tei_path)
 
     unless File.exists?(tei_path) do
@@ -59,7 +59,7 @@ defmodule Mix.Tasks.Ahcip.Build do
 
       sections =
         case work.section_type do
-          :book -> build_book_sections(work, translation_zip, greek_data)
+          :book -> build_book_sections(work, translation_dir, greek_data)
           :hymn -> build_hymn_sections(work, greek_data)
         end
 
@@ -68,10 +68,10 @@ defmodule Mix.Tasks.Ahcip.Build do
     end
   end
 
-  defp build_book_sections(work, translation_zip, greek_data) do
+  defp build_book_sections(work, translation_dir, greek_data) do
     scholar_by_number =
       if work.has_scholar_translations do
-        parse_scholar_files(translation_zip)
+        parse_scholar_files(translation_dir)
         |> Enum.map(fn book -> {book.number, book} end)
         |> Enum.into(%{})
       else
@@ -116,31 +116,19 @@ defmodule Mix.Tasks.Ahcip.Build do
     end
   end
 
-  defp parse_scholar_files(translation_zip) do
-    cwd = File.cwd!()
+  defp parse_scholar_files(translation_dir) do
+    Translations.iliad_file_mapping()
+    |> Enum.map(fn {filename, _book_num} ->
+      path = Path.join(translation_dir, filename)
 
-    :ok = Path.dirname(translation_zip) |> File.cd!()
-    {:ok, files} = :zip.unzip(String.to_charlist(Path.basename(translation_zip)))
-
-    files = files |> Enum.reject(&File.dir?/1) |> Enum.map(&to_string/1)
-
-    translations =
-      Translations.iliad_file_mapping()
-      |> Enum.map(fn {filename, _book_num} ->
-        path = files |> Enum.find(fn f -> String.ends_with?(f, filename) end)
-
-        if File.exists?(path) do
-          Kodon.Parser.parse_file(path)
-        else
-          Mix.shell().info("  WARNING: #{filename} not found, skipping")
-          nil
-        end
-      end)
-      |> Enum.reject(&is_nil/1)
-
-    File.cd!(cwd)
-
-    translations
+      if File.exists?(path) do
+        Kodon.Parser.parse_file(path)
+      else
+        Mix.shell().info("  WARNING: #{filename} not found, skipping")
+        nil
+      end
+    end)
+    |> Enum.reject(&is_nil/1)
   end
 
   defp load_greek_data(work, tei_path) do
