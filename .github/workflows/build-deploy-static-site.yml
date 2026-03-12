@@ -46,7 +46,7 @@ jobs:
     # - name: List contents of translation directory
     #   run: ls -R translation
     - name: Download translations
-      uses: gomes042/gh-actions-dropbox/files/download_zip@2
+      uses: gomes042/gh-actions-dropbox/files/download_zip@23ce81287e83f01c19c9f60b1849b746db6616b5
       env:
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
