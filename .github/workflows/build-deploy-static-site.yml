@@ -52,7 +52,7 @@ jobs:
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           SOURCE_PATH: "/A Homeric translation IP/"
-          DEST_PATH: translation/ahcip.zip
+          DEST_PATH: "translation/ahcip.zip"
     - name: Unzip translations Dropbox archive
       run: unzip translation/ahcip.zip -d translation/ahcip
     - name: Build site
