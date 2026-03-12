@@ -6,9 +6,6 @@
     <%= if @preamble do %>
       <div class="preamble"><%= @preamble %></div>
     <% end %>
-    <%= if length(@translators) > 0 do %>
-      <p class="translators">Translated by <%= Enum.join(@translators, ", ") %></p>
-    <% end %>
   </header>
 
   <div class="book-content">

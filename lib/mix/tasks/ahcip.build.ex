@@ -293,7 +293,7 @@ defmodule Mix.Tasks.Ahcip.Build do
               %{
                 title: "The Iliad",
                 subtitle:
-                  "Translated by Casey Due, Mary Ebbott, Douglas Frame, Leonard Muellner, and Gregory Nagy",
+                  "with a partial, ongoing translation by Casey Dué Hackney, Mary Ebbott, Douglas Frame, Leonard Muellner, and Gregory Nagy",
                 items: items
               }
             ]
