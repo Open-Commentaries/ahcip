@@ -45,14 +45,16 @@ jobs:
     #     path: translation
     # - name: List contents of translation directory
     #   run: ls -R translation
-    - shell: bash
+    - name: Download translations
+      uses: gomes042/gh-actions-dropbox/files/download_zip@2
       env:
-        DROPBOX_API_ACCESS_TOKEN: ${{ secrets.DROPBOX_API_ACCESS_TOKEN }}
-        DROPBOX_CLIENT_ID: ${{ secrets.DROPBOX_CLIENT_ID }}
-        DROPBOX_CLIENT_SECRET: ${{ secrets.DROPBOX_CLIENT_SECRET }}
-        DROPBOX_CLIENT_REFRESH_TOKEN: ${{ secrets.DROPBOX_CLIENT_REFRESH_TOKEN }}
-      run: |
-        scripts/download.bash
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          SOURCE_PATH: "/A Homeric translation IP/"
+          DEST_PATH: translation/ahcip.zip
+    - name: Unzip translations Dropbox archive
+      run: unzip translation/ahcip.zip -d translation/ahcip
     - name: Build site
       run: mix ahcip.build
     - name: Upload static files as artifact
