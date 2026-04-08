@@ -21,7 +21,7 @@ defmodule AHCIP.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:kodon, git: "https://github.com/pletcher/kodon_ex.git", ref: "dca40c951b8a1165181b16c8d70fa4f1abe58fd6"}
+      {:kodon, git: "https://github.com/pletcher/kodon_ex.git", ref: "49428156c3b6d897c7bdd69b480bd3442ddf5855"}
     ]
   end
 end

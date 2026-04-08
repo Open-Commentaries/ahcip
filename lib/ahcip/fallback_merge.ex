@@ -10,7 +10,7 @@ defmodule AHCIP.FallbackMerge do
   for translations.
   """
 
-  alias Kodon.{Book, Line}
+  alias Kodon.Translation.{Book, Line}
 
   @type content_item ::
           {:scholar_line, Line.t()}

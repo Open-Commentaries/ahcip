@@ -36,15 +36,6 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: mix deps.get
-    # - name: Run tests
-    #   run: mix test
-    # - name: Download translations
-    #   uses: actions/download-artifact@v5
-    #   with:
-    #     name: translation-output
-    #     path: translation
-    # - name: List contents of translation directory
-    #   run: ls -R translation
     - name: Download translations
       uses: gomes042/gh-actions-dropbox/files/download_zip@23ce81287e83f01c19c9f60b1849b746db6616b5
       with:

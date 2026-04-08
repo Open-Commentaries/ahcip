@@ -13,7 +13,8 @@ defmodule Mix.Tasks.Ahcip.Build do
   use Mix.Task
 
   alias AHCIP.{WorkRegistry, Translations, GreekSource, FallbackMerge}
-  alias Kodon.{Book, Renderer}
+  alias Kodon.Translation.Book
+  alias Kodon.Renderer
 
   @shortdoc "Build the AHCIP static site"
 
@@ -126,7 +127,7 @@ defmodule Mix.Tasks.Ahcip.Build do
       path = Path.join(translation_dir, filename)
 
       if File.exists?(path) do
-        Kodon.Parser.parse_file(path)
+        Kodon.Translation.Parser.parse_file(path)
       else
         Mix.shell().info("  WARNING: #{filename} not found, skipping")
         nil
@@ -191,6 +192,7 @@ defmodule Mix.Tasks.Ahcip.Build do
 
     # Copy CSS
     Renderer.copy_css(output_dir)
+    Renderer.copy_fonts(output_dir)
 
     :ok
   end
