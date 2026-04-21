@@ -1,0 +1,46 @@
+<%= @nav %>
+
+<main class="main">
+<h2>A Homer Commentary in Progress</h2>
+
+<article>
+<section class="page-content container">
+  <section class="page-byline">
+
+    <h3>Editors/Commenters: Douglas Frame, Leonard Muellner, Gregory Nagy (founding editors); Casey Dué, Mary Ebbott, David Elmer, Olga Levaniouk, Richard Martin, Corinne Pache, John Petropoulos, Laura Slatkin, Thomas Walsh; Associate Editors/Commenters: Keith DeStone, Anita Nikkanen; Assistant Editors: Daniel Cline, Angelia Hanhardt
+    </h3>
+  </section>
+  <section class="about">
+    <p>The intellectual goal of <em>A Homer commentary in progress</em> is simple and at the same time most ambitious: of all existing commentaries on Homeric poetry, ours is the first and only such commentary that is based squarely on the cumulative research of Milman Parry and his student, Albert Lord, who created a new way of thinking about Homeric poetry. Both Parry and Lord taught at Harvard University (Parry died prematurely in 1935, when he was still an assistant professor, while Lord was a distinguished Emeritus Professor at the time of his death in 1991). The lifelong research of Parry (collected papers: 1971) and Lord (1960; second edition 2000 by Stephen Mitchell and Gregory Nagy, with new introduction; new online and print editions are forthcoming), as summarized in Lord’s magisterial synthesis, <em>The Singer of Tales</em> (1960), proved that Homeric poetry is a system generated from oral traditions, and that the building blocks of this system are formulas on the level of form and themes on the level of meaning (Lord 1960:4). Our commentary is designed to analyze and explain this system of formulas and themes, to which we refer short-hand as a formulaic system.</p><p>Such a system can best be visualized as a specialized language that has its own specialized grammar. And, just as the grammar of any language is a system in its own right, so also the linguistic analysis of any grammar needs to be correspondingly systematic. Our Homer commentary offers such a systematic analysis.</p>
+
+    <p>In this commentary we apply to the formulaic system of Homeric poetry a special methodology of linguistics that stems primarily from the research of Antoine Meillet and of his teacher, Ferdinand de Saussure. Our application of this methodology (as exemplified by Meillet 1925 and Saussure 1916) had been pioneered by Parry himself, who was a student of Meillet during his years as a doctoral candidate at the Sorbonne. The intellectual legacy of Meillet is continued to this day at the Sorbonne by researchers like Charles de Lamberterie, who is a partner in our project (for more on the influence of Meillet on Parry, we refer to de Lamberterie 1997). It is also continued by the editors of this project.</p>
+
+    <p>The methodology of this research, as inherited by Parry, combines a rigorous study of Indo-European linguistics with two complementary perspectives on language as a system—perspectives that Saussure described as synchronic and diachronic. Here is a paraphrase of his description (Saussure 1916:117):</p><span>A synchronic perspective on a system has to do with the static aspect of linguistic analysis, whereas a diachronic perspective deals with various kinds of evolution of the system. So synchrony and diachrony refer respectively to an existing state of a language and to phases of evolution in the language.</span><p>Albert Lord, who followed closely the methods of Milman Parry in applying both synchronic and diachronic perspectives in his analysis of formulaic systems, makes a most revealing observation on the basis of his own systematic analysis of a sample poem stemming from the South Slavic oral traditions: “there is nothing in the poem,” he says, “that is not formulaic” (Lord 1960:47). This concept, that everything in an oral poem is formulaic, applies to our project. In A Homer commentary in progress, we deliver a “proof of concept” by analyzing both synchronically and diachronically the evidence of all the Homeric poems—the <em>Iliad</em>, the <em>Odyssey</em>, and the <em>Homeric Hymns</em>. Our commentary on these texts of Homeric poetry proves, we argue, that they all originated from a formulaic system of oral poetry.</p>
+
+    <p>Our linguistic approach in analyzing both synchronically and diachronically the formulaic system of Homeric poetry provides an empirical foundation for the discoveries and discovery procedures that we assemble and organize in our Homer commentary. Such an approach does not ignore, however, the beauty of the verbal art that went into the making of Homeric poetry. As the principal authors of this Homer commentary, we follow the example of Roman Jakobson (in the 1960s, three of us were his students as well as Lord’s), whose research in both linguistics and literature showed that there is another side to the grammar of poetry: it is the poetry of grammar (as reflected in the title of one volume of the collection of his works: Jakobson 1980). The formulaic system of Homeric poetry is not a machine but a special language for expressing the sublime beauty and pleasure of hearing the ‘glories’ or <em>klea</em> of heroes and gods.</p>
+
+    <p>The twleve editors of the basic running commentary comprise two generations of senior researchers in the field of Homeric poetry (Casey Dué, Mary Ebbott, David Elmer, Douglas Frame, Olga Levaniouk, Richard Martin, Leonard Muellner, Gregory Nagy, Corinne Pache, John Petropoulos, Laura Slatkin, and Thomas Walsh). These authors are writing their commentary as a collaborative process, and the collaborators also include a wider team of associate editors (Anita Nikkanen and Keith Stone) and assistant editors (Daniel Cline, Angelia Hanhardt) from the next generation. The senior editors have invited these commenters to respond to selected parts of the text that correspond to their areas of special expertise. As in the case of the principal authors, every paragraph written by contributing authors features an author-stamp and date-stamp.</p><p>--Written and revised by David Elmer, Douglas Frame, Leonard Muellner, and Gregory Nagy, 2016</p>
+  </section>
+  <section class="bibliography">
+    <h3>Bibliographical References</h3>
+
+    <p>Elmer, D. 2013. <em>The Poetics of Consent</em>. Collective Decision Making in the Iliad. Baltimore.</p>
+
+    <p>Frame, D. 1978. <em>The Myth of Return in Early Greek Epic</em>. New Haven. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_Frame.The_Myth_of_Return_in_Early_Greek_Epic.1978.</p><p>Frame, D. 2009. <em>Hippota Nestor</em>. Hellenic Studies 34. Cambridge, MA and Washington, DC. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_Frame.Hippota_Nestor.2009.</p>
+
+    <p>Jakobson, R. 1980. <em>Selected Writings III: Poetry of Grammar and Grammar of Poetry</em>. Preface by S. Rudy. The Hague.</p>
+
+    <p>Lamberterie, C. de. 1997. “Milman Parry et Antoine Meillet.” In Létoublon 1997:9–22. Translated as “Milman Parry and Antoine Meillet” in Loraux, Nagy, and Slatkin 2001:409–421.</p><p>Létoublon, F., ed. 1997. <em>Hommage à Milman Parry: le style formulaire de l’épopée et la théorie de l’oralité poétique</em>. Amsterdam.</p><p>Loraux, N., Nagy, G., and Slatkin, L., eds. 2001. <em>Antiquities: Postwar French Thought III</em>. Edited by R. Naddaff. New York.</p>
+
+    <p>Lord, A. B. 1960. <em>The Singer of Tales</em>. Harvard Studies in Comparative Literature 24. Cambridge, MA. See also Lord 2000.</p><p>Lord, A. B. 2000. 2nd ed. of Lord 1960. Edited, with new Introduction (vii–xxix) by S. Mitchell and G. Nagy. Cambridge, MA. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_LordA.The_Singer_of_Tales.2000.</p>
+
+    <p>Martin, Richard P. 1989. <em>The Language of Heroes. Speech and Performance in the Iliad</em>. Ithaca. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_Martin.The_Language_of_Heroes.1989.</p><p>Meillet, A. 1921–1936. <em>Linguistique historique et linguistique générale</em>. I–II. Paris.</p><p>Meillet, A. 1925. <em>La méthode comparative en linguistique historique</em>. Paris.</p>
+
+    <p>Muellner, L. 1996. <em>The Anger of Achilles: Mēnis in Greek Epic</em>. Ithaca. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_MuellnerL.The_Anger_of_Achilles.1996.</p>
+
+    <p>Nagy, G. 1979/1999. <em>The Best of the Achaeans: Concepts of the Hero in Archaic Greek Poetry</em>. Baltimore. Revised ed. with new introduction 1999. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_Nagy.Best_of_the_Achaeans.1999.</p><p>Nagy, G. 1990. <em>Pindar’s Homer: The Lyric Possession of an Epic Past</em>. Baltimore. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_Nagy.Pindars_Homer.1990.</p><p>Parry, A., ed. 1971. <em>The Making of Homeric Verse: The Collected Papers of Milman Parry</em>. Oxford.</p><p>Petropoulos, Kleos in a Minor Key: The Homeric Education of a Little Prince. Hellenic Studies 45. Cambridge and Washington</p>
+
+    <p>Saussure, F. de. 1916. <em>Cours de linguistique générale</em>. Critical ed. 1972 by T. de Mauro. Paris.</p><p>Slatkin, L. 2011. <em>The Power of Thetis and Selected Essays</em>. Hellenic Studies 16. Cambridge, MA and Washington, DC. http://nrs.harvard.edu/urn-3:hul.ebook:CHS_Slatkin.The_Power_of_Thetis_and_Selected_Essays.2011</p>
+  </section>
+</article>
+</main>

@@ -160,6 +160,12 @@ defmodule Mix.Tasks.Ahcip.Build do
     index_html = Renderer.render_index(nav_groups, work_groups)
     File.write!(Path.join(output_dir, "index.html"), index_html)
 
+    about_html = Renderer.render_about_page(nav_groups)
+
+    unless is_nil(about_html) do
+      File.write!(Path.join(output_dir, "about.html"), about_html)
+    end
+
     # Render each work's sections
     for {work, sections_with_content} <- works_with_content do
       work_dir = Path.join([output_dir, "passages", work.slug])
